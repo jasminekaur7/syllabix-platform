@@ -47,10 +47,11 @@ public class AuthenticationService implements UserDetailsService {
     public Student getAuthenticatedStudent() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null || !auth.isAuthenticated() || "anonymousUser".equals(auth.getPrincipal())) {
-            // Default demo student fallback if needed for demo access
-            return studentRepository.findByEmail("alex.student@university.edu")
+            // Default demo student fallback (supports Thapar Institute user and demo)
+            return studentRepository.findByEmail("jkaur_be24@thapar.edu")
+                    .orElseGet(() -> studentRepository.findByEmail("alex.student@university.edu")
                     .orElseGet(() -> studentRepository.findAll().stream().findFirst()
-                            .orElseThrow(() -> new ResourceNotFoundException("No active student session found")));
+                            .orElseThrow(() -> new ResourceNotFoundException("No active student session found"))));
         }
         String email = auth.getName();
         return studentRepository.findByEmail(email)

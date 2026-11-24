@@ -53,8 +53,24 @@ public class DataInitializer implements CommandLineRunner {
 
         System.out.println(">>> Initializing Syllabix Demo Academic Environment...");
 
-        // 1. Seed Student
+        // 1. Seed Thapar Student (Jasmine Kaur - matching Thapar LMS login)
         Student student = new Student(
+                "Jasmine Kaur",
+                "jkaur_be24@thapar.edu",
+                passwordEncoder.encode("password123"),
+                "Thapar Institute of Engineering & Technology, Patiala",
+                "Bachelor of Engineering (B.E.)",
+                "Computer Engineering (COE)",
+                5
+        );
+        student.setAcademicGoals("Target CGPA >= 9.2 in 2425ODDSEM. Ace DBMS (UCS501) and OS (UCS502) MSTs, maintain 100% submission on Lab Assignments 1-8, and secure A grades across all subjects.");
+        student.setDailyStudyHours(3.5);
+        student.setPreferredStudyTimings("EVENING");
+        student.setWeeklyAvailability("{\"Monday\":3.5,\"Tuesday\":3.5,\"Wednesday\":4.0,\"Thursday\":3.5,\"Friday\":3.0,\"Saturday\":5.0,\"Sunday\":4.5}");
+        studentRepository.save(student);
+
+        // Also seed Alex Mercer for secondary compatibility
+        Student alex = new Student(
                 "Alex Mercer",
                 "alex.student@university.edu",
                 passwordEncoder.encode("password123"),
@@ -63,26 +79,22 @@ public class DataInitializer implements CommandLineRunner {
                 "Computer Science & Engineering",
                 5
         );
-        student.setAcademicGoals("Target CGPA >= 8.8. Ace DBMS and Operating Systems mid-terms, finish syllabus 2 weeks prior to end-terms, and build practical database projects.");
-        student.setDailyStudyHours(3.5);
-        student.setPreferredStudyTimings("EVENING");
-        student.setWeeklyAvailability("{\"Monday\":3.5,\"Tuesday\":3.5,\"Wednesday\":4.0,\"Thursday\":3.5,\"Friday\":3.0,\"Saturday\":5.0,\"Sunday\":4.5}");
-        studentRepository.save(student);
+        studentRepository.save(alex);
 
-        // 2. Seed Subjects
-        Subject dbms = new Subject(student, "Database Management Systems", "CS501", 5, 4,
+        // 2. Seed Subjects with authentic Thapar University course codes
+        Subject dbms = new Subject(student, "Database Management Systems", "UCS501", 5, 4,
                 "Relational databases, Normalization, Query Processing, Transactions and Indexing structures",
                 "Dr. Sarah Jenkins", "A+", "#4f46e5");
-        Subject os = new Subject(student, "Operating Systems", "CS502", 5, 4,
+        Subject os = new Subject(student, "Operating Systems", "UCS502", 5, 4,
                 "Process synchronization, CPU Scheduling, Virtual Memory, Deadlocks, File systems",
                 "Prof. Alan Vance", "A", "#0284c7");
-        Subject cn = new Subject(student, "Computer Networks", "CS503", 5, 3,
+        Subject cn = new Subject(student, "Computer Networks", "UCS503", 5, 3,
                 "OSI and TCP/IP protocol suites, Routing algorithms, Transport layer flow and congestion control",
                 "Dr. Elena Rostova", "A", "#10b981");
-        Subject daa = new Subject(student, "Design & Analysis of Algorithms", "CS504", 5, 4,
+        Subject daa = new Subject(student, "Design & Analysis of Algorithms", "UCS504", 5, 4,
                 "Asymptotic notation, Divide & Conquer, Dynamic Programming, Greedy approaches and Graph algorithms",
                 "Dr. Ramesh Nair", "A+", "#f59e0b");
-        Subject se = new Subject(student, "Software Engineering & Agile", "CS505", 5, 3,
+        Subject se = new Subject(student, "Software Engineering & Agile", "UCS505", 5, 3,
                 "Software lifecycles, Agile Scrum, System design, Testing methodologies and CI/CD pipelines",
                 "Prof. Michael Chang", "A", "#8b5cf6");
 

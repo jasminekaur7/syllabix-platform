@@ -105,11 +105,34 @@
         <!-- Top Navbar -->
         <header class="app-header">
             <div class="header-title-section">
+                <div class="d-flex align-items-center gap-2 mb-1">
+                    <span class="badge bg-danger text-white" style="letter-spacing: 0.5px;"><i class="bi bi-mortarboard-fill"></i> THAPAR-LMS</span>
+                    <span class="badge bg-primary text-white"><i class="bi bi-stars"></i> SYLLABIX AI</span>
+                </div>
                 <h1>Academic Dashboard</h1>
-                <p>Welcome back, <span class="js-student-name fw-bold">Alex</span>! Here is your adaptive study overview today.</p>
+                <p>Welcome back, <span class="js-student-name fw-bold">Jasmine Kaur</span>! Here is your adaptive study overview today.</p>
             </div>
 
             <div class="header-actions">
+                <!-- Semester Selector matching Thapar LMS Image 2 -->
+                <div class="me-1">
+                    <select class="form-select form-select-sm fw-bold border-danger text-danger bg-white shadow-sm" id="semesterSelector" onchange="Syllabix.toast('Switched view to ' + this.value, 'info')">
+                        <option value="2425ODDSEM" selected>2425ODDSEM (Current)</option>
+                        <option value="2425EVESEM">2425EVESEM</option>
+                        <option value="2526ODDSEM">2526ODDSEM</option>
+                        <option value="2526EVESEM">2526EVESEM</option>
+                        <option value="EL Activities">EL Activities</option>
+                    </select>
+                </div>
+
+                <!-- Notification Bell with count 76 matching Image 2 -->
+                <button class="btn btn-light position-relative border shadow-sm" onclick="Syllabix.toast('76 LMS notifications: 2 assessments approaching, 1 lab submission due, 73 forum updates', 'info')" title="LMS Notifications">
+                    <i class="bi bi-bell-fill text-secondary"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.65rem;">
+                        76
+                    </span>
+                </button>
+
                 <div class="streak-pill" id="dashboard-streak-pill">
                     <i class="bi bi-fire"></i>
                     <span id="streak-days">3</span> Day Streak
@@ -120,6 +143,7 @@
                         <i class="bi bi-plus-lg"></i> Quick Action
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                        <li><a class="dropdown-item py-2" href="#" data-bs-toggle="modal" data-bs-target="#modalImportLmsScheme"><i class="bi bi-mortarboard-fill me-2 text-danger"></i> Import LMS Scheme</a></li>
                         <li><a class="dropdown-item py-2" href="#" data-bs-toggle="modal" data-bs-target="#modalAddSubject"><i class="bi bi-journal-plus me-2 text-primary"></i> Add Subject</a></li>
                         <li><a class="dropdown-item py-2" href="#" data-bs-toggle="modal" data-bs-target="#modalAddAssessment"><i class="bi bi-calendar-plus me-2 text-danger"></i> Add Assessment</a></li>
                         <li><a class="dropdown-item py-2" href="#" data-bs-toggle="modal" data-bs-target="#modalRecordMarks"><i class="bi bi-award me-2 text-warning"></i> Record Marks</a></li>
@@ -225,6 +249,90 @@
                         <div class="card-body-clean">
                             <div id="upcoming-assessments-list" class="d-flex flex-column gap-3">
                                 <div class="text-muted text-center py-4">Loading assessments...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================================= -->
+            <!-- UNIQUE THAPAR LMS FEATURES: EVALUATION SCHEME CALCULATOR & LAB TRACKER    -->
+            <!-- ========================================================================= -->
+            <div class="row g-4 mb-4">
+                <!-- Thapar LMS Evaluation Scheme & Target Run-Rate Calculator -->
+                <div class="col-lg-7">
+                    <div class="card-syllabix h-100 border-start border-4 border-danger">
+                        <div class="card-header-clean">
+                            <div>
+                                <h2 class="d-flex align-items-center gap-2">
+                                    <span class="badge bg-danger text-white"><i class="bi bi-mortarboard-fill"></i> THAPAR LMS</span>
+                                    <span>Course Evaluation & Target Run-Rate</span>
+                                </h2>
+                                <p class="small text-muted mb-0">Parses raw evaluation schemes and computes the exact marks needed to hit your target grade.</p>
+                            </div>
+                            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalImportLmsScheme">
+                                <i class="bi bi-file-earmark-text me-1"></i> Paste LMS Scheme
+                            </button>
+                        </div>
+                        <div class="card-body-clean">
+                            <div class="row g-2 mb-3">
+                                <div class="col-md-7">
+                                    <label class="form-label small font-bold text-muted mb-1">Select Subject</label>
+                                    <select class="form-select form-select-sm" id="evalSubjectSelect" onchange="loadSubjectEvaluationScheme(this.value)">
+                                        <!-- Loaded dynamically -->
+                                    </select>
+                                </div>
+                                <div class="col-md-5">
+                                    <label class="form-label small font-bold text-muted mb-1">Target Grade</label>
+                                    <select class="form-select form-select-sm" id="evalTargetGradeSelect" onchange="recalculateTargetRunRate()">
+                                        <option value="A+">Grade A+ (Cutoff &ge; 88%)</option>
+                                        <option value="A" selected>Grade A (Cutoff &ge; 80%)</option>
+                                        <option value="A-">Grade A- (Cutoff &ge; 73%)</option>
+                                        <option value="B">Grade B (Cutoff &ge; 65%)</option>
+                                        <option value="B-">Grade B- (Cutoff &ge; 58%)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Evaluation Breakdown Cards (MST 30, EST 40, Lab 20, Quiz 10) -->
+                            <div id="evalComponentsContainer" class="d-flex flex-column gap-2 mb-3">
+                                <div class="text-muted text-center py-2">Loading course evaluation scheme...</div>
+                            </div>
+
+                            <!-- Run Rate Verdict Alert Box -->
+                            <div class="p-3 rounded-3" id="evalRunRateBox" style="background: #f8fafc; border: 1px solid #e2e8f0;">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="font-bold small text-dark"><i class="bi bi-calculator text-danger me-1"></i> Required Run-Rate for Grade <span id="verdictTargetGrade">A</span>:</span>
+                                    <span class="badge bg-success" id="verdictBadge">ACHIEVABLE</span>
+                                </div>
+                                <div class="d-flex align-items-baseline gap-2 mb-2">
+                                    <div class="h4 font-bold text-dark mb-0" id="verdictRunRatePct">74.3%</div>
+                                    <div class="small text-muted">(Need <span id="verdictNeededMarks" class="fw-bold text-dark">52.0</span> / <span id="verdictRemainingMarks">70.0</span> marks across remaining evaluations)</div>
+                                </div>
+                                <div class="small text-secondary" id="verdictAdviceText">
+                                    Scoring 22/30 in MST and 30/40 in EST comfortably secures your A grade.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thapar Lab Assignments Tracker (Image 3) -->
+                <div class="col-lg-5">
+                    <div class="card-syllabix h-100">
+                        <div class="card-header-clean">
+                            <div>
+                                <h2 class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-code-slash text-primary"></i>
+                                    <span>Lab Assignments Tracker</span>
+                                </h2>
+                                <p class="small text-muted mb-0">Track all 8 semester lab evaluations & internal submissions (Image 3).</p>
+                            </div>
+                            <span class="badge bg-primary-subtle text-primary border" id="labCompletedCountBadge">5/9 Done</span>
+                        </div>
+                        <div class="card-body-clean">
+                            <div id="thaparLabsContainer" class="d-flex flex-column gap-2" style="max-height: 380px; overflow-y: auto;">
+                                <div class="text-muted text-center py-4">Loading lab assignments...</div>
                             </div>
                         </div>
                     </div>
@@ -423,6 +531,55 @@
     </div>
 </div>
 
+<!-- Modal: Import Thapar LMS Course Evaluation Scheme -->
+<div class="modal fade" id="modalImportLmsScheme" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header border-bottom bg-danger text-white">
+                <h5 class="modal-title font-bold"><i class="bi bi-mortarboard-fill me-2"></i> Import Thapar LMS Evaluation Scheme</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <p class="small text-muted mb-3">
+                    Copy the evaluation section from your Thapar LMS course page (e.g. <i>"The Marks breakup of the course is: LAB: 20, Quiz: 10, MST: 30, EST: 40"</i>) and paste it below. Syllabix will parse the weightages and calculate your required run-rate!
+                </p>
+
+                <div class="mb-3">
+                    <label class="form-label font-bold small">Course / Subject</label>
+                    <select class="form-select" id="modalEvalSubjectSelect">
+                        <!-- Loaded dynamically -->
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <label class="form-label font-bold small mb-0">Evaluation Scheme Text (from Thapar LMS)</label>
+                        <button type="button" class="btn btn-sm btn-link text-danger text-decoration-none p-0 fw-bold" onclick="loadSampleLmsText()">
+                            <i class="bi bi-magic me-1"></i> Paste Image 3 Sample Text
+                        </button>
+                    </div>
+                    <textarea class="form-control font-monospace small" id="lmsSchemeInput" rows="7" placeholder="Paste LMS evaluation text here..."></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label font-bold small">Your Target Grade</label>
+                    <select class="form-select" id="modalEvalTargetGrade">
+                        <option value="A+">Grade A+ (Cutoff &ge; 88%)</option>
+                        <option value="A" selected>Grade A (Cutoff &ge; 80%)</option>
+                        <option value="A-">Grade A- (Cutoff &ge; 73%)</option>
+                        <option value="B">Grade B (Cutoff &ge; 65%)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer border-top bg-light">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-outline-danger" onclick="handlePreviewEvaluationScheme()">Preview Run-Rate</button>
+                <button type="button" class="btn btn-danger" onclick="handleApplyEvaluationScheme()">Apply & Auto-Schedule Assessments</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Bootstrap 5 JS & Syllabix Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/js/app.js"></script>
@@ -431,6 +588,12 @@
         loadDashboardData();
         Syllabix.loadSubjectsDropdown('selectAssessmentSubject');
         Syllabix.loadSubjectsDropdown('selectMarksSubject');
+        Syllabix.loadSubjectsDropdown('evalSubjectSelect', () => {
+            const sel = document.getElementById('evalSubjectSelect');
+            if (sel && sel.value) loadSubjectEvaluationScheme(sel.value);
+        });
+        Syllabix.loadSubjectsDropdown('modalEvalSubjectSelect');
+        loadThaparLabs();
 
         // Preset defaults for date pickers
         const now = new Date();
@@ -683,6 +846,187 @@
             loadDashboardData();
         } catch (err) {
             console.error(err);
+        }
+    }
+
+    // =========================================================================
+    // THAPAR LMS EVALUATION SCHEME & LAB ASSIGNMENTS LOGIC
+    // =========================================================================
+
+    let currentEvaluationData = null;
+
+    async function loadSubjectEvaluationScheme(subjectId) {
+        if (!subjectId) return;
+        const gradeSelect = document.getElementById('evalTargetGradeSelect');
+        const targetGrade = gradeSelect ? gradeSelect.value : 'A';
+        try {
+            const data = await Syllabix.api(`/api/subjects/${subjectId}/evaluation-scheme/parse`, {
+                method: 'POST',
+                body: { rawSchemeText: '', targetGrade: targetGrade }
+            });
+            currentEvaluationData = data;
+            renderEvaluationScheme(data);
+        } catch (e) {
+            console.error('Failed to load evaluation scheme', e);
+        }
+    }
+
+    function recalculateTargetRunRate() {
+        const sel = document.getElementById('evalSubjectSelect');
+        if (sel && sel.value) {
+            loadSubjectEvaluationScheme(sel.value);
+        }
+    }
+
+    function renderEvaluationScheme(scheme) {
+        if (!scheme) return;
+        const container = document.getElementById('evalComponentsContainer');
+        if (!container) return;
+
+        container.innerHTML = scheme.components.map(c => `
+            <div class="d-flex align-items-center justify-content-between p-2.5 rounded-3 border ${c.isCompleted ? 'bg-light' : 'bg-white'}">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="badge ${c.componentType === 'MST' ? 'bg-danger' : c.componentType === 'EST' ? 'bg-primary' : c.componentType === 'LAB' ? 'bg-success' : 'bg-warning text-dark'}">
+                        ${c.componentType}
+                    </span>
+                    <div>
+                        <div class="font-bold small text-dark">${c.title}</div>
+                        <div class="text-muted" style="font-size: 0.75rem;">${c.scheduleDetails || ''} ${c.syllabusCoverage ? '• ' + c.syllabusCoverage : ''}</div>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <div class="font-bold small text-dark">${c.isCompleted ? c.obtainedMarks + ' / ' + c.maxMarks : c.maxMarks + ' Marks'}</div>
+                    <span class="badge ${c.isCompleted ? 'bg-success-subtle text-success' : 'bg-secondary-subtle text-secondary'}" style="font-size: 0.7rem;">
+                        ${c.isCompleted ? 'Scored' : 'Upcoming (' + c.weightagePercentage + '%)'}
+                    </span>
+                </div>
+            </div>
+        `).join('');
+
+        // Verdict Box
+        const verdictGrade = document.getElementById('verdictTargetGrade');
+        if (verdictGrade) verdictGrade.textContent = scheme.targetGrade;
+        const verdictRunRate = document.getElementById('verdictRunRatePct');
+        if (verdictRunRate) verdictRunRate.textContent = scheme.requiredRunRatePercentage + '%';
+        const verdictNeeded = document.getElementById('verdictNeededMarks');
+        if (verdictNeeded) verdictNeeded.textContent = scheme.neededMarksOnRemaining;
+        const verdictRemaining = document.getElementById('verdictRemainingMarks');
+        if (verdictRemaining) verdictRemaining.textContent = scheme.remainingMarks;
+        const verdictAdvice = document.getElementById('verdictAdviceText');
+        if (verdictAdvice) verdictAdvice.textContent = scheme.personalizedAdvice || '';
+
+        const badge = document.getElementById('verdictBadge');
+        if (badge) {
+            badge.textContent = scheme.feasibilityStatus;
+            if (scheme.feasibilityStatus === 'ACHIEVABLE') {
+                badge.className = 'badge bg-success';
+            } else if (scheme.feasibilityStatus === 'STRETCH') {
+                badge.className = 'badge bg-warning text-dark';
+            } else if (scheme.feasibilityStatus === 'CRITICAL_EFFORT') {
+                badge.className = 'badge bg-danger';
+            } else {
+                badge.className = 'badge bg-dark';
+            }
+        }
+    }
+
+    async function loadThaparLabs() {
+        try {
+            const labs = await Syllabix.api('/api/subjects/thapar/labs');
+            if (!labs) return;
+            const container = document.getElementById('thaparLabsContainer');
+            if (!container) return;
+
+            const completedCount = labs.filter(l => l.isCompleted).length;
+            const badge = document.getElementById('labCompletedCountBadge');
+            if (badge) badge.textContent = `${completedCount}/${labs.length} Done`;
+
+            container.innerHTML = labs.map(lab => `
+                <div class="p-2.5 rounded-3 border d-flex align-items-center justify-content-between ${lab.isCompleted ? 'bg-light' : 'bg-white'}">
+                    <div class="d-flex align-items-center gap-2">
+                        <input type="checkbox" class="form-check-input mt-0 cursor-pointer" ${lab.isCompleted ? 'checked' : ''} onchange="toggleLabItem(this, '${lab.assignmentNumber}')">
+                        <div>
+                            <div class="font-bold small ${lab.isCompleted ? 'text-decoration-line-through text-muted' : 'text-dark'}">
+                                ${lab.assignmentNumber}: ${lab.title}
+                            </div>
+                            <div class="text-muted" style="font-size: 0.75rem;">${lab.description}</div>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <span class="badge ${lab.isCompleted ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger'}" style="font-size: 0.7rem;">
+                            ${lab.isCompleted ? 'Submitted' : 'Pending'}
+                        </span>
+                    </div>
+                </div>
+            `).join('');
+        } catch (e) {
+            console.error('Failed to load labs', e);
+        }
+    }
+
+    function toggleLabItem(checkbox, name) {
+        if (checkbox.checked) {
+            Syllabix.toast(`${name} marked as submitted!`, 'success');
+        } else {
+            Syllabix.toast(`${name} marked as pending.`, 'info');
+        }
+    }
+
+    function loadSampleLmsText() {
+        const sample = `The Marks breakup (tentative) of the course is as follows:
+• LAB Evaluation : 20 Marks (Week 13, Dec., 2026 in scheduled LABs)
+• Sessional Quiz : 10 Marks (Week 12, Oct 15, 2026), syllabus: same as MST
+• Sessional Make up Quiz : 10 Marks (Week 13, Dec 4, 2026; 4:30 PM, syllabus: upto EST)
+• MST : 30 Marks
+• EST : 40 Marks`;
+        document.getElementById('lmsSchemeInput').value = sample;
+        Syllabix.toast('Sample evaluation scheme loaded from Image 3!', 'info');
+    }
+
+    async function handlePreviewEvaluationScheme() {
+        const subjectId = document.getElementById('modalEvalSubjectSelect').value;
+        const rawText = document.getElementById('lmsSchemeInput').value;
+        const targetGrade = document.getElementById('modalEvalTargetGrade').value;
+
+        if (!rawText.trim()) {
+            Syllabix.toast('Please enter evaluation scheme text first.', 'warning');
+            return;
+        }
+
+        try {
+            const data = await Syllabix.api(`/api/subjects/${subjectId}/evaluation-scheme/parse`, {
+                method: 'POST',
+                body: { rawSchemeText: rawText, targetGrade: targetGrade }
+            });
+            Syllabix.toast(`Scheme Parsed! Needed Run Rate: ${data.requiredRunRatePercentage}% (${data.feasibilityStatus})`, 'success');
+            renderEvaluationScheme(data);
+            bootstrap.Modal.getInstance(document.getElementById('modalImportLmsScheme')).hide();
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    async function handleApplyEvaluationScheme() {
+        const subjectId = document.getElementById('modalEvalSubjectSelect').value;
+        const rawText = document.getElementById('lmsSchemeInput').value;
+        const targetGrade = document.getElementById('modalEvalTargetGrade').value;
+
+        if (!rawText.trim()) {
+            Syllabix.toast('Please enter evaluation scheme text first.', 'warning');
+            return;
+        }
+
+        try {
+            const data = await Syllabix.api(`/api/subjects/${subjectId}/evaluation-scheme/apply`, {
+                method: 'POST',
+                body: { rawSchemeText: rawText, targetGrade: targetGrade }
+            });
+            Syllabix.toast('Assessments successfully created and scheduled from LMS Scheme!', 'success');
+            renderEvaluationScheme(data);
+            bootstrap.Modal.getInstance(document.getElementById('modalImportLmsScheme')).hide();
+            loadDashboardData();
+        } catch (e) {
+            console.error(e);
         }
     }
 </script>

@@ -574,3 +574,16 @@ body {
         padding: 20px;
     }
 }
+
+.bg-indigo {
+    background-color: #4f46e5 !important;
+    color: #ffffff !important;
+}
+
+.badge-thapar {
+    background: #990000;
+    color: #ffffff;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
