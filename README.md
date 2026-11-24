@@ -220,33 +220,42 @@ Every recommendation emits a human-readable explanation explaining **why** the t
 
 ---
 
-## 🌟 Unique Differentiating Features
+## 🌟 Unique Differentiating Features (Why Syllabix Outperforms Standard LMS)
 
-### 1. 🎯 "What Should I Study Today?"
-A dedicated dashboard hero card that instantly answers the student's primary morning question by selecting the **top three highest-priority pending topics** across all subjects, calculating their required focus duration, displaying their exact priority rationale, and offering a 1-click button to launch an immediate Pomodoro focus session.
+Standard university LMS platforms (like Moodle / Thapar LMS) are **passive document repositories**: they dump lecture PDFs, raw text announcements, and bare submission links without answering: *What should I study right now? How many marks do I need on my MST to keep an A grade? Which lab assignment deadline is approaching?*
 
-### 2. 🛡️ 5-Factor Exam Readiness Score
-Provides an objective, data-driven readiness score (0–100%) and letter grade (A+ through F) for every upcoming examination:
-$$\text{Readiness} = (0.35 \times \text{Syllabus}) + (0.25 \times \text{Marks}) + (0.15 \times \text{Confidence}) + (0.15 \times \text{HardTopicsCoverage}) + (0.10 \times \text{TimeBuffer})$$
-Displays an animated SVG circular gauge, color indicators, and targeted advice on how to raise the readiness level before exam day.
+Syllabix directly addresses these pain points with 8 transformative differentiators:
 
-### 3. 🔮 "What-If" Academic Scenario Simulator
-An interactive simulation sandbox where students test hypothetical academic decisions and observe real-time projected outcomes:
-- *"What if I score 90% in my upcoming Computer Networks Mid-Term?"*
-- *"What if I study an extra 1.5 hours daily and complete 4 more pending topics?"*
-- **Output:** Live projected subject average percentage, estimated 10-point CGPA delta, syllabus completion boost, and an automated feasibility verdict.
+### 1. 🏛️ Thapar LMS Course Evaluation Scheme Parser & Target Run-Rate Calculator
+- **The Problem in Moodle/LMS:** Professors paste plain text announcements on course pages:
+  `LAB Evaluation: 20 Marks, Sessional Quiz: 10 Marks, MST: 30 Marks, EST: 40 Marks`.
+  Traditional LMS does nothing with this.
+- **The Syllabix Innovation:** Students paste that exact raw text into Syllabix:
+  - Java regex automatically extracts the evaluation components, weights, and dates.
+  - Automatically schedules them as real trackable calendar assessments.
+  - Calculates the **Target Run-Rate**: *"You have scored 18/20 in Lab and 8.5/10 in Quiz. To secure an A Grade (80%), you need 53.5 / 70 marks (76.4% run-rate) across upcoming MST (30M) and EST (40M). Scoring 23/30 in MST and 30/40 in EST comfortably secures your A grade."*
 
-### 4. 🧠 Spaced-Repetition Active Recall Revision Schedule
-Implements Ebbinghaus-inspired spaced repetition intervals (1 day, 3 days, 7 days, 14 days, 30 days post-completion). Evaluates when completed topics were last studied and flags topics that are decaying from memory with a 1-click "Mark Revised" action.
+### 2. 🧪 Thapar Lab Assignments 1–8 Real-Time Tracker
+- Tracks all semester lab submissions (Assignment 1 through Assignment 8) with submission status checkmarks, countdown timers, and integrated timetable reminders so students never lose internal evaluation marks.
 
-### 5. ⚠️ Proactive Early Academic Risk Alerts
-Continuously monitors student data to detect dangerous combinations before they turn into academic emergencies:
-- **Critical Risk:** Exam $\le 5$ days away with syllabus completion $< 50\%$.
-- **High Risk:** Subject average marks $< 60\%$ with unaddressed hard topics.
-- **Medium Risk:** Stagnant study habits (no study sessions logged in the last 48 hours).
+### 3. 🎯 "What Should I Study Today?" (The Anti-Procrastination Hero Card)
+- Dumps of 50 lecture slides cause decision paralysis. Syllabix evaluates proximity to MST/EST, syllabus incompletion, topic difficulty, and past quiz marks to present the **top three topics to study right now** with a 1-click Pomodoro focus session launcher.
 
-### 6. 📄 Intelligent PDF Syllabus Extractor
-Allows students to upload course syllabus PDF documents (e.g., college syllabus sheets). Uses **Apache PDFBox 3.0.3** and regex heuristics to identify Course Codes, Units, Modules, and Topics. Displays an editable tabular preview where students can adjust topic names, unit groupings, and difficulty levels before committing them to the database.
+### 4. 🛡️ 5-Factor Exam Readiness Score
+- Computes an objective readiness percentage (0–100%) and letter grade (A+ through F) before exams:
+  $$\text{Readiness} = (0.35 \times \text{Syllabus}) + (0.25 \times \text{Marks}) + (0.15 \times \text{Confidence}) + (0.15 \times \text{HardTopicsCoverage}) + (0.10 \times \text{TimeBuffer})$$
+
+### 5. 🔮 "What-If" Academic Scenario & CGPA Simulator
+- Interactive sandbox to simulate hypothetical exam scores: *"What if I score 27/30 in DBMS MST and 35/40 in EST? What will my semester SGPA and overall CGPA be?"*
+
+### 6. 🧠 Spaced-Repetition Active Recall & Memory Decay Radar
+- Implements Ebbinghaus memory decay intervals (1d, 3d, 7d, 14d, 30d). Automatically alerts students when topics studied in Week 1-6 are decaying from retention before the MST or EST exam.
+
+### 7. 📄 Intelligent PDF Syllabus & Slide Extractor (Apache PDFBox)
+- Drag and drop lecture slides or syllabus PDFs. Apache PDFBox extracts units, chapters, and topics into an editable review table.
+
+### 8. ⏱️ Pomodoro Focus Timer with Web Audio Chime & Study Streak Tracker
+- Tracks active study minutes per topic and subject with mandatory completion verification and anti-burnout pacing.
 
 ---
 
