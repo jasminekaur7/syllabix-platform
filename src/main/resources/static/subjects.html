@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Subjects & Syllabus | Syllabix</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/syllabix.css">
+</head>
+<body>
+
+<div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-icon"><i class="bi bi-mortarboard-fill"></i></div>
+            <div class="brand-text">Syllabix</div>
+            <span class="brand-tag">v1.0</span>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li class="menu-label">Academic Core</li>
+            <li class="menu-item"><a href="/" class="menu-link"><i class="bi bi-grid-1x2-fill"></i><span>Dashboard</span></a></li>
+            <li class="menu-item"><a href="/subjects" class="menu-link active"><i class="bi bi-journal-bookmark-fill"></i><span>My Subjects</span></a></li>
+            <li class="menu-item"><a href="/syllabus" class="menu-link"><i class="bi bi-diagram-3-fill"></i><span>Syllabus & Units</span></a></li>
+            <li class="menu-item"><a href="/calendar" class="menu-link"><i class="bi bi-calendar-event-fill"></i><span>Academic Calendar</span></a></li>
+
+            <li class="menu-label">Intelligent Planning</li>
+            <li class="menu-item"><a href="/planner" class="menu-link"><i class="bi bi-cpu-fill text-indigo-400"></i><span>Study Planner</span><span class="menu-badge bg-primary">AI</span></a></li>
+            <li class="menu-item"><a href="/sessions" class="menu-link"><i class="bi bi-stopwatch-fill"></i><span>Study & Pomodoro</span></a></li>
+
+            <li class="menu-label">Analytics & Insights</li>
+            <li class="menu-item"><a href="/analytics" class="menu-link"><i class="bi bi-bar-chart-line-fill"></i><span>Performance Analytics</span></a></li>
+            <li class="menu-item"><a href="/insights" class="menu-link"><i class="bi bi-lightbulb-fill"></i><span>Insights & Simulator</span></a></li>
+
+            <li class="menu-label">Account</li>
+            <li class="menu-item"><a href="/profile" class="menu-link"><i class="bi bi-person-circle"></i><span>Profile & Settings</span></a></li>
+        </ul>
+
+        <div class="sidebar-user">
+            <div class="user-avatar js-user-avatar">AM</div>
+            <div class="user-info">
+                <div class="user-name js-student-name">Alex Mercer</div>
+                <div class="user-role">Student Account</div>
+            </div>
+            <button class="btn btn-link text-secondary p-0 ms-auto" onclick="Syllabix.logout()" title="Logout">
+                <i class="bi bi-box-arrow-right fs-5"></i>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="app-main">
+        <header class="app-header">
+            <div class="header-title-section">
+                <h1>My Subjects</h1>
+                <p>Manage your enrolled courses, syllabus units, credits, faculty, and target grades.</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-primary-syllabix" data-bs-toggle="modal" data-bs-target="#modalAddSubject">
+                    <i class="bi bi-plus-lg"></i> Add New Subject
+                </button>
+            </div>
+        </header>
+
+        <main class="page-body">
+            <div class="row g-4" id="subjects-container">
+                <div class="col-12 text-center py-5 text-muted">
+                    <div class="spinner-border spinner-border-sm text-primary mb-2"></div>
+                    <div>Loading subjects...</div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Modal: Add Subject -->
+<div class="modal fade" id="modalAddSubject" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header border-bottom">
+                <h5 class="modal-title font-bold"><i class="bi bi-journal-plus text-primary me-2"></i> Add New Subject</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="formAddSubject" onsubmit="handleCreateSubject(event)">
+                <div class="modal-body p-4">
+                    <div class="mb-3">
+                        <label class="form-label font-medium small">Subject Name *</label>
+                        <input type="text" name="name" class="form-control" required placeholder="e.g. Distributed Computing">
+                    </div>
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label font-medium small">Subject Code *</label>
+                            <input type="text" name="code" class="form-control" required placeholder="e.g. CS507">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label font-medium small">Semester *</label>
+                            <input type="number" name="semester" class="form-control" required value="5" min="1" max="10">
+                        </div>
+                    </div>
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label font-medium small">Credits</label>
+                            <input type="number" name="credits" class="form-control" value="4" min="1" max="6">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label font-medium small">Target Grade</label>
+                            <select name="targetGrade" class="form-select">
+                                <option value="A+">A+ (Outstanding)</option>
+                                <option value="A" selected>A (Excellent)</option>
+                                <option value="B+">B+ (Very Good)</option>
+                                <option value="B">B (Good)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-8">
+                            <label class="form-label font-medium small">Teacher / Faculty</label>
+                            <input type="text" name="teacherName" class="form-control" placeholder="e.g. Dr. Jennifer Stone">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label font-medium small">Theme Color</label>
+                            <input type="color" name="colorHex" class="form-control form-control-color w-100" value="#4f46e5">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label font-medium small">Description</label>
+                        <textarea name="description" class="form-control" rows="2" placeholder="Course syllabus overview..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer border-top bg-light">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary-syllabix">Save Subject</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/app.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', loadSubjects);
+
+    async function loadSubjects() {
+        try {
+            const subjects = await Syllabix.api('/api/subjects');
+            const container = document.getElementById('subjects-container');
+
+            if (!subjects || subjects.length === 0) {
+                container.innerHTML = `
+                    <div class="col-12 text-center py-5">
+                        <i class="bi bi-journal-x fs-1 text-muted d-block mb-3"></i>
+                        <h5>No Subjects Added Yet</h5>
+                        <p class="text-muted">Start by adding your enrolled courses and semester subjects.</p>
+                        <button class="btn btn-primary-syllabix" data-bs-toggle="modal" data-bs-target="#modalAddSubject">
+                            <i class="bi bi-plus-lg"></i> Add First Subject
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = subjects.map(s => `
+                <div class="col-lg-6 col-xl-4">
+                    <div class="card-syllabix h-100 d-flex flex-column justify-content-between">
+                        <div class="p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <span class="badge" style="background: ${s.colorHex || '#4f46e5'}; color: white; font-size: 13px; padding: 6px 12px;">
+                                    ${s.code} &bull; Sem ${s.semester}
+                                </span>
+                                <span class="badge bg-light text-secondary border">Credits: ${s.credits || 3}</span>
+                            </div>
+
+                            <h3 class="h5 font-bold text-dark mb-2">${s.name}</h3>
+                            <p class="small text-muted mb-3">${s.description || 'No description provided.'}</p>
+
+                            <div class="small mb-3 text-secondary">
+                                <div><i class="bi bi-person-badge me-1"></i> Faculty: <strong>${s.teacherName || 'Not Assigned'}</strong></div>
+                                <div><i class="bi bi-bullseye me-1 text-primary"></i> Target Grade: <strong>${s.targetGrade || 'A'}</strong></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between small font-bold mb-1">
+                                    <span>Syllabus Progress</span>
+                                    <span class="text-primary">${s.completionPercentage}%</span>
+                                </div>
+                                <div class="progress-syllabix">
+                                    <div class="progress-bar-syllabix" style="width: ${s.completionPercentage}%;"></div>
+                                </div>
+                                <div class="small text-muted mt-1">${s.completedTopics} of ${s.totalTopics} topics completed</div>
+                            </div>
+
+                            ${s.nextAssessmentTitle ? `
+                                <div class="p-2.5 rounded bg-light border small text-dark mb-3">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <span class="fw-bold"><i class="bi bi-calendar-event text-danger me-1"></i> Next Exam</span>
+                                        <span class="badge bg-danger text-white">${s.nextAssessmentDaysRemaining} days left</span>
+                                    </div>
+                                    <div class="text-truncate mt-1">${s.nextAssessmentTitle}</div>
+                                </div>
+                            ` : ''}
+                        </div>
+
+                        <div class="p-3 bg-light border-top d-flex align-items-center justify-content-between">
+                            <a href="/syllabus?subjectId=${s.id}" class="btn btn-sm btn-primary-syllabix">
+                                <i class="bi bi-diagram-3"></i> Syllabus Units
+                            </a>
+                            <button class="btn btn-sm btn-outline-danger" onclick="deleteSubject(${s.id}, '${s.name}')" title="Delete Subject">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        } catch (e) {
+            console.error('Failed to load subjects', e);
+        }
+    }
+
+    async function handleCreateSubject(e) {
+        e.preventDefault();
+        const form = e.target;
+        const formData = new FormData(form);
+        const payload = Object.fromEntries(formData.entries());
+        payload.semester = parseInt(payload.semester);
+        payload.credits = parseInt(payload.credits);
+
+        try {
+            await Syllabix.api('/api/subjects', { method: 'POST', body: payload });
+            Syllabix.toast('Subject created successfully!', 'success');
+            bootstrap.Modal.getInstance(document.getElementById('modalAddSubject')).hide();
+            form.reset();
+            loadSubjects();
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    async function deleteSubject(id, name) {
+        if (!confirm(`Are you sure you want to delete "${name}"? All associated units, topics, and assessments will also be deleted.`)) return;
+
+        try {
+            await Syllabix.api(`/api/subjects/${id}`, { method: 'DELETE' });
+            Syllabix.toast(`Subject "${name}" deleted`, 'info');
+            loadSubjects();
+        } catch (e) {
+            console.error(e);
+        }
+    }
+</script>
+</body>
+</html>

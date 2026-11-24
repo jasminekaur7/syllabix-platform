@@ -1,0 +1,560 @@
+{
+  "info": {
+    "_postman_id": "syllabix-api-collection-v1",
+    "name": "Syllabix Academic Platform API",
+    "description": "Comprehensive Postman collection for the Syllabix Intelligent Student Management & Adaptive Academic Planning Platform.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Authentication & Profile",
+      "item": [
+        {
+          "name": "Register Student",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Jane Doe\",\n  \"email\": \"jane.doe@university.edu\",\n  \"password\": \"SecurePass123!\",\n  \"college\": \"National Institute of Technology\",\n  \"degree\": \"B.Tech\",\n  \"branch\": \"Computer Science and Engineering\",\n  \"semester\": 5,\n  \"dailyStudyHours\": 3.0,\n  \"preferredStudyTimings\": \"EVENING\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/auth/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login (Demo Account)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"alex@university.edu\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/auth/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Get Authenticated Profile",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8080/api/auth/profile",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "auth", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Update Profile & Study Hours",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Alex Mercer\",\n  \"college\": \"National Institute of Technology\",\n  \"degree\": \"B.Tech\",\n  \"branch\": \"Computer Science and Engineering\",\n  \"semester\": 5,\n  \"academicGoals\": \"Target CGPA 9.5+, Master Distributed Systems & Graph Algorithms\",\n  \"dailyStudyHours\": 3.5,\n  \"preferredStudyTimings\": \"NIGHT\",\n  \"weeklyAvailability\": \"Mon:3h, Tue:3h, Wed:4h, Thu:3h, Fri:4h, Sat:5h, Sun:5h\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/auth/profile",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "auth", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Reset Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"alex@university.edu\",\n  \"currentPassword\": \"password123\",\n  \"newPassword\": \"NewSecurePass2026!\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/auth/reset-password",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "auth", "reset-password"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Dashboard",
+      "item": [
+        {
+          "name": "Get Dashboard Aggregated Stats",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8080/api/dashboard/stats",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "dashboard", "stats"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Subjects & Syllabus",
+      "item": [
+        {
+          "name": "List Enrolled Subjects",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8080/api/subjects",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "subjects"]
+            }
+          }
+        },
+        {
+          "name": "Create New Subject",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Cloud Computing & Microservices\",\n  \"code\": \"CS506\",\n  \"semester\": 5,\n  \"credits\": 3,\n  \"description\": \"Distributed systems, Docker, Kubernetes, AWS architecture, Serverless computing\",\n  \"teacherName\": \"Dr. Priya Sundaram\",\n  \"targetGrade\": \"A+\",\n  \"colorHex\": \"#0ea5e9\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/subjects",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "subjects"]
+            }
+          }
+        },
+        {
+          "name": "Get Subject Syllabus Tree",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8080/api/topics/subject/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "topics", "subject", "1"]
+            }
+          }
+        },
+        {
+          "name": "Create Topic",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subjectId\": 1,\n  \"unitNumber\": 3,\n  \"unitTitle\": \"Transaction Management\",\n  \"name\": \"Multi-Version Concurrency Control (MVCC)\",\n  \"description\": \"Snapshot isolation and timestamp ordering mechanisms\",\n  \"difficulty\": \"HARD\",\n  \"estimatedDurationMinutes\": 60,\n  \"confidenceLevel\": 2\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/topics",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "topics"]
+            }
+          }
+        },
+        {
+          "name": "Toggle Topic Completion Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"COMPLETED\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/topics/4/status",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "topics", "4", "status"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Assessments & Calendar",
+      "item": [
+        {
+          "name": "List Assessments",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8080/api/assessments",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "assessments"]
+            }
+          }
+        },
+        {
+          "name": "Get Calendar Events (Range)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8080/api/assessments/calendar?start=2026-11-01T00:00:00&end=2026-12-31T23:59:59",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "assessments", "calendar"],
+              "query": [
+                {
+                  "key": "start",
+                  "value": "2026-11-01T00:00:00"
+                },
+                {
+                  "key": "end",
+                  "value": "2026-12-31T23:59:59"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Schedule New Assessment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subjectId\": 2,\n  \"title\": \"Operating Systems Lab Evaluation 2\",\n  \"type\": \"LAB\",\n  \"assessmentDateTime\": \"2026-12-08T15:00:00\",\n  \"syllabusCoverage\": \"POSIX threads synchronization and CPU scheduling simulation in C\",\n  \"maxMarks\": 30.0,\n  \"priority\": \"HIGH\",\n  \"notes\": \"Ensure mutex lock demonstrations compile without warnings\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/assessments",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "assessments"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Marks Management & Analytics",
+      "item": [
+        {
+          "name": "List All Marks Records",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8080/api/marks",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "marks"]
+            }
+          }
+        },
+        {
+          "name": "Record Assessment Marks",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subjectId\": 3,\n  \"assessmentTitle\": \"Computer Networks Surprise Quiz\",\n  \"assessmentType\": \"QUIZ\",\n  \"marksObtained\": 23.5,\n  \"maxMarks\": 25.0,\n  \"assessmentDate\": \"2026-11-20\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/marks",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "marks"]
+            }
+          }
+        },
+        {
+          "name": "Get Chart.js Analytics Datasets",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8080/api/analytics/charts",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "analytics", "charts"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Recommendation Engine & Planner",
+      "item": [
+        {
+          "name": "Get Topic Recommendations (Weighted Algorithm)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8080/api/planner/recommendations?w1=0.35&w2=0.30&w3=0.20&w4=0.15",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "planner", "recommendations"],
+              "query": [
+                { "key": "w1", "value": "0.35", "description": "Exam Urgency Weight" },
+                { "key": "w2", "value": "0.30", "description": "Syllabus Incompletion Weight" },
+                { "key": "w3", "value": "0.20", "description": "Topic Difficulty Weight" },
+                { "key": "w4", "value": "0.15", "description": "Academic Weakness Weight" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get 'What Should I Study Today?' Top 3 Topics",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8080/api/planner/today",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "planner", "today"]
+            }
+          }
+        },
+        {
+          "name": "Generate Automatic Study Timetable",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"startDate\": \"2026-11-25\",\n  \"endDate\": \"2026-12-01\",\n  \"dailyStudyHours\": 3.0,\n  \"examUrgencyWeight\": 0.35,\n  \"syllabusIncompletionWeight\": 0.30,\n  \"difficultyWeight\": 0.20,\n  \"performanceWeight\": 0.15\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/planner/generate",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "planner", "generate"]
+            }
+          }
+        },
+        {
+          "name": "Toggle Planned Study Task",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "http://localhost:8080/api/planner/tasks/1/toggle",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "planner", "tasks", "1", "toggle"]
+            }
+          }
+        },
+        {
+          "name": "Reschedule Missed Task",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"newDate\": \"2026-11-26\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/planner/tasks/1/reschedule",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "planner", "tasks", "1", "reschedule"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. Study Sessions & Pomodoro",
+      "item": [
+        {
+          "name": "List Logged Study Sessions & Streak",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8080/api/sessions",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "sessions"]
+            }
+          }
+        },
+        {
+          "name": "Record Confirmed Study Session",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subjectId\": 1,\n  \"topicId\": 4,\n  \"durationMinutes\": 50,\n  \"notes\": \"Solved 4 BCNF decomposition past-year university examination problems.\",\n  \"productivityRating\": 5,\n  \"startedAt\": \"2026-11-24T14:00:00\",\n  \"endedAt\": \"2026-11-24T14:50:00\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/sessions",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "sessions"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "8. Academic Insights & Simulations",
+      "item": [
+        {
+          "name": "Get 5-Factor Exam Readiness Scores",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8080/api/insights/readiness",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "insights", "readiness"]
+            }
+          }
+        },
+        {
+          "name": "Execute 'What-If' Academic Scenario Simulation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"targetSubjectId\": 3,\n  \"hypotheticalAssessmentScore\": 92.0,\n  \"hypotheticalAssessmentMaxMarks\": 100.0,\n  \"additionalTopicsCompleted\": 3,\n  \"additionalDailyStudyHours\": 1.0\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/insights/simulate",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "insights", "simulate"]
+            }
+          }
+        },
+        {
+          "name": "Get Spaced Repetition Revision List",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8080/api/insights/revision",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "insights", "revision"]
+            }
+          }
+        },
+        {
+          "name": "Get Proactive Early Academic Risk Alerts",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8080/api/insights/risks",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "insights", "risks"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

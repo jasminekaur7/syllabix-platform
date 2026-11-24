@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Calendar & Assessments | Syllabix</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/syllabix.css">
+    <style>
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+        .calendar-day-header {
+            text-align: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            padding: 8px 0;
+            text-transform: uppercase;
+        }
+        .calendar-day-cell {
+            min-height: 105px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+        }
+        .calendar-day-cell:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+        .calendar-day-cell.today {
+            background: #f0fdf4;
+            border: 2px solid var(--accent);
+        }
+        .calendar-day-cell.other-month {
+            background: #f8fafc;
+            opacity: 0.5;
+        }
+        .day-number {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .event-badge {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 6px;
+            border-radius: 4px;
+            margin-bottom: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .event-badge:hover {
+            transform: scale(1.02);
+            filter: brightness(0.95);
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-icon"><i class="bi bi-mortarboard-fill"></i></div>
+            <div class="brand-text">Syllabix</div>
+            <span class="brand-tag">v1.0</span>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li class="menu-label">Academic Core</li>
+            <li class="menu-item"><a href="/" class="menu-link"><i class="bi bi-grid-1x2-fill"></i><span>Dashboard</span></a></li>
+            <li class="menu-item"><a href="/subjects" class="menu-link"><i class="bi bi-journal-bookmark-fill"></i><span>My Subjects</span></a></li>
+            <li class="menu-item"><a href="/syllabus" class="menu-link"><i class="bi bi-diagram-3-fill"></i><span>Syllabus & Units</span></a></li>
+            <li class="menu-item"><a href="/calendar" class="menu-link active"><i class="bi bi-calendar-event-fill"></i><span>Academic Calendar</span></a></li>
+
+            <li class="menu-label">Intelligent Planning</li>
+            <li class="menu-item"><a href="/planner" class="menu-link"><i class="bi bi-cpu-fill text-indigo-400"></i><span>Study Planner</span><span class="menu-badge bg-primary">AI</span></a></li>
+            <li class="menu-item"><a href="/sessions" class="menu-link"><i class="bi bi-stopwatch-fill"></i><span>Study & Pomodoro</span></a></li>
+
+            <li class="menu-label">Analytics & Insights</li>
+            <li class="menu-item"><a href="/analytics" class="menu-link"><i class="bi bi-bar-chart-line-fill"></i><span>Performance Analytics</span></a></li>
+            <li class="menu-item"><a href="/insights" class="menu-link"><i class="bi bi-lightbulb-fill"></i><span>Insights & Simulator</span></a></li>
+
+            <li class="menu-label">Account</li>
+            <li class="menu-item"><a href="/profile" class="menu-link"><i class="bi bi-person-circle"></i><span>Profile & Settings</span></a></li>
+        </ul>
+
+        <div class="sidebar-user">
+            <div class="user-avatar js-user-avatar">AM</div>
+            <div class="user-info">
+                <div class="user-name js-student-name">Alex Mercer</div>
+                <div class="user-role">Student Account</div>
+            </div>
+            <button class="btn btn-link text-secondary p-0 ms-auto" onclick="Syllabix.logout()" title="Logout">
+                <i class="bi bi-box-arrow-right fs-5"></i>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="app-main">
+        <header class="app-header">
+            <div class="header-title-section">
+                <h1>Academic Calendar & Assessment Tracking</h1>
+                <p>Interactive schedule of mid-terms, quizzes, finals, project milestones and deadlines.</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-primary-syllabix" data-bs-toggle="modal" data-bs-target="#modalAddAssessment">
+                    <i class="bi bi-plus-lg"></i> Schedule Assessment
+                </button>
+            </div>
+        </header>
+
+        <main class="page-body">
+            <!-- Filter & Month Switcher Bar -->
+            <div class="card-syllabix p-3 mb-4">
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+                    <div class="d-flex align-items-center gap-2">
+                        <button class="btn btn-sm btn-outline-secondary" onclick="changeMonth(-1)"><i class="bi bi-chevron-left"></i></button>
+                        <h2 class="h5 font-bold mb-0 text-dark px-2" id="calendarMonthTitle">November 2026</h2>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="changeMonth(1)"><i class="bi bi-chevron-right"></i></button>
+                        <button class="btn btn-sm btn-light border ms-2" onclick="goToToday()">Today</button>
+                    </div>
+
+                    <div class="d-flex flex-wrap align-items-center gap-3">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge-urgent"><i class="bi bi-circle-fill me-1"></i> &le; 3 Days (Urgent)</span>
+                            <span class="badge-approaching"><i class="bi bi-circle-fill me-1"></i> 4-7 Days (Approaching)</span>
+                            <span class="badge-sufficient"><i class="bi bi-circle-fill me-1"></i> &gt; 7 Days (Sufficient)</span>
+                        </div>
+
+                        <select id="filterAssessmentType" class="form-select form-select-sm" style="width: auto;" onchange="renderCalendar()">
+                            <option value="ALL">All Assessment Types</option>
+                            <option value="MST">Minor Tests (MST)</option>
+                            <option value="QUIZ">Quizzes</option>
+                            <option value="EST">End-Semester (EST)</option>
+                            <option value="ASSIGNMENT">Assignments</option>
+                            <option value="LAB">Lab Evaluations</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <!-- Monthly Calendar Grid View -->
+                <div class="col-xl-8">
+                    <div class="card-syllabix p-4">
+                        <!-- Day Headers -->
+                        <div class="calendar-grid mb-2">
+                            <div class="calendar-day-header">Sun</div>
+                            <div class="calendar-day-header">Mon</div>
+                            <div class="calendar-day-header">Tue</div>
+                            <div class="calendar-day-header">Wed</div>
+                            <div class="calendar-day-header">Thu</div>
+                            <div class="calendar-day-header">Fri</div>
+                            <div class="calendar-day-header">Sat</div>
+                        </div>
+
+                        <!-- Days Cells -->
+                        <div class="calendar-grid" id="calendarDaysGrid">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Countdowns & Deadlines Sidebar -->
+                <div class="col-xl-4">
+                    <div class="card-syllabix p-4 h-100">
+                        <h2 class="h6 font-bold text-dark mb-3">
+                            <i class="bi bi-hourglass-split text-danger me-2"></i> Examination Countdowns
+                        </h2>
+                        <div class="d-flex flex-column gap-3" id="assessments-countdown-list">
+                            <div class="text-muted text-center py-4">Loading assessment timers...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Modal: Add Assessment -->
+<div class="modal fade" id="modalAddAssessment" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header border-bottom">
+                <h5 class="modal-title font-bold"><i class="bi bi-calendar-plus text-danger me-2"></i> Add Assessment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form onsubmit="handleCreateAssessment(event)">
+                <div class="modal-body p-4">
+                    <div class="mb-3">
+                        <label class="form-label font-medium small">Subject *</label>
+                        <select name="subjectId" id="selectCalendarSubject" class="form-select" required>
+                            <!-- Dynamically loaded -->
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label font-medium small">Assessment Title *</label>
+                        <input type="text" name="title" class="form-control" required placeholder="e.g. Minor Test 1: Operating Systems">
+                    </div>
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label font-medium small">Type *</label>
+                            <select name="type" class="form-select">
+                                <option value="MST">Minor Test (MST)</option>
+                                <option value="QUIZ">Quiz</option>
+                                <option value="EST">End-Semester Exam (EST)</option>
+                                <option value="ASSIGNMENT">Assignment</option>
+                                <option value="LAB">Lab Evaluation</option>
+                                <option value="PROJECT">Project Milestone</option>
+                                <option value="VIVA">Viva Exam</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label font-medium small">Maximum Marks *</label>
+                            <input type="number" name="maxMarks" class="form-control" value="50" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label font-medium small">Date & Time *</label>
+                        <input type="datetime-local" name="assessmentDateTime" id="inputCalendarDateTime" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label font-medium small">Syllabus Coverage</label>
+                        <input type="text" name="syllabusCoverage" class="form-control" placeholder="e.g. Units 1, 2, and 3">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label font-medium small">Notes & Instructions</label>
+                        <textarea name="notes" class="form-control" rows="2" placeholder="Formula sheet permitted, practice numericals..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer border-top bg-light">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary-syllabix">Schedule Assessment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/app.js"></script>
+<script>
+    let currentDate = new Date();
+    let assessmentsData = [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        Syllabix.loadSubjectsDropdown('selectCalendarSubject');
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        document.getElementById('inputCalendarDateTime').value = now.toISOString().slice(0, 16);
+
+        await loadAssessments();
+    });
+
+    async function loadAssessments() {
+        try {
+            assessmentsData = await Syllabix.api('/api/assessments');
+            renderCalendar();
+            renderCountdowns();
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    function changeMonth(delta) {
+        currentDate.setMonth(currentDate.getMonth() + delta);
+        renderCalendar();
+    }
+
+    function goToToday() {
+        currentDate = new Date();
+        renderCalendar();
+    }
+
+    function renderCalendar() {
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        document.getElementById('calendarMonthTitle').textContent = `${monthNames[month]} ${year}`;
+
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+        const typeFilter = document.getElementById('filterAssessmentType').value;
+        const filteredAssessments = assessmentsData.filter(a => typeFilter === 'ALL' || a.type === typeFilter);
+
+        const grid = document.getElementById('calendarDaysGrid');
+        grid.innerHTML = '';
+
+        const today = new Date();
+
+        // Previous month filler days
+        for (let i = firstDay - 1; i >= 0; i--) {
+            const cell = document.createElement('div');
+            cell.className = 'calendar-day-cell other-month';
+            cell.innerHTML = `<span class="day-number text-muted">${daysInPrevMonth - i}</span>`;
+            grid.appendChild(cell);
+        }
+
+        // Current month days
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            const isToday = (day === today.getDate() && month === today.getMonth() && year === today.getFullYear());
+
+            const cell = document.createElement('div');
+            cell.className = `calendar-day-cell ${isToday ? 'today' : ''}`;
+            cell.innerHTML = `<span class="day-number ${isToday ? 'text-success' : 'text-dark'}">${day}</span>`;
+
+            // Find assessments on this date
+            const dayEvents = filteredAssessments.filter(a => {
+                const aDate = a.assessmentDateTime.substring(0, 10);
+                return aDate === dateStr;
+            });
+
+            dayEvents.forEach(a => {
+                let badgeBg = '#4f46e5';
+                if (a.urgencyLevel === 'URGENT') badgeBg = '#ef4444';
+                else if (a.urgencyLevel === 'APPROACHING') badgeBg = '#f59e0b';
+                else if (a.urgencyLevel === 'SUFFICIENT') badgeBg = '#10b981';
+
+                const badge = document.createElement('div');
+                badge.className = 'event-badge text-white';
+                badge.style.backgroundColor = badgeBg;
+                badge.title = `${a.title} (${a.type}) - Max ${a.maxMarks} Marks`;
+                badge.textContent = `${a.subjectCode}: ${a.title}`;
+                cell.appendChild(badge);
+            });
+
+            grid.appendChild(cell);
+        }
+
+        // Next month filler days to complete 7-column grid
+        const totalCells = firstDay + daysInMonth;
+        const remainingCells = (7 - (totalCells % 7)) % 7;
+        for (let i = 1; i <= remainingCells; i++) {
+            const cell = document.createElement('div');
+            cell.className = 'calendar-day-cell other-month';
+            cell.innerHTML = `<span class="day-number text-muted">${i}</span>`;
+            grid.appendChild(cell);
+        }
+    }
+
+    function renderCountdowns() {
+        const container = document.getElementById('assessments-countdown-list');
+        const upcoming = assessmentsData.filter(a => a.daysRemaining >= 0);
+
+        if (upcoming.length === 0) {
+            container.innerHTML = '<div class="text-muted text-center py-4">No upcoming examinations.</div>';
+            return;
+        }
+
+        container.innerHTML = upcoming.map(a => {
+            let urgencyClass = 'badge-sufficient';
+            let label = `${a.daysRemaining} days left`;
+            if (a.urgencyLevel === 'URGENT') {
+                urgencyClass = 'badge-urgent';
+                label = `URGENT • ${a.daysRemaining} days`;
+            } else if (a.urgencyLevel === 'APPROACHING') {
+                urgencyClass = 'badge-approaching';
+                label = `Approaching • ${a.daysRemaining} days`;
+            }
+
+            return `
+                <div class="p-3 border rounded-3 bg-white">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="badge" style="background: ${a.subjectColor || '#4f46e5'}; color: white;">${a.subjectCode}</span>
+                        <span class="${urgencyClass}">${label}</span>
+                    </div>
+                    <h5 class="font-bold h6 text-dark mb-1">${a.title}</h5>
+                    <div class="small text-muted mb-2">
+                        <i class="bi bi-clock me-1"></i> ${new Date(a.assessmentDateTime).toLocaleString(undefined, {month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'})}
+                    </div>
+                    <div class="small text-secondary mb-2">
+                        <strong>Coverage:</strong> ${a.syllabusCoverage || 'Full Syllabus'}
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between pt-2 border-top">
+                        <span class="small font-bold text-dark">Max: ${a.maxMarks} Marks</span>
+                        <div class="d-flex gap-2">
+                            <a href="/insights" class="btn btn-sm btn-outline-primary" title="Exam Readiness">
+                                <i class="bi bi-shield-check"></i> Readiness
+                            </a>
+                            <button class="btn btn-sm btn-link text-danger p-0" onclick="deleteAssessment(${a.id})" title="Delete Assessment">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    async function handleCreateAssessment(e) {
+        e.preventDefault();
+        const form = e.target;
+        const formData = new FormData(form);
+        const payload = Object.fromEntries(formData.entries());
+        payload.subjectId = parseInt(payload.subjectId);
+        payload.maxMarks = parseFloat(payload.maxMarks);
+
+        try {
+            await Syllabix.api('/api/assessments', { method: 'POST', body: payload });
+            Syllabix.toast('Assessment scheduled successfully!', 'success');
+            bootstrap.Modal.getInstance(document.getElementById('modalAddAssessment')).hide();
+            form.reset();
+            loadAssessments();
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    async function deleteAssessment(id) {
+        if (!confirm('Are you sure you want to remove this assessment?')) return;
+        try {
+            await Syllabix.api(`/api/assessments/${id}`, { method: 'DELETE' });
+            Syllabix.toast('Assessment removed', 'info');
+            loadAssessments();
+        } catch (e) {
+            console.error(e);
+        }
+    }
+</script>
+</body>
+</html>

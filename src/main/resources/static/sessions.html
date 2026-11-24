@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Sessions & Pomodoro Tracker | Syllabix</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/syllabix.css">
+</head>
+<body>
+
+<div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-icon"><i class="bi bi-mortarboard-fill"></i></div>
+            <div class="brand-text">Syllabix</div>
+            <span class="brand-tag">v1.0</span>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li class="menu-label">Academic Core</li>
+            <li class="menu-item"><a href="/" class="menu-link"><i class="bi bi-grid-1x2-fill"></i><span>Dashboard</span></a></li>
+            <li class="menu-item"><a href="/subjects" class="menu-link"><i class="bi bi-journal-bookmark-fill"></i><span>My Subjects</span></a></li>
+            <li class="menu-item"><a href="/syllabus" class="menu-link"><i class="bi bi-diagram-3-fill"></i><span>Syllabus & Units</span></a></li>
+            <li class="menu-item"><a href="/calendar" class="menu-link"><i class="bi bi-calendar-event-fill"></i><span>Academic Calendar</span></a></li>
+
+            <li class="menu-label">Intelligent Planning</li>
+            <li class="menu-item"><a href="/planner" class="menu-link"><i class="bi bi-cpu-fill text-indigo-400"></i><span>Study Planner</span><span class="menu-badge bg-primary">AI</span></a></li>
+            <li class="menu-item"><a href="/sessions" class="menu-link active"><i class="bi bi-stopwatch-fill"></i><span>Study & Pomodoro</span></a></li>
+
+            <li class="menu-label">Analytics & Insights</li>
+            <li class="menu-item"><a href="/analytics" class="menu-link"><i class="bi bi-bar-chart-line-fill"></i><span>Performance Analytics</span></a></li>
+            <li class="menu-item"><a href="/insights" class="menu-link"><i class="bi bi-lightbulb-fill"></i><span>Insights & Simulator</span></a></li>
+
+            <li class="menu-label">Account</li>
+            <li class="menu-item"><a href="/profile" class="menu-link"><i class="bi bi-person-circle"></i><span>Profile & Settings</span></a></li>
+        </ul>
+
+        <div class="sidebar-user">
+            <div class="user-avatar js-user-avatar">AM</div>
+            <div class="user-info">
+                <div class="user-name js-student-name">Alex Mercer</div>
+                <div class="user-role">Student Account</div>
+            </div>
+            <button class="btn btn-link text-secondary p-0 ms-auto" onclick="Syllabix.logout()" title="Logout">
+                <i class="bi bi-box-arrow-right fs-5"></i>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="app-main">
+        <header class="app-header">
+            <div class="header-title-section">
+                <h1>Study Sessions & Productivity Tracker</h1>
+                <p>Focused Pomodoro intervals, verified task completion, and study habits.</p>
+            </div>
+            <div class="header-actions">
+                <div class="streak-pill">
+                    <i class="bi bi-fire"></i>
+                    <span id="streak-counter">0</span> Day Streak
+                </div>
+            </div>
+        </header>
+
+        <main class="page-body">
+            <!-- Row: Pomodoro Focus Timer & Target Session Context -->
+            <div class="row g-4 mb-4">
+                <div class="col-lg-6">
+                    <div class="card-syllabix p-4 text-center h-100 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-center gap-2 mb-3">
+                                <button class="btn btn-sm btn-outline-primary active" id="btnMode25" onclick="setTimerMinutes(25, 'POMODORO')">25m Focus</button>
+                                <button class="btn btn-sm btn-outline-primary" id="btnMode50" onclick="setTimerMinutes(50, 'DEEP FOCUS')">50m Deep Work</button>
+                                <button class="btn btn-sm btn-outline-success" id="btnMode5" onclick="setTimerMinutes(5, 'SHORT BREAK')">5m Break</button>
+                            </div>
+
+                            <div class="timer-circle my-3">
+                                <div class="timer-mode" id="timerModeText">POMODORO FOCUS</div>
+                                <div class="timer-digits" id="timerDisplay">25:00</div>
+                                <div class="small text-muted" id="timerTargetTopic">Select a topic below</div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="d-flex justify-content-center gap-3 mb-2">
+                                <button class="btn btn-primary-syllabix px-4 py-2 fs-6" id="btnStartPause" onclick="toggleTimer()">
+                                    <i class="bi bi-play-fill fs-5"></i> <span id="btnStartText">Start Session</span>
+                                </button>
+                                <button class="btn btn-secondary-syllabix px-3" onclick="resetTimer()">
+                                    <i class="bi bi-arrow-counterclockwise"></i> Reset
+                                </button>
+                                <button class="btn btn-outline-success px-3" onclick="openConfirmSessionModal()">
+                                    <i class="bi bi-check-lg"></i> Complete & Log
+                                </button>
+                            </div>
+                            <p class="small text-muted mb-0">Study sessions only count towards streak after you confirm completion.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Session Context Selection Card -->
+                <div class="col-lg-6">
+                    <div class="card-syllabix p-4 h-100">
+                        <h2 class="h6 font-bold text-dark mb-3"><i class="bi bi-tag-fill text-primary me-2"></i> Current Session Target</h2>
+
+                        <div class="mb-3">
+                            <label class="form-label small font-bold">Select Subject *</label>
+                            <select id="selectSessionSubject" class="form-select" onchange="onSessionSubjectChange()">
+                                <!-- Loaded dynamically -->
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small font-bold">Select Topic to Study</label>
+                            <select id="selectSessionTopic" class="form-select" onchange="onSessionTopicChange()">
+                                <option value="">-- Choose Topic (Optional) --</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small font-bold">Focus Notes / Session Objectives</label>
+                            <textarea id="sessionNotes" class="form-control" rows="3" placeholder="What are you aiming to master in this session? (e.g. Read unit 2 pages 45-60, solve 3 practice proofs)"></textarea>
+                        </div>
+
+                        <div class="p-3 bg-light rounded border small text-muted">
+                            <i class="bi bi-info-circle me-1 text-primary"></i>
+                            <strong>Healthy Study Guidelines:</strong> Syllabix limits uninterrupted sessions to 60 minutes and inserts rest intervals to optimize cognitive retention.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats & History -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-4">
+                    <div class="stat-widget">
+                        <div class="stat-icon primary"><i class="bi bi-clock"></i></div>
+                        <div>
+                            <div class="stat-value" id="val-today-hours">0.0h</div>
+                            <div class="stat-label">Studied Today</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-widget">
+                        <div class="stat-icon secondary"><i class="bi bi-calendar-week"></i></div>
+                        <div>
+                            <div class="stat-value" id="val-weekly-hours">0.0h</div>
+                            <div class="stat-label">Studied Past 7 Days</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-widget">
+                        <div class="stat-icon warning"><i class="bi bi-fire"></i></div>
+                        <div>
+                            <div class="stat-value" id="val-streak">0 Days</div>
+                            <div class="stat-label">Active Streak</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Verified Sessions Table -->
+            <div class="card-syllabix p-4">
+                <h2 class="h6 font-bold text-dark mb-3"><i class="bi bi-journal-check text-primary me-2"></i> Verified Study History</h2>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light small">
+                            <tr>
+                                <th>Subject</th>
+                                <th>Topic Studied</th>
+                                <th>Duration</th>
+                                <th>Session Type</th>
+                                <th>Date & Time</th>
+                                <th>Rating</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-sessions-history">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Modal: Confirm & Log Study Session -->
+<div class="modal fade" id="modalConfirmSession" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header border-bottom">
+                <h5 class="modal-title font-bold"><i class="bi bi-patch-check-fill text-success me-2"></i> Confirm Study Session Completion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form onsubmit="handleConfirmSession(event)">
+                <div class="modal-body p-4">
+                    <p class="small text-muted mb-3">
+                        Review and confirm your session details to register your study hours and maintain your active streak.
+                    </p>
+
+                    <div class="mb-3">
+                        <label class="form-label small font-bold">Minutes Studied *</label>
+                        <input type="number" id="inputConfirmMinutes" class="form-control" value="25" min="1" max="240" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small font-bold">Productivity Rating</label>
+                        <select id="selectConfirmRating" class="form-select">
+                            <option value="5">★★★★★ 5 - Highly Focused & Productive</option>
+                            <option value="4" selected>★★★★☆ 4 - Good Progress</option>
+                            <option value="3">★★★☆☆ 3 - Moderate Focus</option>
+                            <option value="2">★★☆☆☆ 2 - Somewhat Distracted</option>
+                            <option value="1">★☆☆☆☆ 1 - Low Focus</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small font-bold">Session Summary / Takeaways</label>
+                        <textarea id="inputConfirmNotes" class="form-control" rows="2" placeholder="Key concepts mastered or questions noted..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer border-top bg-light">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary-syllabix"><i class="bi bi-check-circle"></i> Save Verified Session</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/app.js"></script>
+<script>
+    let timerTotalSeconds = 25 * 60;
+    let timerSecondsLeft = 25 * 60;
+    let timerInterval = null;
+    let isRunning = false;
+    let currentMode = 'POMODORO';
+
+    let selectedTaskId = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const subParam = urlParams.get('subjectId');
+        const topicParam = urlParams.get('topicId');
+        selectedTaskId = urlParams.get('taskId');
+
+        await loadSubjectsDropdown(subParam);
+        if (topicParam) {
+            document.getElementById('selectSessionTopic').value = topicParam;
+            onSessionTopicChange();
+        }
+
+        loadSessionStats();
+        loadSessionHistory();
+    });
+
+    // Audio chime using Web Audio API (zero external asset dependency!)
+    function playChime() {
+        try {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
+            osc.frequency.setValueAtTime(880.00, audioCtx.currentTime + 0.15); // A5
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.8);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.8);
+        } catch (e) {
+            console.log('Audio chime not supported');
+        }
+    }
+
+    function setTimerMinutes(mins, mode) {
+        clearInterval(timerInterval);
+        isRunning = false;
+        document.getElementById('btnStartText').textContent = 'Start Session';
+        document.getElementById('btnStartPause').innerHTML = '<i class="bi bi-play-fill fs-5"></i> <span>Start Session</span>';
+
+        timerTotalSeconds = mins * 60;
+        timerSecondsLeft = mins * 60;
+        currentMode = mode;
+        document.getElementById('timerModeText').textContent = mode;
+        updateTimerDisplay();
+
+        document.getElementById('btnMode25').classList.remove('active');
+        document.getElementById('btnMode50').classList.remove('active');
+        document.getElementById('btnMode5').classList.remove('active');
+
+        if (mins === 25) document.getElementById('btnMode25').classList.add('active');
+        if (mins === 50) document.getElementById('btnMode50').classList.add('active');
+        if (mins === 5) document.getElementById('btnMode5').classList.add('active');
+    }
+
+    function toggleTimer() {
+        if (isRunning) {
+            clearInterval(timerInterval);
+            isRunning = false;
+            document.getElementById('btnStartPause').innerHTML = '<i class="bi bi-play-fill fs-5"></i> <span>Resume Session</span>';
+        } else {
+            isRunning = true;
+            document.getElementById('btnStartPause').innerHTML = '<i class="bi bi-pause-fill fs-5"></i> <span>Pause Session</span>';
+            timerInterval = setInterval(() => {
+                if (timerSecondsLeft > 0) {
+                    timerSecondsLeft--;
+                    updateTimerDisplay();
+                } else {
+                    clearInterval(timerInterval);
+                    isRunning = false;
+                    playChime();
+                    Syllabix.toast('Pomodoro session completed! Time to log your progress.', 'success');
+                    openConfirmSessionModal();
+                }
+            }, 1000);
+        }
+    }
+
+    function resetTimer() {
+        clearInterval(timerInterval);
+        isRunning = false;
+        timerSecondsLeft = timerTotalSeconds;
+        document.getElementById('btnStartPause').innerHTML = '<i class="bi bi-play-fill fs-5"></i> <span>Start Session</span>';
+        updateTimerDisplay();
+    }
+
+    function updateTimerDisplay() {
+        const m = Math.floor(timerSecondsLeft / 60);
+        const s = timerSecondsLeft % 60;
+        document.getElementById('timerDisplay').textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    async function loadSubjectsDropdown(selectedId) {
+        try {
+            const subjects = await Syllabix.api('/api/subjects');
+            const select = document.getElementById('selectSessionSubject');
+            select.innerHTML = '<option value="">-- Choose Subject --</option>';
+            subjects.forEach(s => {
+                const opt = document.createElement('option');
+                opt.value = s.id;
+                opt.textContent = `${s.name} (${s.code})`;
+                if (selectedId && s.id == selectedId) opt.selected = true;
+                select.appendChild(opt);
+            });
+            if (selectedId) onSessionSubjectChange();
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    async function onSessionSubjectChange() {
+        const subId = document.getElementById('selectSessionSubject').value;
+        const topicSelect = document.getElementById('selectSessionTopic');
+        topicSelect.innerHTML = '<option value="">-- Choose Topic (Optional) --</option>';
+        if (!subId) return;
+
+        try {
+            const topics = await Syllabix.api(`/api/topics/subject/${subId}`);
+            topics.forEach(t => {
+                const opt = document.createElement('option');
+                opt.value = t.id;
+                opt.textContent = `${t.name} (${t.difficulty})`;
+                topicSelect.appendChild(opt);
+            });
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    function onSessionTopicChange() {
+        const select = document.getElementById('selectSessionTopic');
+        const selectedText = select.options[select.selectedIndex]?.text;
+        if (selectedText && select.value) {
+            document.getElementById('timerTargetTopic').textContent = selectedText;
+        } else {
+            document.getElementById('timerTargetTopic').textContent = 'General Subject Study';
+        }
+    }
+
+    function openConfirmSessionModal() {
+        const subId = document.getElementById('selectSessionSubject').value;
+        if (!subId) {
+            Syllabix.toast('Please select a subject for this session before completing', 'warning');
+            return;
+        }
+
+        const elapsedMins = Math.max(1, Math.round((timerTotalSeconds - timerSecondsLeft) / 60));
+        document.getElementById('inputConfirmMinutes').value = elapsedMins > 0 ? elapsedMins : Math.round(timerTotalSeconds / 60);
+        document.getElementById('inputConfirmNotes').value = document.getElementById('sessionNotes').value;
+
+        new bootstrap.Modal(document.getElementById('modalConfirmSession')).show();
+    }
+
+    async function handleConfirmSession(e) {
+        e.preventDefault();
+        const subId = parseInt(document.getElementById('selectSessionSubject').value);
+        const topicId = document.getElementById('selectSessionTopic').value ? parseInt(document.getElementById('selectSessionTopic').value) : null;
+        const mins = parseInt(document.getElementById('inputConfirmMinutes').value);
+        const rating = parseInt(document.getElementById('selectConfirmRating').value);
+        const notes = document.getElementById('inputConfirmNotes').value;
+
+        const payload = {
+            subjectId: subId,
+            topicId: topicId,
+            studyTaskId: selectedTaskId ? parseInt(selectedTaskId) : null,
+            durationMinutes: mins,
+            sessionType: currentMode,
+            notes: notes,
+            rating: rating,
+            isConfirmed: true
+        };
+
+        try {
+            await Syllabix.api('/api/sessions', { method: 'POST', body: payload });
+            Syllabix.toast('Study session logged & verified!', 'success');
+            bootstrap.Modal.getInstance(document.getElementById('modalConfirmSession')).hide();
+
+            resetTimer();
+            loadSessionStats();
+            loadSessionHistory();
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    async function loadSessionStats() {
+        try {
+            const stats = await Syllabix.api('/api/sessions/stats');
+            if (!stats) return;
+
+            document.getElementById('val-today-hours').textContent = (stats.todayStudyHours || 0) + 'h';
+            document.getElementById('val-weekly-hours').textContent = (stats.weeklyStudyHours || 0) + 'h';
+            document.getElementById('val-streak').textContent = (stats.currentStreakDays || 0) + ' Days';
+            document.getElementById('streak-counter').textContent = stats.currentStreakDays || 0;
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    async function loadSessionHistory() {
+        const tbody = document.getElementById('tbody-sessions-history');
+        try {
+            const sessions = await Syllabix.api('/api/sessions');
+            if (!sessions || sessions.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-muted">No confirmed study sessions logged yet.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = sessions.map(s => `
+                <tr>
+                    <td><strong>${s.subjectName}</strong></td>
+                    <td>${s.topicName ? `<span class="badge bg-light text-dark border">${s.topicName}</span>` : '<span class="text-muted">General Review</span>'}</td>
+                    <td class="font-bold text-primary">${s.durationMinutes} mins</td>
+                    <td><span class="badge bg-light text-secondary border">${s.sessionType}</span></td>
+                    <td class="small text-muted">${new Date(s.startTime).toLocaleString(undefined, {month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'})}</td>
+                    <td class="text-warning small">${'★'.repeat(s.rating || 5)}</td>
+                    <td class="small text-muted">${s.notes || '—'}</td>
+                </tr>
+            `).join('');
+        } catch (e) {
+            console.error(e);
+        }
+    }
+</script>
+</body>
+</html>
