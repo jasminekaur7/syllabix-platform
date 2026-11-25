@@ -126,6 +126,65 @@
         </header>
 
         <main class="page-body">
+            <!-- Thapar Academic Calendar (ODD SEM 2026-27) & Datesheet Tracker -->
+            <div class="card-syllabix p-4 mb-4 border-start border-4 border-danger shadow-sm">
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
+                    <div>
+                        <div class="d-flex align-items-center gap-2 mb-1">
+                            <span class="badge bg-danger text-white"><i class="bi bi-mortarboard-fill me-1"></i> TIET ACADEMIC CALENDAR</span>
+                            <span class="badge bg-light text-dark border fw-bold">ODD SEM 2026-27</span>
+                            <span class="badge bg-success text-white" id="currentWeekPill"><i class="bi bi-clock-history me-1"></i> Week 17 (Teaching)</span>
+                        </div>
+                        <h2 class="h5 font-bold text-dark mb-0">Official Thapar Academic Calendar & Examination Datesheet</h2>
+                    </div>
+                    <ul class="nav nav-pills gap-2" id="calendarTabNav" role="tablist">
+                        <li class="nav-item">
+                            <button class="btn btn-sm btn-outline-danger active" id="tabWeeksBtn" onclick="switchAcademicTab('weeks')">
+                                <i class="bi bi-calendar3-range me-1"></i> 20-Week Timeline
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="btn btn-sm btn-outline-danger" id="tabMilestonesBtn" onclick="switchAcademicTab('milestones')">
+                                <i class="bi bi-flag-fill me-1"></i> Datesheet Milestones
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="btn btn-sm btn-outline-danger" id="tabHolidaysBtn" onclick="switchAcademicTab('holidays')">
+                                <i class="bi bi-cup-hot-fill me-1"></i> Gazetted Holidays
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Tab 1: 20-Week Semester Strip -->
+                <div id="academicTabWeeks" class="academic-tab-content">
+                    <p class="small text-muted mb-2"><i class="bi bi-info-circle me-1"></i> Full 20-week semester progression from July to Dec 2026. Click any week card to jump the interactive calendar.</p>
+                    <div class="d-flex gap-2 overflow-auto py-2" id="semesterWeeksStrip" style="scrollbar-width: thin;">
+                        <!-- Dynamically populated 20 weeks -->
+                        <div class="text-muted small py-3"><span class="spinner-border spinner-border-sm me-2"></span>Loading 20-week academic calendar...</div>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Datesheet Milestones -->
+                <div id="academicTabMilestones" class="academic-tab-content d-none">
+                    <p class="small text-muted mb-3"><i class="bi bi-info-circle me-1"></i> Official MST, Diwali Break, Lab Evaluations, EST, and Answer Sheet Review dates.</p>
+                    <div class="row g-3" id="datesheetMilestonesGrid">
+                        <!-- Dynamically populated milestones -->
+                    </div>
+                </div>
+
+                <!-- Tab 3: Gazetted Holidays -->
+                <div id="academicTabHolidays" class="academic-tab-content d-none">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between mb-3">
+                        <p class="small text-muted mb-0"><i class="bi bi-info-circle me-1"></i> 6 Gazetted Holidays and 2 Saturday Compensatory Teaching Days per University notification.</p>
+                        <span class="badge bg-warning-subtle text-dark border border-warning">Next Holiday: Shaheedi Diwas (14 Dec 2026)</span>
+                    </div>
+                    <div class="row g-3" id="gazettedHolidaysGrid">
+                        <!-- Dynamically populated holidays -->
+                    </div>
+                </div>
+            </div>
+
             <!-- Filter & Month Switcher Bar -->
             <div class="card-syllabix p-3 mb-4">
                 <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
@@ -265,8 +324,154 @@
         now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
         document.getElementById('inputCalendarDateTime').value = now.toISOString().slice(0, 16);
 
-        await loadAssessments();
+        await Promise.all([
+            loadAssessments(),
+            loadAcademicCalendar()
+        ]);
     });
+
+    // ─── THAPAR ACADEMIC CALENDAR & DATESHEET INTEGRATION ───
+    async function loadAcademicCalendar() {
+        try {
+            const [currentWeek, weeks, milestones, holidays] = await Promise.all([
+                Syllabix.api('/api/academic-calendar/current-week'),
+                Syllabix.api('/api/academic-calendar/weeks'),
+                Syllabix.api('/api/academic-calendar/milestones'),
+                Syllabix.api('/api/academic-calendar/holidays')
+            ]);
+
+            // Update Current Week Pill
+            if (currentWeek) {
+                document.getElementById('currentWeekPill').innerHTML = `
+                    <i class="bi bi-clock-history me-1"></i> Week ${currentWeek.weekNumber} (${currentWeek.label}) • Next: Assessment Week in 5d
+                `;
+            }
+
+            // Render 20 Weeks Strip
+            renderSemesterWeeks(weeks);
+
+            // Render Milestones
+            renderDatesheetMilestones(milestones);
+
+            // Render Holidays
+            renderGazettedHolidays(holidays);
+
+        } catch (err) {
+            console.error('Failed to load Thapar Academic Calendar:', err);
+        }
+    }
+
+    function renderSemesterWeeks(weeks) {
+        const container = document.getElementById('semesterWeeksStrip');
+        if (!container || !weeks || weeks.length === 0) return;
+
+        container.innerHTML = weeks.map(w => {
+            const isCurrent = w.current;
+            let typeBadgeClass = 'bg-light text-muted border';
+            let typeLabel = 'Teaching';
+            if (w.type === 'MST') { typeBadgeClass = 'bg-warning text-dark font-bold'; typeLabel = 'MST Exam'; }
+            else if (w.type === 'EVALUATION') { typeBadgeClass = 'bg-info text-dark font-bold'; typeLabel = 'Lab Eval'; }
+            else if (w.type === 'EST') { typeBadgeClass = 'bg-danger text-white font-bold'; typeLabel = 'EST Exam'; }
+            else if (w.type === 'BREAK') { typeBadgeClass = 'bg-secondary text-white'; typeLabel = 'Diwali Break'; }
+
+            const cardBorder = isCurrent ? 'border-2 border-danger bg-danger-subtle shadow-sm' : 'border bg-white';
+            const currentBadge = isCurrent ? '<span class="badge bg-danger text-white py-0 px-1" style="font-size: 9px;">TODAY</span>' : '';
+
+            // Format date range
+            const startD = new Date(w.startDate).toLocaleDateString(undefined, {month: 'short', day: 'numeric'});
+            const endD = new Date(w.endDate).toLocaleDateString(undefined, {month: 'short', day: 'numeric'});
+
+            return `
+                <div class="p-2 rounded text-center flex-shrink-0 ${cardBorder}" style="width: 145px; cursor: pointer; transition: transform 0.15s ease;"
+                     onclick="jumpToDate('${w.startDate}')" title="Click to view ${w.startDate}">
+                    <div class="d-flex align-items-center justify-content-between mb-1">
+                        <span class="badge ${typeBadgeClass}" style="font-size: 10px;">${typeLabel}</span>
+                        ${currentBadge}
+                    </div>
+                    <div class="font-bold small ${isCurrent ? 'text-danger' : 'text-dark'}">Week ${w.weekNumber}</div>
+                    <div class="text-muted" style="font-size: 11px;">${startD} – ${endD}</div>
+                    ${w.notes ? `<div class="small text-truncate mt-1 text-danger font-medium" style="font-size: 10px;" title="${w.notes}">${w.notes}</div>` : ''}
+                </div>
+            `;
+        }).join('');
+    }
+
+    function renderDatesheetMilestones(milestones) {
+        const container = document.getElementById('datesheetMilestonesGrid');
+        if (!container || !milestones) return;
+
+        container.innerHTML = milestones.map(m => {
+            let statusBadge = '<span class="badge bg-secondary">Upcoming</span>';
+            if (m.completed) {
+                statusBadge = '<span class="badge bg-success-subtle text-success border border-success"><i class="bi bi-check-circle-fill me-1"></i> Completed</span>';
+            } else if (m.ongoing) {
+                statusBadge = '<span class="badge bg-danger animate-pulse"><i class="bi bi-record-circle-fill me-1"></i> Ongoing</span>';
+            } else if (m.daysRemaining >= 0) {
+                statusBadge = `<span class="badge bg-warning-subtle text-dark border border-warning"><i class="bi bi-clock-history me-1"></i> in ${m.daysRemaining} days</span>`;
+            }
+
+            const startStr = new Date(m.startDate).toLocaleDateString(undefined, {month: 'short', day: 'numeric', year: 'numeric'});
+            const endStr = new Date(m.endDate).toLocaleDateString(undefined, {month: 'short', day: 'numeric', year: 'numeric'});
+
+            return `
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border shadow-none p-3 ${m.ongoing ? 'border-danger bg-danger-subtle' : 'bg-light'}">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <span class="badge bg-white text-dark border fw-bold">${m.category}</span>
+                            ${statusBadge}
+                        </div>
+                        <h4 class="h6 font-bold text-dark mb-1">${m.title}</h4>
+                        <div class="small text-muted mb-2"><i class="bi bi-calendar3 me-1"></i> ${startStr} – ${endStr}</div>
+                        <p class="small text-secondary mb-0">${m.description}</p>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function renderGazettedHolidays(holidays) {
+        const container = document.getElementById('gazettedHolidaysGrid');
+        if (!container || !holidays) return;
+
+        container.innerHTML = holidays.map(h => {
+            const hDate = new Date(h.date).toLocaleDateString(undefined, {weekday: 'short', month: 'short', day: 'numeric', year: 'numeric'});
+            const badge = h.past 
+                ? '<span class="badge bg-secondary">Completed</span>' 
+                : `<span class="badge bg-danger">in ${h.daysRemaining} days</span>`;
+
+            return `
+                <div class="col-md-6 col-lg-4">
+                    <div class="p-3 rounded border bg-white d-flex align-items-center justify-content-between">
+                        <div>
+                            <div class="font-bold small text-dark">${h.name}</div>
+                            <div class="text-muted" style="font-size: 11px;"><i class="bi bi-calendar-event me-1"></i> ${hDate}</div>
+                        </div>
+                        <div>${badge}</div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function switchAcademicTab(tab) {
+        ['weeks', 'milestones', 'holidays'].forEach(t => {
+            const content = document.getElementById(`academicTab${t.charAt(0).toUpperCase() + t.slice(1)}`);
+            const btn = document.getElementById(`tab${t.charAt(0).toUpperCase() + t.slice(1)}Btn`);
+            if (t === tab) {
+                content.classList.remove('d-none');
+                btn.classList.add('active');
+            } else {
+                content.classList.add('d-none');
+                btn.classList.remove('active');
+            }
+        });
+    }
+
+    function jumpToDate(dateStr) {
+        currentDate = new Date(dateStr);
+        renderCalendar();
+        document.getElementById('calendarDaysGrid').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
 
     async function loadAssessments() {
         try {
