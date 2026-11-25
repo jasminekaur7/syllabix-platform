@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,392 +8,434 @@
     <link rel="icon" type="image/png" href="/images/thapar_logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/syllabix.css">
 </head>
+
 <body>
 
-<div class="app-container">
-    <!-- Sidebar Navigation -->
-    <aside class="app-sidebar">
-        <div class="sidebar-brand">
-            <img src="/images/thapar_logo.png" alt="Thapar Logo" style="height: 32px; width: auto; object-fit: contain; background: white; padding: 2px 4px; border-radius: 4px; margin-right: 6px;">
-            <div class="brand-text">Syllabix</div>
-            <span class="brand-tag">v1.0</span>
-        </div>
-
-        <ul class="sidebar-menu">
-            <li class="menu-label">Academic Core</li>
-            <li class="menu-item"><a href="/" class="menu-link"><i class="bi bi-grid-1x2-fill"></i><span>Dashboard</span></a></li>
-            <li class="menu-item"><a href="/subjects" class="menu-link"><i class="bi bi-journal-bookmark-fill"></i><span>My Subjects</span></a></li>
-            <li class="menu-item"><a href="/syllabus" class="menu-link active"><i class="bi bi-diagram-3-fill"></i><span>Syllabus & Units</span></a></li>
-            <li class="menu-item"><a href="/calendar" class="menu-link"><i class="bi bi-calendar-event-fill"></i><span>Academic Calendar</span></a></li>
-
-            <li class="menu-label">Intelligent Planning</li>
-            <li class="menu-item"><a href="/planner" class="menu-link"><i class="bi bi-cpu-fill text-indigo-400"></i><span>Study Planner</span><span class="menu-badge bg-primary">AI</span></a></li>
-            <li class="menu-item"><a href="/sessions" class="menu-link"><i class="bi bi-stopwatch-fill"></i><span>Study & Pomodoro</span></a></li>
-
-            <li class="menu-label">Analytics & Insights</li>
-            <li class="menu-item"><a href="/analytics" class="menu-link"><i class="bi bi-bar-chart-line-fill"></i><span>Performance Analytics</span></a></li>
-            <li class="menu-item"><a href="/insights" class="menu-link"><i class="bi bi-lightbulb-fill"></i><span>Insights & Simulator</span></a></li>
-
-            <li class="menu-label">Account</li>
-            <li class="menu-item"><a href="/profile" class="menu-link"><i class="bi bi-person-circle"></i><span>Profile & Settings</span></a></li>
-        </ul>
-
-        <div class="sidebar-user">
-            <div class="user-avatar js-user-avatar">AM</div>
-            <div class="user-info">
-                <div class="user-name js-student-name">Alex Mercer</div>
-                <div class="user-role">Student Account</div>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="app-sidebar">
+            <div class="sidebar-brand">
+                <img src="/images/thapar_logo.png" alt="Thapar Logo"
+                    style="height: 32px; width: auto; object-fit: contain; background: white; padding: 2px 4px; border-radius: 4px; margin-right: 6px;">
+                <div class="brand-text">Syllabix</div>
+                <span class="brand-tag">v1.0</span>
             </div>
-            <button class="btn btn-link text-secondary p-0 ms-auto" onclick="Syllabix.logout()" title="Logout">
-                <i class="bi bi-box-arrow-right fs-5"></i>
-            </button>
-        </div>
-    </aside>
 
-    <!-- Main Content -->
-    <div class="app-main">
-        <!-- Institutional University Masthead Bar -->
-        <div class="university-brand-masthead d-none d-md-flex">
-            <div class="d-flex align-items-center gap-3">
-                <img src="/images/thapar_logo.png" alt="Thapar Institute Logo" style="height: 42px; width: auto; object-fit: contain; background: white; padding: 2px 4px; border-radius: 4px;">
-                <div>
-                    <div class="university-title-text">Thapar Institute of Engineering & Technology</div>
-                    <div class="university-subtitle-text">(Deemed to be University) &bull; Estd. 1956 &bull; NAAC 'A+' Grade &bull; Patiala, Punjab</div>
+            <ul class="sidebar-menu">
+                <li class="menu-label">Academic Core</li>
+                <li class="menu-item"><a href="/" class="menu-link"><i
+                            class="bi bi-grid-1x2-fill"></i><span>Dashboard</span></a></li>
+                <li class="menu-item"><a href="/subjects" class="menu-link"><i
+                            class="bi bi-journal-bookmark-fill"></i><span>My Subjects</span></a></li>
+                <li class="menu-item"><a href="/syllabus" class="menu-link active"><i
+                            class="bi bi-diagram-3-fill"></i><span>Syllabus & Units</span></a></li>
+                <li class="menu-item"><a href="/calendar" class="menu-link"><i
+                            class="bi bi-calendar-event-fill"></i><span>Academic Calendar</span></a></li>
+
+                <li class="menu-label">Intelligent Planning</li>
+                <li class="menu-item"><a href="/planner" class="menu-link"><i
+                            class="bi bi-cpu-fill text-indigo-400"></i><span>Study Planner</span><span
+                            class="menu-badge bg-primary">AI</span></a></li>
+                <li class="menu-item"><a href="/sessions" class="menu-link"><i
+                            class="bi bi-stopwatch-fill"></i><span>Study & Pomodoro</span></a></li>
+
+                <li class="menu-label">Analytics & Insights</li>
+                <li class="menu-item"><a href="/analytics" class="menu-link"><i
+                            class="bi bi-bar-chart-line-fill"></i><span>Performance Analytics</span></a></li>
+                <li class="menu-item"><a href="/insights" class="menu-link"><i
+                            class="bi bi-lightbulb-fill"></i><span>Insights & Simulator</span></a></li>
+
+                <li class="menu-label">Account</li>
+                <li class="menu-item"><a href="/profile" class="menu-link"><i
+                            class="bi bi-person-circle"></i><span>Profile & Settings</span></a></li>
+            </ul>
+
+            <div class="sidebar-user">
+                <div class="user-avatar js-user-avatar">AG</div>
+                <div class="user-info">
+                    <div class="user-name js-student-name">Akshat Gupta</div>
+                    <div class="user-role">Student Account</div>
                 </div>
-            </div>
-            <div class="d-flex align-items-center gap-3">
-                <span class="badge bg-danger text-white px-2.5 py-1.5 fw-bold"><i class="bi bi-diagram-3 me-1"></i> Syllabus & Learning Objectives</span>
-                <span class="small text-muted fw-bold">Academic Session: 2026–2027</span>
-            </div>
-        </div>
-
-        <header class="app-header">
-            <div class="header-title-section">
-                <div class="d-flex align-items-center gap-2 mb-1">
-                    <span class="badge bg-danger text-white fw-bold"><i class="bi bi-mortarboard-fill"></i> THAPAR-LMS</span>
-                    <span class="badge bg-light text-dark border fw-bold">2627ODDSEM</span>
-                </div>
-                <h1>Syllabus & Curriculum Management</h1>
-                <p>Organize units, track individual topic completion, and import syllabus PDFs.</p>
-            </div>
-            <div class="header-actions">
-                <button class="btn btn-secondary-syllabix" data-bs-toggle="modal" data-bs-target="#modalPdfUpload">
-                    <i class="bi bi-file-earmark-pdf-fill text-danger"></i> Import Syllabus PDF
-                </button>
-                <button class="btn btn-primary-syllabix" onclick="openAddUnitModal()">
-                    <i class="bi bi-plus-lg"></i> Add Unit
+                <button class="btn btn-link text-secondary p-0 ms-auto" onclick="Syllabix.logout()" title="Logout">
+                    <i class="bi bi-box-arrow-right fs-5"></i>
                 </button>
             </div>
-        </header>
+        </aside>
 
-        <main class="page-body">
-            <!-- Filter & Selection Bar -->
-            <div class="card-syllabix p-3 mb-4">
-                <div class="row g-3 align-items-center">
-                    <div class="col-md-4">
-                        <label class="form-label small font-bold text-secondary mb-1">Select Subject</label>
-                        <select id="selectCurrentSubject" class="form-select font-medium" onchange="onSubjectChange()">
-                            <!-- Loaded dynamically -->
-                        </select>
-                    </div>
-
-                    <div class="col-md-5">
-                        <label class="form-label small font-bold text-secondary mb-1">Search Topics</label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
-                            <input type="text" id="inputTopicSearch" class="form-control border-start-0" placeholder="Type topic keyword (e.g. Normalization, B-Tree)..." oninput="filterTopics()">
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <label class="form-label small font-bold text-secondary mb-1">Filter Status</label>
-                        <select id="selectStatusFilter" class="form-select" onchange="filterTopics()">
-                            <option value="ALL">All Statuses</option>
-                            <option value="NOT_STARTED">Not Started</option>
-                            <option value="IN_PROGRESS">In Progress</option>
-                            <option value="COMPLETED">Completed</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Subject Progress Bar Header -->
-            <div class="card-syllabix p-4 mb-4" id="subject-header-card" style="display: none;">
-                <div class="d-flex align-items-center justify-content-between mb-2">
+        <!-- Main Content -->
+        <div class="app-main">
+            <!-- Institutional University Masthead Bar -->
+            <div class="university-brand-masthead d-none d-md-flex">
+                <div class="d-flex align-items-center gap-3">
+                    <img src="/images/thapar_logo.png" alt="Thapar Institute Logo"
+                        style="height: 42px; width: auto; object-fit: contain; background: white; padding: 2px 4px; border-radius: 4px;">
                     <div>
-                        <h2 class="h5 font-bold mb-0 text-dark" id="displaySubjectName">Database Management Systems</h2>
-                        <span class="small text-muted" id="displaySubjectMeta">CS501 &bull; Semester 5 &bull; 4 Credits</span>
-                    </div>
-                    <div class="text-end">
-                        <div class="h4 font-bold text-primary mb-0" id="displaySubjectPct">0%</div>
-                        <span class="small text-muted">Syllabus Completed</span>
+                        <div class="university-title-text">Thapar Institute of Engineering & Technology</div>
+                        <div class="university-subtitle-text">(Deemed to be University) &bull; Estd. 1956 &bull; NAAC
+                            'A+' Grade &bull; Patiala, Punjab</div>
                     </div>
                 </div>
-                <div class="progress-syllabix mb-2">
-                    <div class="progress-bar-syllabix" id="displaySubjectBar" style="width: 0%;"></div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center small text-muted">
-                    <span id="displaySubjectTopicsRatio">0 of 0 topics completed</span>
-                    <div class="d-flex align-items-center gap-3">
-                        <button class="btn btn-sm btn-outline-primary" onclick="aiEvaluateAllTopicsForSubject()">
-                            <i class="bi bi-robot me-1"></i> AI Re-Evaluate Topics
-                        </button>
-                        <button class="btn btn-sm btn-link p-0 text-primary text-decoration-none" onclick="openAddTopicModal(null)">
-                            <i class="bi bi-plus-circle me-1"></i> Add Topic
-                        </button>
-                    </div>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="badge bg-danger text-white px-2.5 py-1.5 fw-bold"><i class="bi bi-diagram-3 me-1"></i>
+                        Syllabus & Learning Objectives</span>
+                    <span class="small text-muted fw-bold">Academic Session: 2026–2027</span>
                 </div>
             </div>
 
-            <!-- Units & Topics Accordion Container -->
-            <div class="d-flex flex-column gap-3" id="units-container">
-                <div class="text-center py-5 text-muted">Loading syllabus units...</div>
-            </div>
-        </main>
-    </div>
-</div>
+            <header class="app-header">
+                <div class="header-title-section">
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <span class="badge bg-danger text-white fw-bold"><i class="bi bi-mortarboard-fill"></i>
+                            THAPAR-LMS</span>
+                        <span class="badge bg-light text-dark border fw-bold">2627ODDSEM</span>
+                    </div>
+                    <h1>Syllabus & Curriculum Management</h1>
+                    <p>Organize units, track individual topic completion, and import syllabus PDFs.</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-secondary-syllabix" data-bs-toggle="modal" data-bs-target="#modalPdfUpload">
+                        <i class="bi bi-file-earmark-pdf-fill text-danger"></i> Import Syllabus PDF
+                    </button>
+                    <button class="btn btn-primary-syllabix" onclick="openAddUnitModal()">
+                        <i class="bi bi-plus-lg"></i> Add Unit
+                    </button>
+                </div>
+            </header>
 
-<!-- ================= MODALS ================= -->
+            <main class="page-body">
+                <!-- Filter & Selection Bar -->
+                <div class="card-syllabix p-3 mb-4">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-md-4">
+                            <label class="form-label small font-bold text-secondary mb-1">Select Subject</label>
+                            <select id="selectCurrentSubject" class="form-select font-medium"
+                                onchange="onSubjectChange()">
+                                <!-- Loaded dynamically -->
+                            </select>
+                        </div>
 
-<!-- Modal: Import Syllabus PDF (Advanced Feature) -->
-<div class="modal fade" id="modalPdfUpload" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content border-0 shadow">
-            <div class="modal-header border-bottom">
-                <h5 class="modal-title font-bold"><i class="bi bi-file-earmark-pdf-fill text-danger me-2"></i> Import Syllabus from PDF (AI Parser)</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body p-4">
-                <p class="small text-muted mb-3">
-                    Upload your university course syllabus PDF. Syllabix extracts the text using Apache PDFBox, detects Units and Topics, and allows you to <strong>review and edit before saving</strong> into your database.
-                </p>
+                        <div class="col-md-5">
+                            <label class="form-label small font-bold text-secondary mb-1">Search Topics</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0"><i
+                                        class="bi bi-search text-muted"></i></span>
+                                <input type="text" id="inputTopicSearch" class="form-control border-start-0"
+                                    placeholder="Type topic keyword (e.g. Normalization, B-Tree)..."
+                                    oninput="filterTopics()">
+                            </div>
+                        </div>
 
-                <div class="dropzone-syllabix mb-3" id="pdfDropzone" onclick="document.getElementById('filePdfInput').click()">
-                    <i class="bi bi-cloud-arrow-up-fill fs-1 text-primary mb-2 d-block"></i>
-                    <h6 class="font-bold mb-1">Click to browse or drag & drop syllabus PDF</h6>
-                    <p class="small text-muted mb-0">Supports course handouts, unit outlines, and curriculum PDFs (Max 15MB)</p>
-                    <input type="file" id="filePdfInput" class="d-none" accept=".pdf" onchange="handlePdfSelected(event)">
+                        <div class="col-md-3">
+                            <label class="form-label small font-bold text-secondary mb-1">Filter Status</label>
+                            <select id="selectStatusFilter" class="form-select" onchange="filterTopics()">
+                                <option value="ALL">All Statuses</option>
+                                <option value="NOT_STARTED">Not Started</option>
+                                <option value="IN_PROGRESS">In Progress</option>
+                                <option value="COMPLETED">Completed</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Extraction Loader -->
-                <div id="pdfExtractionLoader" class="text-center py-4" style="display: none;">
-                    <div class="spinner-border text-primary mb-2" role="status"></div>
-                    <div class="small font-bold text-dark">Extracting text & parsing curriculum hierarchy...</div>
-                </div>
-
-                <!-- Extraction Review & Edit Table -->
-                <div id="pdfReviewSection" style="display: none;">
+                <!-- Subject Progress Bar Header -->
+                <div class="card-syllabix p-4 mb-4" id="subject-header-card" style="display: none;">
                     <div class="d-flex align-items-center justify-content-between mb-2">
-                        <h6 class="font-bold text-dark mb-0"><i class="bi bi-check2-circle text-success me-1"></i> Extracted Curriculum Preview</h6>
-                        <span class="badge bg-light text-secondary border" id="pdfPreviewCount">0 Units extracted</span>
+                        <div>
+                            <h2 class="h5 font-bold mb-0 text-dark" id="displaySubjectName">Database Management Systems
+                            </h2>
+                            <span class="small text-muted" id="displaySubjectMeta">CS501 &bull; Semester 5 &bull; 4
+                                Credits</span>
+                        </div>
+                        <div class="text-end">
+                            <div class="h4 font-bold text-primary mb-0" id="displaySubjectPct">0%</div>
+                            <span class="small text-muted">Syllabus Completed</span>
+                        </div>
+                    </div>
+                    <div class="progress-syllabix mb-2">
+                        <div class="progress-bar-syllabix" id="displaySubjectBar" style="width: 0%;"></div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center small text-muted">
+                        <span id="displaySubjectTopicsRatio">0 of 0 topics completed</span>
+                        <div class="d-flex align-items-center gap-3">
+                            <button class="btn btn-sm btn-outline-primary" onclick="aiEvaluateAllTopicsForSubject()">
+                                <i class="bi bi-robot me-1"></i> AI Re-Evaluate Topics
+                            </button>
+                            <button class="btn btn-sm btn-link p-0 text-primary text-decoration-none"
+                                onclick="openAddTopicModal(null)">
+                                <i class="bi bi-plus-circle me-1"></i> Add Topic
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Units & Topics Accordion Container -->
+                <div class="d-flex flex-column gap-3" id="units-container">
+                    <div class="text-center py-5 text-muted">Loading syllabus units...</div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- ================= MODALS ================= -->
+
+    <!-- Modal: Import Syllabus PDF (Advanced Feature) -->
+    <div class="modal fade" id="modalPdfUpload" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header border-bottom">
+                    <h5 class="modal-title font-bold"><i class="bi bi-file-earmark-pdf-fill text-danger me-2"></i>
+                        Import Syllabus from PDF (AI Parser)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p class="small text-muted mb-3">
+                        Upload your university course syllabus PDF. Syllabix extracts the text using Apache PDFBox,
+                        detects Units and Topics, and allows you to <strong>review and edit before saving</strong> into
+                        your database.
+                    </p>
+
+                    <div class="dropzone-syllabix mb-3" id="pdfDropzone"
+                        onclick="document.getElementById('filePdfInput').click()">
+                        <i class="bi bi-cloud-arrow-up-fill fs-1 text-primary mb-2 d-block"></i>
+                        <h6 class="font-bold mb-1">Click to browse or drag & drop syllabus PDF</h6>
+                        <p class="small text-muted mb-0">Supports course handouts, unit outlines, and curriculum PDFs
+                            (Max 15MB)</p>
+                        <input type="file" id="filePdfInput" class="d-none" accept=".pdf"
+                            onchange="handlePdfSelected(event)">
                     </div>
 
-                    <div class="alert alert-info py-2 small mb-3">
-                        <i class="bi bi-info-circle me-1"></i> You can review and edit any extracted topic names, difficulties, or unit titles below before saving.
+                    <!-- Extraction Loader -->
+                    <div id="pdfExtractionLoader" class="text-center py-4" style="display: none;">
+                        <div class="spinner-border text-primary mb-2" role="status"></div>
+                        <div class="small font-bold text-dark">Extracting text & parsing curriculum hierarchy...</div>
                     </div>
 
-                    <div class="table-responsive border rounded mb-3" style="max-height: 320px; overflow-y: auto;">
-                        <table class="table table-hover align-middle mb-0" id="tableExtractedSyllabus">
-                            <thead class="table-light small">
-                                <tr>
-                                    <th>Unit / Chapter</th>
-                                    <th>Topic Title (Editable)</th>
-                                    <th>Difficulty</th>
-                                    <th>Est. Mins</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbodyExtractedTopics">
+                    <!-- Extraction Review & Edit Table -->
+                    <div id="pdfReviewSection" style="display: none;">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <h6 class="font-bold text-dark mb-0"><i class="bi bi-check2-circle text-success me-1"></i>
+                                Extracted Curriculum Preview</h6>
+                            <span class="badge bg-light text-secondary border" id="pdfPreviewCount">0 Units
+                                extracted</span>
+                        </div>
+
+                        <div class="alert alert-info py-2 small mb-3">
+                            <i class="bi bi-info-circle me-1"></i> You can review and edit any extracted topic names,
+                            difficulties, or unit titles below before saving.
+                        </div>
+
+                        <div class="table-responsive border rounded mb-3" style="max-height: 320px; overflow-y: auto;">
+                            <table class="table table-hover align-middle mb-0" id="tableExtractedSyllabus">
+                                <thead class="table-light small">
+                                    <tr>
+                                        <th>Unit / Chapter</th>
+                                        <th>Topic Title (Editable)</th>
+                                        <th>Difficulty</th>
+                                        <th>Est. Mins</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyExtractedTopics">
+                                    <!-- Populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-top bg-light">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary-syllabix" id="btnSaveExtractedSyllabus"
+                        style="display: none;" onclick="saveReviewedSyllabus()">
+                        <i class="bi bi-check-lg"></i> Save to Subject Syllabus
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Add Unit -->
+    <div class="modal fade" id="modalAddUnit" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header border-bottom">
+                    <h5 class="modal-title font-bold"><i class="bi bi-diagram-3-fill text-primary me-2"></i> Add
+                        Syllabus Unit</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form onsubmit="handleCreateUnit(event)">
+                    <div class="modal-body p-4">
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-4">
+                                <label class="form-label font-medium small">Unit Number *</label>
+                                <input type="number" id="inputUnitNumber" name="unitNumber" class="form-control"
+                                    required value="1" min="1">
+                            </div>
+                            <div class="col-md-8">
+                                <label class="form-label font-medium small">Unit Title *</label>
+                                <input type="text" name="title" class="form-control" required
+                                    placeholder="e.g. Transactions & Concurrency">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label font-medium small">Unit Description</label>
+                            <textarea name="description" class="form-control" rows="2"
+                                placeholder="Unit syllabus coverage..."></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-top bg-light">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary-syllabix">Save Unit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Add Topic -->
+    <div class="modal fade" id="modalAddTopic" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header border-bottom">
+                    <h5 class="modal-title font-bold"><i class="bi bi-journal-plus text-primary me-2"></i> Add Topic
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form onsubmit="handleCreateTopic(event)">
+                    <div class="modal-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label font-medium small">Target Unit *</label>
+                            <select name="unitId" id="selectTopicUnit" class="form-select" required>
                                 <!-- Populated dynamically -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer border-top bg-light">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary-syllabix" id="btnSaveExtractedSyllabus" style="display: none;" onclick="saveReviewedSyllabus()">
-                    <i class="bi bi-check-lg"></i> Save to Subject Syllabus
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal: Add Unit -->
-<div class="modal fade" id="modalAddUnit" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content border-0 shadow">
-            <div class="modal-header border-bottom">
-                <h5 class="modal-title font-bold"><i class="bi bi-diagram-3-fill text-primary me-2"></i> Add Syllabus Unit</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <form onsubmit="handleCreateUnit(event)">
-                <div class="modal-body p-4">
-                    <div class="row g-2 mb-3">
-                        <div class="col-md-4">
-                            <label class="form-label font-medium small">Unit Number *</label>
-                            <input type="number" id="inputUnitNumber" name="unitNumber" class="form-control" required value="1" min="1">
-                        </div>
-                        <div class="col-md-8">
-                            <label class="form-label font-medium small">Unit Title *</label>
-                            <input type="text" name="title" class="form-control" required placeholder="e.g. Transactions & Concurrency">
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label font-medium small">Unit Description</label>
-                        <textarea name="description" class="form-control" rows="2" placeholder="Unit syllabus coverage..."></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer border-top bg-light">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary-syllabix">Save Unit</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Modal: Add Topic -->
-<div class="modal fade" id="modalAddTopic" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content border-0 shadow">
-            <div class="modal-header border-bottom">
-                <h5 class="modal-title font-bold"><i class="bi bi-journal-plus text-primary me-2"></i> Add Topic</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <form onsubmit="handleCreateTopic(event)">
-                <div class="modal-body p-4">
-                    <div class="mb-3">
-                        <label class="form-label font-medium small">Target Unit *</label>
-                        <select name="unitId" id="selectTopicUnit" class="form-select" required>
-                            <!-- Populated dynamically -->
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label font-medium small">Topic Name *</label>
-                        <input type="text" name="name" class="form-control" required placeholder="e.g. BCNF Decomposition">
-                    </div>
-                    <div class="row g-2 mb-3">
-                        <div class="col-md-4">
-                            <label class="form-label font-medium small">Difficulty</label>
-                            <select name="difficulty" class="form-select">
-                                <option value="EASY">Easy</option>
-                                <option value="MEDIUM" selected>Medium</option>
-                                <option value="HARD">Hard</option>
                             </select>
                         </div>
-                        <div class="col-md-4">
-                            <label class="form-label font-medium small">Est. Duration (Mins)</label>
-                            <input type="number" name="estimatedDurationMinutes" class="form-control" value="45" min="15" max="180">
+                        <div class="mb-3">
+                            <label class="form-label font-medium small">Topic Name *</label>
+                            <input type="text" name="name" class="form-control" required
+                                placeholder="e.g. BCNF Decomposition">
                         </div>
-                        <div class="col-md-4">
-                            <label class="form-label font-medium small">Self Confidence</label>
-                            <select name="confidenceLevel" class="form-select">
-                                <option value="1">1 (Very Low)</option>
-                                <option value="2">2 (Low)</option>
-                                <option value="3" selected>3 (Moderate)</option>
-                                <option value="4">4 (High)</option>
-                                <option value="5">5 (Mastered)</option>
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-4">
+                                <label class="form-label font-medium small">Difficulty</label>
+                                <select name="difficulty" class="form-select">
+                                    <option value="EASY">Easy</option>
+                                    <option value="MEDIUM" selected>Medium</option>
+                                    <option value="HARD">Hard</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label font-medium small">Est. Duration (Mins)</label>
+                                <input type="number" name="estimatedDurationMinutes" class="form-control" value="45"
+                                    min="15" max="180">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label font-medium small">Self Confidence</label>
+                                <select name="confidenceLevel" class="form-select">
+                                    <option value="1">1 (Very Low)</option>
+                                    <option value="2">2 (Low)</option>
+                                    <option value="3" selected>3 (Moderate)</option>
+                                    <option value="4">4 (High)</option>
+                                    <option value="5">5 (Mastered)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label font-medium small">Status</label>
+                            <select name="completionStatus" class="form-select">
+                                <option value="NOT_STARTED" selected>Not Started</option>
+                                <option value="IN_PROGRESS">In Progress</option>
+                                <option value="COMPLETED">Completed</option>
                             </select>
                         </div>
+                        <div class="mb-3">
+                            <label class="form-label font-medium small">Description / Notes</label>
+                            <textarea name="description" class="form-control" rows="2"
+                                placeholder="Key concepts, formula, or textbook page references..."></textarea>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label font-medium small">Status</label>
-                        <select name="completionStatus" class="form-select">
-                            <option value="NOT_STARTED" selected>Not Started</option>
-                            <option value="IN_PROGRESS">In Progress</option>
-                            <option value="COMPLETED">Completed</option>
-                        </select>
+                    <div class="modal-footer border-top bg-light">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary-syllabix">Save Topic</button>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label font-medium small">Description / Notes</label>
-                        <textarea name="description" class="form-control" rows="2" placeholder="Key concepts, formula, or textbook page references..."></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer border-top bg-light">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary-syllabix">Save Topic</button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/js/app.js"></script>
-<script>
-    let currentSubjectId = null;
-    let currentUnits = [];
-    let extractedPayload = null;
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/app.js"></script>
+    <script>
+        let currentSubjectId = null;
+        let currentUnits = [];
+        let extractedPayload = null;
 
-    document.addEventListener('DOMContentLoaded', async () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const paramSubId = urlParams.get('subjectId');
-        await loadSubjectsDropdown(paramSubId);
-    });
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const paramSubId = urlParams.get('subjectId');
+            await loadSubjectsDropdown(paramSubId);
+        });
 
-    async function loadSubjectsDropdown(selectedId) {
-        try {
-            const subjects = await Syllabix.api('/api/subjects');
-            const select = document.getElementById('selectCurrentSubject');
-            select.innerHTML = '';
+        async function loadSubjectsDropdown(selectedId) {
+            try {
+                const subjects = await Syllabix.api('/api/subjects');
+                const select = document.getElementById('selectCurrentSubject');
+                select.innerHTML = '';
 
-            if (!subjects || subjects.length === 0) {
-                select.innerHTML = '<option value="">No subjects found</option>';
-                return;
+                if (!subjects || subjects.length === 0) {
+                    select.innerHTML = '<option value="">No subjects found</option>';
+                    return;
+                }
+
+                subjects.forEach(s => {
+                    const opt = document.createElement('option');
+                    opt.value = s.id;
+                    opt.textContent = `${s.name} (${s.code})`;
+                    if (selectedId && s.id == selectedId) opt.selected = true;
+                    select.appendChild(opt);
+                });
+
+                currentSubjectId = select.value;
+                loadSubjectSyllabus(currentSubjectId);
+            } catch (e) {
+                console.error(e);
             }
+        }
 
-            subjects.forEach(s => {
-                const opt = document.createElement('option');
-                opt.value = s.id;
-                opt.textContent = `${s.name} (${s.code})`;
-                if (selectedId && s.id == selectedId) opt.selected = true;
-                select.appendChild(opt);
-            });
-
-            currentSubjectId = select.value;
+        function onSubjectChange() {
+            currentSubjectId = document.getElementById('selectCurrentSubject').value;
             loadSubjectSyllabus(currentSubjectId);
-        } catch (e) {
-            console.error(e);
         }
-    }
 
-    function onSubjectChange() {
-        currentSubjectId = document.getElementById('selectCurrentSubject').value;
-        loadSubjectSyllabus(currentSubjectId);
-    }
+        async function loadSubjectSyllabus(subjectId) {
+            if (!subjectId) return;
+            try {
+                const subject = await Syllabix.api(`/api/subjects/${subjectId}`);
+                if (!subject) return;
 
-    async function loadSubjectSyllabus(subjectId) {
-        if (!subjectId) return;
-        try {
-            const subject = await Syllabix.api(`/api/subjects/${subjectId}`);
-            if (!subject) return;
+                // Render header
+                document.getElementById('subject-header-card').style.display = 'block';
+                document.getElementById('displaySubjectName').textContent = subject.name;
+                document.getElementById('displaySubjectMeta').textContent = `${subject.code} • Sem ${subject.semester} • ${subject.credits} Credits • Faculty: ${subject.teacherName || 'Not Assigned'}`;
+                document.getElementById('displaySubjectPct').textContent = `${subject.completionPercentage}%`;
+                document.getElementById('displaySubjectBar').style.width = `${subject.completionPercentage}%`;
+                document.getElementById('displaySubjectTopicsRatio').textContent = `${subject.completedTopics} of ${subject.totalTopics} topics completed`;
 
-            // Render header
-            document.getElementById('subject-header-card').style.display = 'block';
-            document.getElementById('displaySubjectName').textContent = subject.name;
-            document.getElementById('displaySubjectMeta').textContent = `${subject.code} • Sem ${subject.semester} • ${subject.credits} Credits • Faculty: ${subject.teacherName || 'Not Assigned'}`;
-            document.getElementById('displaySubjectPct').textContent = `${subject.completionPercentage}%`;
-            document.getElementById('displaySubjectBar').style.width = `${subject.completionPercentage}%`;
-            document.getElementById('displaySubjectTopicsRatio').textContent = `${subject.completedTopics} of ${subject.totalTopics} topics completed`;
-
-            // Load units
-            currentUnits = await Syllabix.api(`/api/topics/units/subject/${subjectId}`);
-            renderUnits(currentUnits);
-        } catch (e) {
-            console.error('Failed loading syllabus', e);
+                // Load units
+                currentUnits = await Syllabix.api(`/api/topics/units/subject/${subjectId}`);
+                renderUnits(currentUnits);
+            } catch (e) {
+                console.error('Failed loading syllabus', e);
+            }
         }
-    }
 
-    function renderUnits(units) {
-        const container = document.getElementById('units-container');
-        if (!units || units.length === 0) {
-            container.innerHTML = `
+        function renderUnits(units) {
+            const container = document.getElementById('units-container');
+            if (!units || units.length === 0) {
+                container.innerHTML = `
                 <div class="card-syllabix text-center py-5">
                     <i class="bi bi-diagram-3 fs-1 text-muted d-block mb-3"></i>
                     <h5>No Units Defined Yet</h5>
@@ -403,12 +446,12 @@
                     </div>
                 </div>
             `;
-            return;
-        }
+                return;
+            }
 
-        container.innerHTML = units.map(u => {
-            const topics = u.topics || [];
-            return `
+            container.innerHTML = units.map(u => {
+                const topics = u.topics || [];
+                return `
                 <div class="card-syllabix unit-block" data-unit-id="${u.id}">
                     <div class="card-header-clean bg-light">
                         <div class="d-flex align-items-center gap-3">
@@ -446,14 +489,14 @@
                                     </thead>
                                     <tbody>
                                         ${topics.map(t => {
-                                            let diffBadge = 'bg-secondary';
-                                            if (t.difficulty === 'HARD') diffBadge = 'bg-danger';
-                                            else if (t.difficulty === 'MEDIUM') diffBadge = 'bg-warning text-dark';
-                                            else if (t.difficulty === 'EASY') diffBadge = 'bg-success';
+                    let diffBadge = 'bg-secondary';
+                    if (t.difficulty === 'HARD') diffBadge = 'bg-danger';
+                    else if (t.difficulty === 'MEDIUM') diffBadge = 'bg-warning text-dark';
+                    else if (t.difficulty === 'EASY') diffBadge = 'bg-success';
 
-                                            let isDone = t.completionStatus === 'COMPLETED';
+                    let isDone = t.completionStatus === 'COMPLETED';
 
-                                            return `
+                    return `
                                                 <tr class="topic-row ${isDone ? 'table-light' : ''}" data-topic-name="${t.name.toLowerCase()}" data-topic-status="${t.completionStatus}">
                                                     <td>
                                                         <button class="btn btn-sm ${isDone ? 'btn-success' : (t.completionStatus === 'IN_PROGRESS' ? 'btn-warning text-dark' : 'btn-outline-secondary')} rounded-circle p-1" style="width: 28px; height: 28px;" onclick="cycleTopicStatus(${t.id}, '${t.completionStatus}')" title="Click to cycle status: Not Started -> In Progress -> Completed">
@@ -484,7 +527,7 @@
                                                     </td>
                                                 </tr>
                                             `;
-                                        }).join('')}
+                }).join('')}
                                     </tbody>
                                 </table>
                             </div>
@@ -492,199 +535,199 @@
                     </div>
                 </div>
             `;
-        }).join('');
-    }
-
-    async function cycleTopicStatus(topicId, currentStatus) {
-        let newStatus = 'IN_PROGRESS';
-        if (currentStatus === 'NOT_STARTED') newStatus = 'IN_PROGRESS';
-        else if (currentStatus === 'IN_PROGRESS') newStatus = 'COMPLETED';
-        else if (currentStatus === 'COMPLETED') newStatus = 'NOT_STARTED';
-
-        try {
-            await Syllabix.api(`/api/topics/${topicId}/status`, {
-                method: 'PATCH',
-                body: { status: newStatus }
-            });
-            Syllabix.toast(`Topic marked as ${newStatus.replace('_', ' ')}`, 'success');
-            loadSubjectSyllabus(currentSubjectId);
-        } catch (e) {
-            console.error(e);
+            }).join('');
         }
-    }
 
-    async function aiEvaluateSingleTopic(topicId) {
-        try {
-            Syllabix.toast('AI Agent evaluating topic difficulty...', 'info');
-            const res = await Syllabix.api(`/api/topics/${topicId}/ai-evaluate`, { method: 'POST' });
-            Syllabix.toast(`Evaluated as ${res.difficulty}!`, 'success');
-            loadSubjectSyllabus(currentSubjectId);
-        } catch (e) {
-            console.error('Failed to AI evaluate topic', e);
-        }
-    }
+        async function cycleTopicStatus(topicId, currentStatus) {
+            let newStatus = 'IN_PROGRESS';
+            if (currentStatus === 'NOT_STARTED') newStatus = 'IN_PROGRESS';
+            else if (currentStatus === 'IN_PROGRESS') newStatus = 'COMPLETED';
+            else if (currentStatus === 'COMPLETED') newStatus = 'NOT_STARTED';
 
-    async function aiEvaluateAllTopicsForSubject() {
-        if (!currentSubjectId) return;
-        try {
-            Syllabix.toast('AI Agent evaluating all topics for this subject...', 'info');
-            await Syllabix.api(`/api/subjects/${currentSubjectId}/ai-evaluate`, { method: 'POST' });
-            Syllabix.toast('All syllabus topics AI evaluated with difficulty scores!', 'success');
-            loadSubjectSyllabus(currentSubjectId);
-        } catch (e) {
-            console.error('Failed to AI evaluate all topics', e);
-        }
-    }
-
-    function filterTopics() {
-        const query = document.getElementById('inputTopicSearch').value.toLowerCase().trim();
-        const status = document.getElementById('selectStatusFilter').value;
-
-        const rows = document.querySelectorAll('.topic-row');
-        rows.forEach(r => {
-            const name = r.getAttribute('data-topic-name') || '';
-            const tStatus = r.getAttribute('data-topic-status') || '';
-
-            const matchesQuery = query === '' || name.includes(query);
-            const matchesStatus = status === 'ALL' || tStatus === status;
-
-            if (matchesQuery && matchesStatus) {
-                r.style.display = '';
-            } else {
-                r.style.display = 'none';
+            try {
+                await Syllabix.api(`/api/topics/${topicId}/status`, {
+                    method: 'PATCH',
+                    body: { status: newStatus }
+                });
+                Syllabix.toast(`Topic marked as ${newStatus.replace('_', ' ')}`, 'success');
+                loadSubjectSyllabus(currentSubjectId);
+            } catch (e) {
+                console.error(e);
             }
-        });
-    }
-
-    function openAddUnitModal() {
-        const nextNum = currentUnits.length + 1;
-        document.getElementById('inputUnitNumber').value = nextNum;
-        new bootstrap.Modal(document.getElementById('modalAddUnit')).show();
-    }
-
-    async function handleCreateUnit(e) {
-        e.preventDefault();
-        const form = e.target;
-        const formData = new FormData(form);
-        const payload = Object.fromEntries(formData.entries());
-        payload.unitNumber = parseInt(payload.unitNumber);
-
-        try {
-            await Syllabix.api(`/api/topics/units/subject/${currentSubjectId}`, {
-                method: 'POST',
-                body: payload
-            });
-            Syllabix.toast('Unit added successfully!', 'success');
-            bootstrap.Modal.getInstance(document.getElementById('modalAddUnit')).hide();
-            form.reset();
-            loadSubjectSyllabus(currentSubjectId);
-        } catch (err) {
-            console.error(err);
         }
-    }
 
-    function openAddTopicModal(preferredUnitId) {
-        const select = document.getElementById('selectTopicUnit');
-        select.innerHTML = '';
-        currentUnits.forEach(u => {
-            const opt = document.createElement('option');
-            opt.value = u.id;
-            opt.textContent = `Unit ${u.unitNumber}: ${u.title}`;
-            if (preferredUnitId && u.id == preferredUnitId) opt.selected = true;
-            select.appendChild(opt);
-        });
-        new bootstrap.Modal(document.getElementById('modalAddTopic')).show();
-    }
-
-    async function handleCreateTopic(e) {
-        e.preventDefault();
-        const form = e.target;
-        const formData = new FormData(form);
-        const payload = Object.fromEntries(formData.entries());
-        const unitId = payload.unitId;
-        delete payload.unitId;
-
-        payload.estimatedDurationMinutes = parseInt(payload.estimatedDurationMinutes);
-        payload.confidenceLevel = parseInt(payload.confidenceLevel);
-
-        try {
-            await Syllabix.api(`/api/topics/unit/${unitId}`, {
-                method: 'POST',
-                body: payload
-            });
-            Syllabix.toast('Topic created successfully!', 'success');
-            bootstrap.Modal.getInstance(document.getElementById('modalAddTopic')).hide();
-            form.reset();
-            loadSubjectSyllabus(currentSubjectId);
-        } catch (err) {
-            console.error(err);
-        }
-    }
-
-    async function deleteUnit(unitId) {
-        if (!confirm('Are you sure you want to delete this unit and all its topics?')) return;
-        try {
-            await Syllabix.api(`/api/topics/units/${unitId}`, { method: 'DELETE' });
-            Syllabix.toast('Unit deleted', 'info');
-            loadSubjectSyllabus(currentSubjectId);
-        } catch (e) {
-            console.error(e);
-        }
-    }
-
-    async function deleteTopic(topicId) {
-        if (!confirm('Delete this topic?')) return;
-        try {
-            await Syllabix.api(`/api/topics/${topicId}`, { method: 'DELETE' });
-            Syllabix.toast('Topic deleted', 'info');
-            loadSubjectSyllabus(currentSubjectId);
-        } catch (e) {
-            console.error(e);
-        }
-    }
-
-    // ================= ADVANCED FEATURE: PDF SYLLABUS UPLOAD & REVIEW =================
-    async function handlePdfSelected(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-
-        const formData = new FormData();
-        formData.append('file', file);
-
-        document.getElementById('pdfExtractionLoader').style.display = 'block';
-        document.getElementById('pdfReviewSection').style.display = 'none';
-        document.getElementById('btnSaveExtractedSyllabus').style.display = 'none';
-
-        try {
-            extractedPayload = await Syllabix.api('/api/syllabus/pdf/extract', {
-                method: 'POST',
-                body: formData
-            });
-
-            document.getElementById('pdfExtractionLoader').style.display = 'none';
-
-            if (!extractedPayload || !extractedPayload.units || extractedPayload.units.length === 0) {
-                Syllabix.toast('No structured units could be extracted from PDF. You can add them manually.', 'warning');
-                return;
+        async function aiEvaluateSingleTopic(topicId) {
+            try {
+                Syllabix.toast('AI Agent evaluating topic difficulty...', 'info');
+                const res = await Syllabix.api(`/api/topics/${topicId}/ai-evaluate`, { method: 'POST' });
+                Syllabix.toast(`Evaluated as ${res.difficulty}!`, 'success');
+                loadSubjectSyllabus(currentSubjectId);
+            } catch (e) {
+                console.error('Failed to AI evaluate topic', e);
             }
-
-            renderExtractedReviewTable(extractedPayload);
-        } catch (e) {
-            document.getElementById('pdfExtractionLoader').style.display = 'none';
-            console.error('PDF parsing error', e);
         }
-    }
 
-    function renderExtractedReviewTable(data) {
-        const tbody = document.getElementById('tbodyExtractedTopics');
-        tbody.innerHTML = '';
+        async function aiEvaluateAllTopicsForSubject() {
+            if (!currentSubjectId) return;
+            try {
+                Syllabix.toast('AI Agent evaluating all topics for this subject...', 'info');
+                await Syllabix.api(`/api/subjects/${currentSubjectId}/ai-evaluate`, { method: 'POST' });
+                Syllabix.toast('All syllabus topics AI evaluated with difficulty scores!', 'success');
+                loadSubjectSyllabus(currentSubjectId);
+            } catch (e) {
+                console.error('Failed to AI evaluate all topics', e);
+            }
+        }
 
-        let totalTopics = 0;
-        data.units.forEach((u, uIdx) => {
-            (u.topics || []).forEach((t, tIdx) => {
-                totalTopics++;
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
+        function filterTopics() {
+            const query = document.getElementById('inputTopicSearch').value.toLowerCase().trim();
+            const status = document.getElementById('selectStatusFilter').value;
+
+            const rows = document.querySelectorAll('.topic-row');
+            rows.forEach(r => {
+                const name = r.getAttribute('data-topic-name') || '';
+                const tStatus = r.getAttribute('data-topic-status') || '';
+
+                const matchesQuery = query === '' || name.includes(query);
+                const matchesStatus = status === 'ALL' || tStatus === status;
+
+                if (matchesQuery && matchesStatus) {
+                    r.style.display = '';
+                } else {
+                    r.style.display = 'none';
+                }
+            });
+        }
+
+        function openAddUnitModal() {
+            const nextNum = currentUnits.length + 1;
+            document.getElementById('inputUnitNumber').value = nextNum;
+            new bootstrap.Modal(document.getElementById('modalAddUnit')).show();
+        }
+
+        async function handleCreateUnit(e) {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+            const payload = Object.fromEntries(formData.entries());
+            payload.unitNumber = parseInt(payload.unitNumber);
+
+            try {
+                await Syllabix.api(`/api/topics/units/subject/${currentSubjectId}`, {
+                    method: 'POST',
+                    body: payload
+                });
+                Syllabix.toast('Unit added successfully!', 'success');
+                bootstrap.Modal.getInstance(document.getElementById('modalAddUnit')).hide();
+                form.reset();
+                loadSubjectSyllabus(currentSubjectId);
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function openAddTopicModal(preferredUnitId) {
+            const select = document.getElementById('selectTopicUnit');
+            select.innerHTML = '';
+            currentUnits.forEach(u => {
+                const opt = document.createElement('option');
+                opt.value = u.id;
+                opt.textContent = `Unit ${u.unitNumber}: ${u.title}`;
+                if (preferredUnitId && u.id == preferredUnitId) opt.selected = true;
+                select.appendChild(opt);
+            });
+            new bootstrap.Modal(document.getElementById('modalAddTopic')).show();
+        }
+
+        async function handleCreateTopic(e) {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+            const payload = Object.fromEntries(formData.entries());
+            const unitId = payload.unitId;
+            delete payload.unitId;
+
+            payload.estimatedDurationMinutes = parseInt(payload.estimatedDurationMinutes);
+            payload.confidenceLevel = parseInt(payload.confidenceLevel);
+
+            try {
+                await Syllabix.api(`/api/topics/unit/${unitId}`, {
+                    method: 'POST',
+                    body: payload
+                });
+                Syllabix.toast('Topic created successfully!', 'success');
+                bootstrap.Modal.getInstance(document.getElementById('modalAddTopic')).hide();
+                form.reset();
+                loadSubjectSyllabus(currentSubjectId);
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        async function deleteUnit(unitId) {
+            if (!confirm('Are you sure you want to delete this unit and all its topics?')) return;
+            try {
+                await Syllabix.api(`/api/topics/units/${unitId}`, { method: 'DELETE' });
+                Syllabix.toast('Unit deleted', 'info');
+                loadSubjectSyllabus(currentSubjectId);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        async function deleteTopic(topicId) {
+            if (!confirm('Delete this topic?')) return;
+            try {
+                await Syllabix.api(`/api/topics/${topicId}`, { method: 'DELETE' });
+                Syllabix.toast('Topic deleted', 'info');
+                loadSubjectSyllabus(currentSubjectId);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        // ================= ADVANCED FEATURE: PDF SYLLABUS UPLOAD & REVIEW =================
+        async function handlePdfSelected(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            document.getElementById('pdfExtractionLoader').style.display = 'block';
+            document.getElementById('pdfReviewSection').style.display = 'none';
+            document.getElementById('btnSaveExtractedSyllabus').style.display = 'none';
+
+            try {
+                extractedPayload = await Syllabix.api('/api/syllabus/pdf/extract', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                document.getElementById('pdfExtractionLoader').style.display = 'none';
+
+                if (!extractedPayload || !extractedPayload.units || extractedPayload.units.length === 0) {
+                    Syllabix.toast('No structured units could be extracted from PDF. You can add them manually.', 'warning');
+                    return;
+                }
+
+                renderExtractedReviewTable(extractedPayload);
+            } catch (e) {
+                document.getElementById('pdfExtractionLoader').style.display = 'none';
+                console.error('PDF parsing error', e);
+            }
+        }
+
+        function renderExtractedReviewTable(data) {
+            const tbody = document.getElementById('tbodyExtractedTopics');
+            tbody.innerHTML = '';
+
+            let totalTopics = 0;
+            data.units.forEach((u, uIdx) => {
+                (u.topics || []).forEach((t, tIdx) => {
+                    totalTopics++;
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
                     <td>
                         <input type="text" class="form-control form-control-sm" value="Unit ${u.unitNumber}: ${u.title}" onchange="updateExtractedUnitTitle(${uIdx}, this.value)">
                     </td>
@@ -702,55 +745,56 @@
                         <input type="number" class="form-control form-control-sm" value="${t.estimatedDurationMinutes || 45}" onchange="updateExtractedTopicDuration(${uIdx}, ${tIdx}, this.value)">
                     </td>
                 `;
-                tbody.appendChild(tr);
-            });
-        });
-
-        document.getElementById('pdfPreviewCount').textContent = `${data.units.length} Units • ${totalTopics} Topics`;
-        document.getElementById('pdfReviewSection').style.display = 'block';
-        document.getElementById('btnSaveExtractedSyllabus').style.display = 'inline-flex';
-    }
-
-    function updateExtractedUnitTitle(uIdx, val) {
-        if (extractedPayload && extractedPayload.units[uIdx]) {
-            extractedPayload.units[uIdx].title = val.replace(/^Unit \d+:\s*/, '');
-        }
-    }
-
-    function updateExtractedTopicName(uIdx, tIdx, val) {
-        if (extractedPayload && extractedPayload.units[uIdx].topics[tIdx]) {
-            extractedPayload.units[uIdx].topics[tIdx].name = val;
-        }
-    }
-
-    function updateExtractedTopicDifficulty(uIdx, tIdx, val) {
-        if (extractedPayload && extractedPayload.units[uIdx].topics[tIdx]) {
-            extractedPayload.units[uIdx].topics[tIdx].difficulty = val;
-        }
-    }
-
-    function updateExtractedTopicDuration(uIdx, tIdx, val) {
-        if (extractedPayload && extractedPayload.units[uIdx].topics[tIdx]) {
-            extractedPayload.units[uIdx].topics[tIdx].estimatedDurationMinutes = parseInt(val);
-        }
-    }
-
-    async function saveReviewedSyllabus() {
-        if (!extractedPayload || !currentSubjectId) return;
-
-        try {
-            await Syllabix.api(`/api/syllabus/pdf/save/${currentSubjectId}`, {
-                method: 'POST',
-                body: extractedPayload
+                    tbody.appendChild(tr);
+                });
             });
 
-            Syllabix.toast('Syllabus imported and saved successfully!', 'success');
-            bootstrap.Modal.getInstance(document.getElementById('modalPdfUpload')).hide();
-            loadSubjectSyllabus(currentSubjectId);
-        } catch (e) {
-            console.error('Failed saving reviewed syllabus', e);
+            document.getElementById('pdfPreviewCount').textContent = `${data.units.length} Units • ${totalTopics} Topics`;
+            document.getElementById('pdfReviewSection').style.display = 'block';
+            document.getElementById('btnSaveExtractedSyllabus').style.display = 'inline-flex';
         }
-    }
-</script>
+
+        function updateExtractedUnitTitle(uIdx, val) {
+            if (extractedPayload && extractedPayload.units[uIdx]) {
+                extractedPayload.units[uIdx].title = val.replace(/^Unit \d+:\s*/, '');
+            }
+        }
+
+        function updateExtractedTopicName(uIdx, tIdx, val) {
+            if (extractedPayload && extractedPayload.units[uIdx].topics[tIdx]) {
+                extractedPayload.units[uIdx].topics[tIdx].name = val;
+            }
+        }
+
+        function updateExtractedTopicDifficulty(uIdx, tIdx, val) {
+            if (extractedPayload && extractedPayload.units[uIdx].topics[tIdx]) {
+                extractedPayload.units[uIdx].topics[tIdx].difficulty = val;
+            }
+        }
+
+        function updateExtractedTopicDuration(uIdx, tIdx, val) {
+            if (extractedPayload && extractedPayload.units[uIdx].topics[tIdx]) {
+                extractedPayload.units[uIdx].topics[tIdx].estimatedDurationMinutes = parseInt(val);
+            }
+        }
+
+        async function saveReviewedSyllabus() {
+            if (!extractedPayload || !currentSubjectId) return;
+
+            try {
+                await Syllabix.api(`/api/syllabus/pdf/save/${currentSubjectId}`, {
+                    method: 'POST',
+                    body: extractedPayload
+                });
+
+                Syllabix.toast('Syllabus imported and saved successfully!', 'success');
+                bootstrap.Modal.getInstance(document.getElementById('modalPdfUpload')).hide();
+                loadSubjectSyllabus(currentSubjectId);
+            } catch (e) {
+                console.error('Failed saving reviewed syllabus', e);
+            }
+        }
+    </script>
 </body>
+
 </html>
