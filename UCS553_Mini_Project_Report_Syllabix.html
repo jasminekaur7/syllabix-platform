@@ -6,29 +6,26 @@
     <title>UCS553 Mini Project Report - Syllabix</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
-    </script>
     <style>
         @page {
-            size: A4;
-            margin: 20mm 18mm 20mm 18mm;
-            @bottom-right {
-                content: counter(page);
-            }
+            size: A4 portrait;
+            margin: 18mm 18mm 18mm 18mm;
+        }
+        @page :first {
+            margin: 12mm 15mm 12mm 15mm;
         }
         body {
             font-family: 'Times New Roman', Times, serif;
             color: #1a1a1a;
-            line-height: 1.6;
+            line-height: 1.55;
             background-color: #f8f9fa;
+            font-size: 11.5pt;
         }
         .report-container {
-            max-width: 900px;
+            max-width: 880px;
             margin: 30px auto;
             background: #ffffff;
-            padding: 50px 65px;
+            padding: 40px 55px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             border-radius: 4px;
         }
@@ -36,6 +33,7 @@
             body {
                 background: #ffffff;
                 color: #000000;
+                font-size: 11pt;
             }
             .report-container {
                 max-width: 100%;
@@ -51,132 +49,150 @@
                 page-break-after: always;
                 break-after: page;
             }
+            .cover-page {
+                height: 245mm !important;
+                max-height: 245mm !important;
+                padding: 22px 20px !important;
+                margin: 0 !important;
+                box-sizing: border-box !important;
+            }
+            .diagram-box {
+                page-break-inside: avoid;
+                margin: 15px auto !important;
+                text-align: center;
+            }
+            .diagram-box svg {
+                max-width: 100% !important;
+                height: auto !important;
+            }
         }
         .cover-page {
-            min-height: 980px;
+            box-sizing: border-box;
+            height: 900px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             text-align: center;
             border: 2px solid #222;
-            padding: 45px 35px;
-            margin-bottom: 30px;
+            padding: 26px 22px;
+            margin-bottom: 0;
+            background: #fff;
         }
         .cover-header h1 {
-            font-size: 26pt;
+            font-size: 21pt;
             font-weight: bold;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             color: #000;
         }
         .cover-header h2 {
-            font-size: 20pt;
+            font-size: 16pt;
             font-weight: bold;
-            margin-bottom: 25px;
+            margin-bottom: 10px;
             color: #333;
         }
         .cover-title {
-            margin: 30px 0;
+            margin: 10px 0;
         }
         .cover-title h3 {
-            font-size: 20pt;
+            font-size: 16pt;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             color: #800000;
-            line-height: 1.3;
+            line-height: 1.35;
         }
         .cover-section-title {
-            font-size: 13pt;
+            font-size: 11pt;
             font-style: italic;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
         .cover-guide {
-            font-size: 14pt;
-            margin: 20px 0;
+            font-size: 12pt;
+            margin: 8px 0;
         }
         .cover-guide strong {
-            font-size: 15pt;
+            font-size: 13pt;
         }
         .ti-logo-box {
-            margin: 25px auto;
+            margin: 10px auto;
         }
         .ti-logo-text {
-            font-size: 40pt;
+            font-size: 34pt;
             font-weight: 900;
             color: #d32f2f;
-            line-height: 1;
+            line-height: 0.9;
             letter-spacing: -2px;
             display: inline-block;
         }
         .ti-subtext {
-            font-size: 9pt;
+            font-size: 8.5pt;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: #800000;
-            margin-top: 4px;
+            margin-top: 3px;
         }
         .ti-deemed {
-            font-size: 8pt;
+            font-size: 7.5pt;
             color: #555;
             font-style: italic;
         }
         .cover-students {
-            margin: 25px 0;
+            margin: 8px 0;
             text-align: left;
             display: inline-block;
-            font-size: 13pt;
+            font-size: 11.5pt;
         }
         .cover-students-table {
             margin: 0 auto;
-            font-size: 13pt;
+            font-size: 11.5pt;
         }
         .cover-students-table td {
-            padding: 4px 15px;
+            padding: 3px 14px;
         }
         .cover-footer {
-            font-size: 12pt;
-            line-height: 1.4;
+            font-size: 11pt;
+            line-height: 1.35;
+            margin-top: 4px;
         }
         .cover-footer strong {
-            font-size: 13pt;
+            font-size: 11.5pt;
         }
         h2.section-heading {
-            font-size: 18pt;
+            font-size: 16pt;
             font-weight: bold;
             border-bottom: 2px solid #800000;
-            padding-bottom: 6px;
-            margin-top: 35px;
-            margin-bottom: 20px;
+            padding-bottom: 5px;
+            margin-top: 25px;
+            margin-bottom: 14px;
             color: #800000;
         }
         h3.sub-heading {
-            font-size: 14pt;
+            font-size: 13pt;
             font-weight: bold;
-            margin-top: 25px;
-            margin-bottom: 12px;
+            margin-top: 20px;
+            margin-bottom: 10px;
             color: #002D62;
         }
         h4.sub-sub-heading {
-            font-size: 12pt;
+            font-size: 11.5pt;
             font-weight: bold;
-            margin-top: 18px;
-            margin-bottom: 8px;
+            margin-top: 14px;
+            margin-bottom: 6px;
             color: #333;
         }
         p, li {
-            font-size: 12pt;
             text-align: justify;
         }
         table.report-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 11pt;
+            margin: 14px 0;
+            font-size: 10.5pt;
         }
         table.report-table th, table.report-table td {
             border: 1px solid #444;
-            padding: 8px 12px;
+            padding: 6px 10px;
             vertical-align: top;
         }
         table.report-table th {
@@ -191,32 +207,38 @@
             background-color: #f4f6f8;
             border: 1px solid #dcdcdc;
             border-left: 4px solid #800000;
-            padding: 12px 16px;
-            font-size: 10pt;
-            line-height: 1.45;
+            padding: 10px 14px;
+            font-size: 9.5pt;
+            line-height: 1.4;
             overflow-x: auto;
             border-radius: 3px;
-            margin: 16px 0;
+            margin: 12px 0;
         }
-        .mermaid-container {
+        .diagram-box {
             text-align: center;
-            background: #fafafa;
+            background: #ffffff;
             border: 1px solid #e2e8f0;
             border-radius: 4px;
-            padding: 15px;
-            margin: 20px 0;
+            padding: 10px;
+            margin: 14px 0 20px 0;
+        }
+        .diagram-box svg {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
         }
         .callout-box {
             background-color: #f8f9fc;
             border-left: 4px solid #002D62;
-            padding: 14px 18px;
-            margin: 20px 0;
+            padding: 12px 16px;
+            margin: 14px 0;
             border-radius: 3px;
         }
         .status-badge {
             display: inline-block;
-            padding: 2px 8px;
-            font-size: 9pt;
+            padding: 2px 7px;
+            font-size: 8.5pt;
             font-weight: bold;
             border-radius: 3px;
         }
@@ -271,7 +293,7 @@
         </div>
 
         <div class="cover-students">
-            <div style="font-weight: bold; margin-bottom: 8px;">Submitted By :</div>
+            <div style="font-weight: bold; margin-bottom: 6px;">Submitted By :</div>
             <table class="cover-students-table">
                 <tr>
                     <td><strong>Roll Number</strong></td>
@@ -371,10 +393,13 @@
         The system is deployed live on the cloud via Docker at <strong><code>https://syllabix-platform-2.onrender.com</code></strong> and backed by a comprehensive JUnit 5 and Mockito test suite achieving 100% pass rates across all core algorithmic services.
     </p>
 
+    <div class="page-break"></div>
+
+    <!-- PAGE 3: TABLE OF CONTENTS -->
     <h2 class="section-heading">Table of Contents</h2>
     <div class="row">
         <div class="col-12">
-            <ul class="list-unstyled" style="font-size: 11pt; line-height: 1.8;">
+            <ul class="list-unstyled" style="font-size: 11pt; line-height: 1.85;">
                 <li><strong>1. Cover Page</strong></li>
                 <li><strong>2. Abstract</strong></li>
                 <li><strong>3. Table of Contents</strong></li>
@@ -475,348 +500,569 @@
 
     <div class="page-break"></div>
 
-    <!-- CHAPTER 2 -->
+    <!-- CHAPTER 2: SYSTEM DESIGN -->
     <h2 class="section-heading">Chapter 2: System Design</h2>
 
     <h3 class="sub-heading">2.1 System Architecture</h3>
     <p>
         Syllabix follows an enterprise 3-tier Layered MVC (Model-View-Controller) architecture, ensuring clean separation of concerns, testability, and high maintainability.
     </p>
+    <div class="diagram-box">
+        
+<svg width="780" height="420" viewBox="0 0 780 420" xmlns="http://www.w3.org/2000/svg" style="font-family:'Segoe UI',Arial,sans-serif;">
+  <defs>
+    <linearGradient id="gradHeader" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#800000;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#b30000;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gradBox" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#edf2f7;stop-opacity:1" />
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#002D62" />
+    </marker>
+  </defs>
 
-    <div class="mermaid-container">
-        <div class="mermaid">
-flowchart TD
-    subgraph ClientLayer ["Client Presentation Layer (Browser)"]
-        UI["Institutional UI (HTML5, Bootstrap 5, Custom CSS, JS)"]
-        ChartJS["Chart.js Analytics & Visualizations"]
-        WebAudio["HTML5 Web Audio Chime Synthesizer"]
-    end
+  <!-- LAYER 1: CLIENT -->
+  <rect x="20" y="10" width="740" height="60" rx="6" fill="#f0f4f8" stroke="#002D62" stroke-width="1.5"/>
+  <rect x="20" y="10" width="740" height="22" rx="6" fill="#002D62"/>
+  <text x="390" y="26" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">CLIENT PRESENTATION LAYER (BROWSER)</text>
+  <rect x="35" y="38" width="220" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="145" y="54" fill="#1e293b" font-size="10" font-weight="bold" text-anchor="middle">Institutional UI (HTML5 / Bootstrap 5)</text>
+  <rect x="275" y="38" width="220" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="385" y="54" fill="#1e293b" font-size="10" font-weight="bold" text-anchor="middle">Chart.js Analytics &amp; Visualizations</text>
+  <rect x="515" y="38" width="230" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="630" y="54" fill="#1e293b" font-size="10" font-weight="bold" text-anchor="middle">HTML5 Web Audio Chime Synthesizer</text>
 
-    subgraph SecurityFilter ["Security & Routing Layer"]
-        SecFilter["Spring Security Filter Chain (CSRF, BCrypt, Session Mgmt)"]
-    end
+  <!-- ARROW 1-2 -->
+  <line x1="390" y1="70" x2="390" y2="90" stroke="#002D62" stroke-width="2" marker-end="url(#arrow)" />
+  <text x="405" y="83" fill="#64748b" font-size="9" font-weight="bold">HTTP REST / JSON</text>
 
-    subgraph ControllerLayer ["API & MVC Controller Layer"]
-        AuthCtrl["Auth Controller (/api/auth)"]
-        SubCtrl["Subject Controller (/api/subjects)"]
-        PlanCtrl["Planner Controller (/api/planner)"]
-        CalCtrl["Academic Calendar Controller (/api/academic-calendar)"]
-        InsightCtrl["Insights Controller (/api/insights)"]
-    end
+  <!-- LAYER 2: SECURITY -->
+  <rect x="140" y="92" width="500" height="42" rx="6" fill="#fff1f2" stroke="#e11d48" stroke-width="1.5"/>
+  <text x="390" y="110" fill="#9f1239" font-size="11" font-weight="bold" text-anchor="middle">Spring Security Filter Chain &amp; Auth Filter</text>
+  <text x="390" y="125" fill="#475569" font-size="9.5" text-anchor="middle">BCrypt Hashing &bull; Session Cookie Management &bull; CSRF Validation</text>
 
-    subgraph ServiceLayer ["Business Logic & Algorithmic Layer"]
-        RecEngine["RecommendationEngineService (Weighted Priority Heuristic)"]
-        EvalParser["CourseEvaluationParserService (Regex & Run-Rate Engine)"]
-        PlanService["StudyPlanService (Dynamic Timetable Allocator)"]
-        CalService["AcademicCalendarService (20-Week TIET Datesheet Engine)"]
-        InsightService["AcademicInsightsService (Readiness & CGPA Simulator)"]
-        PdfService["PdfParserService (Apache PDFBox Extractor)"]
-    end
+  <!-- ARROW 2-3 -->
+  <line x1="390" y1="134" x2="390" y2="152" stroke="#002D62" stroke-width="2" marker-end="url(#arrow)" />
 
-    subgraph PersistenceLayer ["Data Persistence Layer"]
-        SpringData["Spring Data JPA & Hibernate 6 ORM"]
-        HikariCP["HikariCP High-Performance Connection Pool"]
-    end
+  <!-- LAYER 3: CONTROLLERS -->
+  <rect x="20" y="154" width="740" height="60" rx="6" fill="#f8fafc" stroke="#475569" stroke-width="1.5"/>
+  <rect x="20" y="154" width="740" height="20" rx="6" fill="#475569"/>
+  <text x="390" y="168" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">REST CONTROLLER LAYER (Spring MVC)</text>
+  <rect x="30" y="180" width="130" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="95" y="196" fill="#1e293b" font-size="9" font-weight="bold" text-anchor="middle">AuthApiController</text>
+  <rect x="175" y="180" width="130" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="240" y="196" fill="#1e293b" font-size="9" font-weight="bold" text-anchor="middle">SubjectApiController</text>
+  <rect x="320" y="180" width="135" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="387" y="196" fill="#1e293b" font-size="9" font-weight="bold" text-anchor="middle">PlannerApiController</text>
+  <rect x="470" y="180" width="140" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="540" y="196" fill="#1e293b" font-size="9" font-weight="bold" text-anchor="middle">CalendarApiController</text>
+  <rect x="625" y="180" width="125" height="24" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="687" y="196" fill="#1e293b" font-size="9" font-weight="bold" text-anchor="middle">InsightsApiController</text>
 
-    subgraph DatabaseLayer ["Relational Storage Layer"]
-        H2MySQL["Relational Database (H2 File-based MySQL Mode / MySQL 8.0)"]
-    end
+  <!-- ARROW 3-4 -->
+  <line x1="390" y1="214" x2="390" y2="232" stroke="#002D62" stroke-width="2" marker-end="url(#arrow)" />
 
-    ClientLayer <-->|JSON / REST & HTTP GET| SecFilter
-    SecFilter <--> ControllerLayer
-    ControllerLayer <--> ServiceLayer
-    ServiceLayer <--> PersistenceLayer
-    PersistenceLayer <--> DatabaseLayer
-        </div>
+  <!-- LAYER 4: BUSINESS SERVICES -->
+  <rect x="20" y="234" width="740" height="66" rx="6" fill="#fdf2f2" stroke="#800000" stroke-width="1.5"/>
+  <rect x="20" y="234" width="740" height="20" rx="6" fill="url(#gradHeader)"/>
+  <text x="390" y="248" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">BUSINESS LOGIC &amp; ALGORITHMIC LAYER</text>
+  <rect x="30" y="260" width="220" height="30" rx="4" fill="#ffffff" stroke="#fca5a5"/>
+  <text x="140" y="274" fill="#800000" font-size="9.5" font-weight="bold" text-anchor="middle">RecommendationEngineService</text>
+  <text x="140" y="286" fill="#475569" font-size="8" text-anchor="middle">4-Factor Normalized Priority Model</text>
+
+  <rect x="265" y="260" width="220" height="30" rx="4" fill="#ffffff" stroke="#fca5a5"/>
+  <text x="375" y="274" fill="#800000" font-size="9.5" font-weight="bold" text-anchor="middle">CourseEvaluationParserService</text>
+  <text x="375" y="286" fill="#475569" font-size="8" text-anchor="middle">LMS Regex &amp; Grade Run-Rate</text>
+
+  <rect x="500" y="260" width="250" height="30" rx="4" fill="#ffffff" stroke="#fca5a5"/>
+  <text x="625" y="274" fill="#800000" font-size="9.5" font-weight="bold" text-anchor="middle">AcademicCalendarService</text>
+  <text x="625" y="286" fill="#475569" font-size="8" text-anchor="middle">20-Week TIET Datesheet Engine</text>
+
+  <!-- ARROW 4-5 -->
+  <line x1="390" y1="300" x2="390" y2="318" stroke="#002D62" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- LAYER 5: PERSISTENCE & DB -->
+  <rect x="20" y="320" width="740" height="85" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <rect x="20" y="320" width="740" height="20" rx="6" fill="#16a34a"/>
+  <text x="390" y="334" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">DATA PERSISTENCE &amp; STORAGE LAYER</text>
+
+  <rect x="40" y="348" width="320" height="46" rx="4" fill="#ffffff" stroke="#86efac"/>
+  <text x="200" y="367" fill="#14532d" font-size="10.5" font-weight="bold" text-anchor="middle">Spring Data JPA &bull; Hibernate 6 ORM</text>
+  <text x="200" y="382" fill="#475569" font-size="9" text-anchor="middle">HikariCP High-Performance Connection Pool</text>
+
+  <rect x="400" y="348" width="340" height="46" rx="4" fill="#ffffff" stroke="#86efac"/>
+  <text x="570" y="367" fill="#14532d" font-size="10.5" font-weight="bold" text-anchor="middle">Relational Database Engine</text>
+  <text x="570" y="382" fill="#475569" font-size="9" text-anchor="middle">Persistent H2 (MySQL Mode) &bull; Production MySQL 8.0</text>
+</svg>
+
     </div>
+
+    <div class="page-break"></div>
 
     <h3 class="sub-heading">2.2 Use Case Diagram</h3>
-    <div class="mermaid-container">
-        <div class="mermaid">
-flowchart LR
-    Student((Registered Student))
-    System((Syllabix Core Engine))
+    <p>
+        The primary actors interacting with the system are the <strong>Registered Student</strong> and the <strong>System Automation Engine</strong>.
+    </p>
+    <div class="diagram-box">
+        
+<svg width="780" height="460" viewBox="0 0 780 460" xmlns="http://www.w3.org/2000/svg" style="font-family:'Segoe UI',Arial,sans-serif;">
+  <!-- System Boundary -->
+  <rect x="180" y="20" width="420" height="425" rx="8" fill="#ffffff" stroke="#800000" stroke-width="2"/>
+  <rect x="180" y="20" width="420" height="28" rx="8" fill="#800000"/>
+  <text x="390" y="39" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">Syllabix Academic Platform</text>
 
-    subgraph SyllabixPlatform ["Syllabix Academic Platform"]
-        UC1["Authenticate / Register / BCrypt Login"]
-        UC2["View Academic Dashboard & Roll Ribbon"]
-        UC3["Manage Registered Subjects & Syllabus Units"]
-        UC4["Upload & Extract Syllabus PDF (Apache PDFBox)"]
-        UC5["Paste LMS Scheme & Calculate Target Run-Rate"]
-        UC6["Track Lab Assignments (Assignments 1-8)"]
-        UC7["Consult 20-Week TIET Academic Calendar"]
-        UC8["Generate Adaptive Daily Study Timetable"]
-        UC9["Execute Pomodoro Study Focus Session"]
-        UC10["Simulate What-If CGPA & Exam Readiness"]
-        UC11["Algorithmic Priority Scoring (4-Factor Model)"]
-    end
+  <!-- Left Actor: Registered Student -->
+  <circle cx="80" cy="180" r="16" fill="#f8fafc" stroke="#002D62" stroke-width="2"/>
+  <line x1="80" y1="196" x2="80" y2="235" stroke="#002D62" stroke-width="2"/>
+  <line x1="55" y1="210" x2="105" y2="210" stroke="#002D62" stroke-width="2"/>
+  <line x1="80" y1="235" x2="60" y2="275" stroke="#002D62" stroke-width="2"/>
+  <line x1="80" y1="235" x2="100" y2="275" stroke="#002D62" stroke-width="2"/>
+  <text x="80" y="295" fill="#002D62" font-size="11" font-weight="bold" text-anchor="middle">Registered Student</text>
+  <text x="80" y="310" fill="#64748b" font-size="9" text-anchor="middle">(Jasmine Kaur)</text>
 
-    Student --> UC1
-    Student --> UC2
-    Student --> UC3
-    Student --> UC4
-    Student --> UC5
-    Student --> UC6
-    Student --> UC7
-    Student --> UC8
-    Student --> UC9
-    Student --> UC10
+  <!-- Right Actor: Core Engine -->
+  <rect x="655" y="195" width="85" height="50" rx="6" fill="#f8fafc" stroke="#800000" stroke-width="2"/>
+  <text x="697" y="218" fill="#800000" font-size="10.5" font-weight="bold" text-anchor="middle">&lt;&lt;System&gt;&gt;</text>
+  <text x="697" y="233" fill="#1e293b" font-size="10" font-weight="bold" text-anchor="middle">Syllabix Core</text>
 
-    UC5 --> System
-    UC8 --> System
-    System --> UC11
-        </div>
+  <!-- Use Case Ellipses -->
+  <!-- UC1 -->
+  <ellipse cx="390" cy="70" rx="160" ry="15" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.2"/>
+  <text x="390" y="74" fill="#0369a1" font-size="9.5" font-weight="bold" text-anchor="middle">UC1: Authenticate / Register / BCrypt Login</text>
+  <line x1="96" y1="180" x2="230" y2="70" stroke="#94a3b8" stroke-width="1.2"/>
+
+  <!-- UC2 -->
+  <ellipse cx="390" cy="107" rx="160" ry="15" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.2"/>
+  <text x="390" y="111" fill="#0369a1" font-size="9.5" font-weight="bold" text-anchor="middle">UC2: View Academic Dashboard &amp; Roll Ribbon</text>
+  <line x1="96" y1="185" x2="230" y2="107" stroke="#94a3b8" stroke-width="1.2"/>
+
+  <!-- UC3 -->
+  <ellipse cx="390" cy="144" rx="160" ry="15" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.2"/>
+  <text x="390" y="148" fill="#0369a1" font-size="9.5" font-weight="bold" text-anchor="middle">UC3: Manage 7 Registered Subjects &amp; Units</text>
+  <line x1="96" y1="195" x2="230" y2="144" stroke="#94a3b8" stroke-width="1.2"/>
+
+  <!-- UC4 -->
+  <ellipse cx="390" cy="181" rx="160" ry="15" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.2"/>
+  <text x="390" y="185" fill="#0369a1" font-size="9.5" font-weight="bold" text-anchor="middle">UC4: Extract Syllabus PDF (Apache PDFBox)</text>
+  <line x1="96" y1="210" x2="230" y2="181" stroke="#94a3b8" stroke-width="1.2"/>
+
+  <!-- UC5 -->
+  <ellipse cx="390" cy="218" rx="160" ry="15" fill="#fdf2f8" stroke="#db2777" stroke-width="1.4"/>
+  <text x="390" y="222" fill="#be185d" font-size="9.5" font-weight="bold" text-anchor="middle">UC5: Paste LMS Scheme &amp; Calculate Run-Rate</text>
+  <line x1="96" y1="215" x2="230" y2="218" stroke="#94a3b8" stroke-width="1.2"/>
+  <line x1="550" y1="218" x2="655" y2="215" stroke="#94a3b8" stroke-width="1.2"/>
+
+  <!-- UC6 -->
+  <ellipse cx="390" cy="255" rx="160" ry="15" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.2"/>
+  <text x="390" y="259" fill="#0369a1" font-size="9.5" font-weight="bold" text-anchor="middle">UC6: Track Lab Assignments (Assignments 1-8)</text>
+  <line x1="96" y1="225" x2="230" y2="255" stroke="#94a3b8" stroke-width="1.2"/>
+
+  <!-- UC7 -->
+  <ellipse cx="390" cy="292" rx="160" ry="15" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.2"/>
+  <text x="390" y="296" fill="#0369a1" font-size="9.5" font-weight="bold" text-anchor="middle">UC7: Consult 20-Week TIET Academic Calendar</text>
+  <line x1="96" y1="235" x2="230" y2="292" stroke="#94a3b8" stroke-width="1.2"/>
+
+  <!-- UC8 -->
+  <ellipse cx="390" cy="329" rx="160" ry="15" fill="#fef2f2" stroke="#dc2626" stroke-width="1.4"/>
+  <text x="390" y="333" fill="#b91c1c" font-size="9.5" font-weight="bold" text-anchor="middle">UC8: Generate Adaptive Daily Study Timetable</text>
+  <line x1="96" y1="245" x2="230" y2="329" stroke="#94a3b8" stroke-width="1.2"/>
+  <line x1="550" y1="329" x2="655" y2="225" stroke="#94a3b8" stroke-width="1.2"/>
+
+  <!-- UC9 -->
+  <ellipse cx="390" cy="366" rx="160" ry="15" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.2"/>
+  <text x="390" y="370" fill="#0369a1" font-size="9.5" font-weight="bold" text-anchor="middle">UC9: Execute Pomodoro Study Session &amp; Streak</text>
+  <line x1="96" y1="255" x2="230" y2="366" stroke="#94a3b8" stroke-width="1.2"/>
+
+  <!-- UC10 -->
+  <ellipse cx="390" cy="403" rx="160" ry="15" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.2"/>
+  <text x="390" y="407" fill="#0369a1" font-size="9.5" font-weight="bold" text-anchor="middle">UC10: Simulate What-If CGPA &amp; Exam Readiness</text>
+  <line x1="96" y1="265" x2="230" y2="403" stroke="#94a3b8" stroke-width="1.2"/>
+</svg>
+
     </div>
+
+    <div class="page-break"></div>
 
     <h3 class="sub-heading">2.3 Class Diagram</h3>
-    <div class="mermaid-container">
-        <div class="mermaid">
-classDiagram
-    class Student {
-        +Long id
-        +String fullName
-        +String email
-        +String password
-        +String college
-        +String degree
-        +String branch
-        +Integer currentSemester
-        +Double dailyStudyHours
-        +String preferredStudyTimings
-        +LocalDateTime createdAt
-    }
+    <p>
+        The domain model captures all academic relationships with foreign key integrity and bidirectional JPA associations.
+    </p>
+    <div class="diagram-box">
+        
+<svg width="780" height="490" viewBox="0 0 780 490" xmlns="http://www.w3.org/2000/svg" style="font-family:'Segoe UI',Arial,sans-serif;">
+  <!-- Student Class -->
+  <rect x="20" y="10" width="165" height="150" rx="4" fill="#ffffff" stroke="#002D62" stroke-width="1.5"/>
+  <rect x="20" y="10" width="165" height="22" rx="4" fill="#002D62"/>
+  <text x="102" y="26" fill="#ffffff" font-size="10.5" font-weight="bold" text-anchor="middle">Student</text>
+  <text x="26" y="45" fill="#334155" font-size="8.5">+ Long id</text>
+  <text x="26" y="58" fill="#334155" font-size="8.5">+ String fullName</text>
+  <text x="26" y="71" fill="#334155" font-size="8.5">+ String email</text>
+  <text x="26" y="84" fill="#334155" font-size="8.5">+ String password (BCrypt)</text>
+  <text x="26" y="97" fill="#334155" font-size="8.5">+ Integer semester (5)</text>
+  <text x="26" y="110" fill="#334155" font-size="8.5">+ Double dailyHours</text>
+  <line x1="20" y1="116" x2="185" y2="116" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="26" y="130" fill="#0f172a" font-size="8.5">+ register()</text>
+  <text x="26" y="143" fill="#0f172a" font-size="8.5">+ updateAvailability()</text>
 
-    class Subject {
-        +Long id
-        +String name
-        +String code
-        +Integer semester
-        +Integer credits
-        +String description
-        +String teacherName
-        +String targetGrade
-        +String colorHex
-    }
+  <!-- Subject Class -->
+  <rect x="235" y="10" width="155" height="150" rx="4" fill="#ffffff" stroke="#800000" stroke-width="1.5"/>
+  <rect x="235" y="10" width="155" height="22" rx="4" fill="#800000"/>
+  <text x="312" y="26" fill="#ffffff" font-size="10.5" font-weight="bold" text-anchor="middle">Subject</text>
+  <text x="241" y="45" fill="#334155" font-size="8.5">+ Long id</text>
+  <text x="241" y="58" fill="#334155" font-size="8.5">+ String code (UCS553)</text>
+  <text x="241" y="71" fill="#334155" font-size="8.5">+ String name</text>
+  <text x="241" y="84" fill="#334155" font-size="8.5">+ Integer credits (4.0)</text>
+  <text x="241" y="97" fill="#334155" font-size="8.5">+ String targetGrade</text>
+  <text x="241" y="110" fill="#334155" font-size="8.5">+ String teacherName</text>
+  <line x1="235" y1="116" x2="390" y2="116" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="241" y="130" fill="#0f172a" font-size="8.5">+ getCompletionRate()</text>
+  <text x="241" y="143" fill="#0f172a" font-size="8.5">+ calculateDeficit()</text>
 
-    class Unit {
-        +Long id
-        +Integer unitNumber
-        +String title
-        +String description
-    }
+  <!-- Unit Class -->
+  <rect x="440" y="10" width="145" height="110" rx="4" fill="#ffffff" stroke="#475569" stroke-width="1.5"/>
+  <rect x="440" y="10" width="145" height="22" rx="4" fill="#475569"/>
+  <text x="512" y="26" fill="#ffffff" font-size="10.5" font-weight="bold" text-anchor="middle">Unit</text>
+  <text x="446" y="45" fill="#334155" font-size="8.5">+ Long id</text>
+  <text x="446" y="58" fill="#334155" font-size="8.5">+ Integer unitNumber</text>
+  <text x="446" y="71" fill="#334155" font-size="8.5">+ String title</text>
+  <text x="446" y="84" fill="#334155" font-size="8.5">+ String description</text>
+  <line x1="440" y1="90" x2="585" y2="90" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="446" y="103" fill="#0f172a" font-size="8.5">+ getTopics()</text>
 
-    class Topic {
-        +Long id
-        +String name
-        +String description
-        +String difficultyLevel
-        +Integer estimatedDurationMinutes
-        +String completionStatus
-        +Integer studentConfidenceLevel
-        +LocalDate lastStudiedDate
-    }
+  <!-- Topic Class -->
+  <rect x="620" y="10" width="145" height="150" rx="4" fill="#ffffff" stroke="#475569" stroke-width="1.5"/>
+  <rect x="620" y="10" width="145" height="22" rx="4" fill="#475569"/>
+  <text x="692" y="26" fill="#ffffff" font-size="10.5" font-weight="bold" text-anchor="middle">Topic</text>
+  <text x="626" y="45" fill="#334155" font-size="8.5">+ Long id</text>
+  <text x="626" y="58" fill="#334155" font-size="8.5">+ String name</text>
+  <text x="626" y="71" fill="#334155" font-size="8.5">+ String difficultyLevel</text>
+  <text x="626" y="84" fill="#334155" font-size="8.5">+ Integer durationMin</text>
+  <text x="626" y="97" fill="#334155" font-size="8.5">+ String completionStatus</text>
+  <text x="626" y="110" fill="#334155" font-size="8.5">+ Integer confidence</text>
+  <line x1="620" y1="116" x2="765" y2="116" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="626" y="130" fill="#0f172a" font-size="8.5">+ markComplete()</text>
+  <text x="626" y="143" fill="#0f172a" font-size="8.5">+ updateConfidence()</text>
 
-    class Assessment {
-        +Long id
-        +String title
-        +String type
-        +LocalDateTime assessmentDateTime
-        +String syllabusCoverage
-        +Double maxMarks
-        +String preparationStatus
-        +String priority
-        +String notes
-    }
+  <!-- Connection: Student -> Subject (1 to *) -->
+  <line x1="185" y1="80" x2="235" y2="80" stroke="#002D62" stroke-width="1.5"/>
+  <text x="190" y="74" fill="#002D62" font-size="8" font-weight="bold">1</text>
+  <text x="220" y="74" fill="#002D62" font-size="8" font-weight="bold">*</text>
 
-    class Marks {
-        +Long id
-        +Double marksObtained
-        +Double maxMarks
-        +LocalDate assessmentDate
-        +String assessmentType
-        +String remarks
-    }
+  <!-- Connection: Subject -> Unit (1 to *) -->
+  <line x1="390" y1="65" x2="440" y2="65" stroke="#475569" stroke-width="1.5"/>
+  <text x="395" y="59" fill="#475569" font-size="8" font-weight="bold">1</text>
+  <text x="428" y="59" fill="#475569" font-size="8" font-weight="bold">*</text>
 
-    class StudyTask {
-        +Long id
-        +LocalDate scheduledDate
-        +LocalTime startTime
-        +LocalTime endTime
-        +Integer durationMinutes
-        +String taskType
-        +String priority
-        +Double calculatedPriorityScore
-        +Boolean isCompleted
-    }
+  <!-- Connection: Unit -> Topic (1 to *) -->
+  <line x1="585" y1="65" x2="620" y2="65" stroke="#475569" stroke-width="1.5"/>
+  <text x="590" y="59" fill="#475569" font-size="8" font-weight="bold">1</text>
+  <text x="608" y="59" fill="#475569" font-size="8" font-weight="bold">*</text>
 
-    class StudySession {
-        +Long id
-        +LocalDateTime startTime
-        +LocalDateTime endTime
-        +Integer durationMinutes
-        +String sessionType
-        +String notes
-        +Integer focusRating
-    }
+  <!-- SECOND ROW -->
+  <!-- Assessment Class -->
+  <rect x="20" y="210" width="165" height="130" rx="4" fill="#ffffff" stroke="#b91c1c" stroke-width="1.5"/>
+  <rect x="20" y="210" width="165" height="22" rx="4" fill="#b91c1c"/>
+  <text x="102" y="226" fill="#ffffff" font-size="10.5" font-weight="bold" text-anchor="middle">Assessment</text>
+  <text x="26" y="245" fill="#334155" font-size="8.5">+ Long id</text>
+  <text x="26" y="258" fill="#334155" font-size="8.5">+ String title (MST/EST)</text>
+  <text x="26" y="271" fill="#334155" font-size="8.5">+ String type</text>
+  <text x="26" y="284" fill="#334155" font-size="8.5">+ LocalDateTime date</text>
+  <text x="26" y="297" fill="#334155" font-size="8.5">+ Double maxMarks</text>
+  <line x1="20" y1="303" x2="185" y2="303" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="26" y="318" fill="#0f172a" font-size="8.5">+ isApproaching()</text>
+  <text x="26" y="331" fill="#0f172a" font-size="8.5">+ calculateDaysLeft()</text>
 
-    Student "1" --> "*" Subject : enrolls in
-    Subject "1" --> "*" Unit : contains
-    Unit "1" --> "*" Topic : comprises
-    Subject "1" --> "*" Assessment : evaluates
-    Subject "1" --> "*" Marks : tracks
-    Student "1" --> "*" StudyTask : executes
-    Student "1" --> "*" StudySession : records
-    Topic "1" --> "*" StudyTask : scheduled as
-        </div>
+  <!-- Marks Class -->
+  <rect x="235" y="210" width="155" height="120" rx="4" fill="#ffffff" stroke="#b91c1c" stroke-width="1.5"/>
+  <rect x="235" y="210" width="155" height="22" rx="4" fill="#b91c1c"/>
+  <text x="312" y="226" fill="#ffffff" font-size="10.5" font-weight="bold" text-anchor="middle">Marks</text>
+  <text x="241" y="245" fill="#334155" font-size="8.5">+ Long id</text>
+  <text x="241" y="258" fill="#334155" font-size="8.5">+ Double marksObtained</text>
+  <text x="241" y="271" fill="#334155" font-size="8.5">+ Double maxMarks</text>
+  <text x="241" y="284" fill="#334155" font-size="8.5">+ LocalDate date</text>
+  <line x1="235" y1="290" x2="390" y2="290" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="241" y="306" fill="#0f172a" font-size="8.5">+ getPercentage()</text>
+
+  <!-- StudyTask Class -->
+  <rect x="430" y="210" width="165" height="140" rx="4" fill="#ffffff" stroke="#16a34a" stroke-width="1.5"/>
+  <rect x="430" y="210" width="165" height="22" rx="4" fill="#16a34a"/>
+  <text x="512" y="226" fill="#ffffff" font-size="10.5" font-weight="bold" text-anchor="middle">StudyTask</text>
+  <text x="436" y="245" fill="#334155" font-size="8.5">+ Long id</text>
+  <text x="436" y="258" fill="#334155" font-size="8.5">+ LocalDate scheduledDate</text>
+  <text x="436" y="271" fill="#334155" font-size="8.5">+ LocalTime startTime</text>
+  <text x="436" y="284" fill="#334155" font-size="8.5">+ Integer durationMinutes</text>
+  <text x="436" y="297" fill="#334155" font-size="8.5">+ Double priorityScore</text>
+  <text x="436" y="310" fill="#334155" font-size="8.5">+ Boolean isCompleted</text>
+  <line x1="430" y1="316" x2="595" y2="316" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="436" y="331" fill="#0f172a" font-size="8.5">+ markComplete()</text>
+
+  <!-- StudySession Class -->
+  <rect x="625" y="210" width="140" height="120" rx="4" fill="#ffffff" stroke="#16a34a" stroke-width="1.5"/>
+  <rect x="625" y="210" width="140" height="22" rx="4" fill="#16a34a"/>
+  <text x="695" y="226" fill="#ffffff" font-size="10.5" font-weight="bold" text-anchor="middle">StudySession</text>
+  <text x="631" y="245" fill="#334155" font-size="8.5">+ Long id</text>
+  <text x="631" y="258" fill="#334155" font-size="8.5">+ LocalDateTime start</text>
+  <text x="631" y="271" fill="#334155" font-size="8.5">+ LocalDateTime end</text>
+  <text x="631" y="284" fill="#334155" font-size="8.5">+ Integer durationMin</text>
+  <line x1="625" y1="290" x2="765" y2="290" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="631" y="306" fill="#0f172a" font-size="8.5">+ logStreak()</text>
+
+  <!-- Vertical Links -->
+  <line x1="102" y1="160" x2="102" y2="210" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="106" y="175" fill="#b91c1c" font-size="8" font-weight="bold">1</text>
+  <text x="106" y="200" fill="#b91c1c" font-size="8" font-weight="bold">*</text>
+
+  <line x1="312" y1="160" x2="312" y2="210" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="316" y="175" fill="#b91c1c" font-size="8" font-weight="bold">1</text>
+  <text x="316" y="200" fill="#b91c1c" font-size="8" font-weight="bold">*</text>
+
+  <line x1="695" y1="160" x2="540" y2="210" stroke="#16a34a" stroke-width="1.5"/>
+  <line x1="512" y1="350" x2="625" y2="300" stroke="#16a34a" stroke-width="1.5"/>
+</svg>
+
     </div>
+
+    <div class="page-break"></div>
 
     <h3 class="sub-heading">2.4 Activity Diagram</h3>
-    <div class="mermaid-container">
-        <div class="mermaid">
-flowchart TD
-    Start([User Requests Study Timetable]) --> LoadData[Fetch Student Subjects, Pending Topics & Assessments]
-    LoadData --> CheckAssessments{Upcoming Assessments Found?}
-    
-    CheckAssessments -- Yes --> CalcExamUrgency[Compute Exam Urgency Score: 100 * 1 - daysRemaining / 30]
-    CheckAssessments -- No --> ZeroUrgency[Set Exam Urgency = 0.0]
-    
-    CalcExamUrgency --> CalcIncompletion[Compute Syllabus Incompletion: 100 - Completion %]
-    ZeroUrgency --> CalcIncompletion
-    
-    CalcIncompletion --> CalcDifficulty[Compute Difficulty Score: Easy=25, Medium=60, Hard=100]
-    CalcDifficulty --> CalcMarksDeficit[Compute Marks Deficit: 100 - Subject Average %]
-    
-    CalcMarksDeficit --> WeightedSum[Apply Configurable Weights:<br>0.35*Urgency + 0.30*Incompletion + 0.20*Difficulty + 0.15*Deficit]
-    WeightedSum --> RankTopics[Sort Topics Descending by Calculated Priority Score]
-    
-    RankTopics --> CheckHours{Remaining Allocated Time < Daily Availability?}
-    CheckHours -- Yes --> AssignBlock[Schedule Topic in Daily Session with Break Interval]
-    AssignBlock --> DeductTime[Deduct Topic Duration from Remaining Available Time]
-    DeductTime --> CheckHours
-    
-    CheckHours -- No --> PersistPlan[Save Generated Study Tasks to Database]
-    PersistPlan --> RenderUI[Render Conflict-Free Daily Timetable to Student]
-    RenderUI --> End([End Workflow])
-        </div>
+    <p>
+        The workflow below illustrates the recommendation and run-rate scheduling process:
+    </p>
+    <div class="diagram-box">
+        
+<svg width="780" height="490" viewBox="0 0 780 490" xmlns="http://www.w3.org/2000/svg" style="font-family:'Segoe UI',Arial,sans-serif;">
+  <defs>
+    <marker id="actArrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e293b" />
+    </marker>
+  </defs>
+
+  <!-- Start Node -->
+  <circle cx="390" cy="20" r="12" fill="#002D62"/>
+  <text x="390" y="42" fill="#002D62" font-size="9" font-weight="bold" text-anchor="middle">Start: Request Timetable</text>
+
+  <line x1="390" y1="32" x2="390" y2="55" stroke="#1e293b" stroke-width="1.5" marker-end="url(#actArrow)"/>
+
+  <!-- Step 1: Fetch Data -->
+  <rect x="250" y="55" width="280" height="30" rx="5" fill="#f1f5f9" stroke="#475569" stroke-width="1.2"/>
+  <text x="390" y="74" fill="#0f172a" font-size="9.5" text-anchor="middle">Fetch Enrolled Courses, Topics &amp; Datesheet</text>
+
+  <line x1="390" y1="85" x2="390" y2="105" stroke="#1e293b" stroke-width="1.5" marker-end="url(#actArrow)"/>
+
+  <!-- Decision: Assessments? -->
+  <polygon points="390,105 450,125 390,145 330,125" fill="#fef3c7" stroke="#d97706" stroke-width="1.2"/>
+  <text x="390" y="129" fill="#92400e" font-size="9" font-weight="bold" text-anchor="middle">Upcoming Exam?</text>
+
+  <!-- Yes -> Urgency Calc -->
+  <line x1="450" y1="125" x2="520" y2="125" stroke="#1e293b" stroke-width="1.5" marker-end="url(#actArrow)"/>
+  <text x="475" y="118" fill="#16a34a" font-size="8.5" font-weight="bold">Yes</text>
+  <rect x="520" y="110" width="230" height="30" rx="4" fill="#fee2e2" stroke="#dc2626" stroke-width="1"/>
+  <text x="635" y="129" fill="#991b1b" font-size="9" text-anchor="middle">Urgency = 100 &times; (1 - DaysLeft/30)</text>
+
+  <!-- No -> Zero Urgency -->
+  <line x1="330" y1="125" x2="260" y2="125" stroke="#1e293b" stroke-width="1.5" marker-end="url(#actArrow)"/>
+  <text x="290" y="118" fill="#dc2626" font-size="8.5" font-weight="bold">No</text>
+  <rect x="50" y="110" width="210" height="30" rx="4" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1"/>
+  <text x="155" y="129" fill="#475569" font-size="9" text-anchor="middle">Set Urgency = 0.0</text>
+
+  <!-- Merge to 4-Factor Calculation -->
+  <line x1="635" y1="140" x2="635" y2="175" stroke="#1e293b" stroke-width="1.5"/>
+  <line x1="635" y1="175" x2="390" y2="175" stroke="#1e293b" stroke-width="1.5"/>
+  <line x1="155" y1="140" x2="155" y2="175" stroke="#1e293b" stroke-width="1.5"/>
+  <line x1="155" y1="175" x2="390" y2="175" stroke="#1e293b" stroke-width="1.5"/>
+  <line x1="390" y1="175" x2="390" y2="195" stroke="#1e293b" stroke-width="1.5" marker-end="url(#actArrow)"/>
+
+  <!-- Step 2: Compute Remaining Factors -->
+  <rect x="180" y="195" width="420" height="42" rx="5" fill="#fdf2f2" stroke="#800000" stroke-width="1.5"/>
+  <text x="390" y="212" fill="#800000" font-size="10" font-weight="bold" text-anchor="middle">Evaluate 4 Normalized Factors for Each Pending Topic</text>
+  <text x="390" y="227" fill="#475569" font-size="8.5" text-anchor="middle">Exam Urgency (35%) + Incompletion (30%) + Difficulty (20%) + Marks Deficit (15%)</text>
+
+  <line x1="390" y1="237" x2="390" y2="255" stroke="#1e293b" stroke-width="1.5" marker-end="url(#actArrow)"/>
+
+  <!-- Step 3: Sort Ranking -->
+  <rect x="230" y="255" width="320" height="28" rx="4" fill="#f8fafc" stroke="#334155" stroke-width="1.2"/>
+  <text x="390" y="273" fill="#0f172a" font-size="9.5" text-anchor="middle">Sort Topics Descending by Calculated Priority Score</text>
+
+  <line x1="390" y1="283" x2="390" y2="305" stroke="#1e293b" stroke-width="1.5" marker-end="url(#actArrow)"/>
+
+  <!-- Decision: Capacity Check -->
+  <polygon points="390,305 465,325 390,345 315,325" fill="#fef3c7" stroke="#d97706" stroke-width="1.2"/>
+  <text x="390" y="329" fill="#92400e" font-size="9" font-weight="bold" text-anchor="middle">Allocated &lt; Daily Hours?</text>
+
+  <!-- Yes -> Schedule Block -->
+  <line x1="315" y1="325" x2="220" y2="325" stroke="#1e293b" stroke-width="1.5" marker-end="url(#actArrow)"/>
+  <text x="260" y="318" fill="#16a34a" font-size="8.5" font-weight="bold">Yes</text>
+  <rect x="40" y="310" width="180" height="42" rx="4" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
+  <text x="130" y="327" fill="#15803d" font-size="9" font-weight="bold" text-anchor="middle">Schedule Topic Block (45-60m)</text>
+  <text x="130" y="341" fill="#475569" font-size="8" text-anchor="middle">+ 15m Buffer / Break Interval</text>
+
+  <!-- Loop back to Capacity Check -->
+  <line x1="130" y1="352" x2="130" y2="375" stroke="#1e293b" stroke-width="1.5"/>
+  <line x1="130" y1="375" x2="390" y2="375" stroke="#1e293b" stroke-width="1.5"/>
+  <line x1="390" y1="375" x2="390" y2="345" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- No -> Persist & Render -->
+  <line x1="465" y1="325" x2="530" y2="325" stroke="#1e293b" stroke-width="1.5" marker-end="url(#actArrow)"/>
+  <text x="490" y="318" fill="#dc2626" font-size="8.5" font-weight="bold">No</text>
+  <rect x="530" y="310" width="220" height="30" rx="4" fill="#f1f5f9" stroke="#475569" stroke-width="1.2"/>
+  <text x="640" y="329" fill="#0f172a" font-size="9" text-anchor="middle">Persist Study Tasks via Spring Data JPA</text>
+
+  <line x1="640" y1="340" x2="640" y2="390" stroke="#1e293b" stroke-width="1.5" marker-end="url(#actArrow)"/>
+
+  <!-- Render UI -->
+  <rect x="520" y="390" width="240" height="30" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="1.2"/>
+  <text x="640" y="409" fill="#1d4ed8" font-size="9" font-weight="bold" text-anchor="middle">Render Conflict-Free Daily Timetable</text>
+
+  <line x1="640" y1="420" x2="640" y2="445" stroke="#1e293b" stroke-width="1.5" marker-end="url(#actArrow)"/>
+
+  <!-- End Node -->
+  <circle cx="640" cy="455" r="10" fill="none" stroke="#800000" stroke-width="2"/>
+  <circle cx="640" cy="455" r="6" fill="#800000"/>
+  <text x="640" y="475" fill="#800000" font-size="9" font-weight="bold" text-anchor="middle">End Workflow</text>
+</svg>
+
     </div>
+
+    <div class="page-break"></div>
 
     <h3 class="sub-heading">2.5 Database Design / Entity-Relationship (ER) Diagram</h3>
-    <div class="mermaid-container">
-        <div class="mermaid">
-erDiagram
-    STUDENTS ||--o{ SUBJECTS : owns
-    STUDENTS ||--o{ ASSESSMENTS : manages
-    STUDENTS ||--o{ MARKS : records
-    STUDENTS ||--o{ STUDY_TASKS : executes
-    STUDENTS ||--o{ STUDY_SESSIONS : logs
+    <p>
+        Relational entity model capturing students, subjects, units, topics, assessments, marks, and study tasks:
+    </p>
+    <div class="diagram-box">
+        
+<svg width="780" height="490" viewBox="0 0 780 490" xmlns="http://www.w3.org/2000/svg" style="font-family:'Segoe UI',Arial,sans-serif;">
+  <!-- STUDENTS TABLE -->
+  <rect x="20" y="20" width="165" height="150" rx="4" fill="#ffffff" stroke="#002D62" stroke-width="1.5"/>
+  <rect x="20" y="20" width="165" height="22" rx="4" fill="#002D62"/>
+  <text x="102" y="35" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">STUDENTS</text>
+  <text x="26" y="55" fill="#0f172a" font-size="8.5"><tspan font-weight="bold">id</tspan> : BIGINT [PK]</text>
+  <text x="26" y="70" fill="#334155" font-size="8.5">full_name : VARCHAR</text>
+  <text x="26" y="85" fill="#334155" font-size="8.5">email : VARCHAR [UK]</text>
+  <text x="26" y="100" fill="#334155" font-size="8.5">password : VARCHAR</text>
+  <text x="26" y="115" fill="#334155" font-size="8.5">branch : VARCHAR</text>
+  <text x="26" y="130" fill="#334155" font-size="8.5">semester : INT (5)</text>
+  <text x="26" y="145" fill="#334155" font-size="8.5">daily_study_hours : DOUBLE</text>
+  <text x="26" y="160" fill="#334155" font-size="8.5">created_at : TIMESTAMP</text>
 
-    SUBJECTS ||--o{ UNITS : contains
-    SUBJECTS ||--o{ ASSESSMENTS : categorized_under
-    SUBJECTS ||--o{ MARKS : graded_in
-    SUBJECTS ||--o{ STUDY_TASKS : targeted_in
-    SUBJECTS ||--o{ STUDY_SESSIONS : studied_in
+  <!-- SUBJECTS TABLE -->
+  <rect x="235" y="20" width="160" height="150" rx="4" fill="#ffffff" stroke="#800000" stroke-width="1.5"/>
+  <rect x="235" y="20" width="160" height="22" rx="4" fill="#800000"/>
+  <text x="315" y="35" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">SUBJECTS</text>
+  <text x="241" y="55" fill="#0f172a" font-size="8.5"><tspan font-weight="bold">id</tspan> : BIGINT [PK]</text>
+  <text x="241" y="70" fill="#dc2626" font-size="8.5"><tspan font-weight="bold">student_id</tspan> : BIGINT [FK]</text>
+  <text x="241" y="85" fill="#334155" font-size="8.5">code : VARCHAR (UCS553)</text>
+  <text x="241" y="100" fill="#334155" font-size="8.5">name : VARCHAR</text>
+  <text x="241" y="115" fill="#334155" font-size="8.5">credits : INT (4.0)</text>
+  <text x="241" y="130" fill="#334155" font-size="8.5">target_grade : VARCHAR</text>
+  <text x="241" y="145" fill="#334155" font-size="8.5">teacher_name : VARCHAR</text>
+  <text x="241" y="160" fill="#334155" font-size="8.5">color_hex : VARCHAR</text>
 
-    UNITS ||--o{ TOPICS : groups
-    TOPICS ||--o{ STUDY_TASKS : assigned_to
-    TOPICS ||--o{ STUDY_SESSIONS : focused_on
+  <!-- UNITS TABLE -->
+  <rect x="445" y="20" width="145" height="110" rx="4" fill="#ffffff" stroke="#475569" stroke-width="1.5"/>
+  <rect x="445" y="20" width="145" height="22" rx="4" fill="#475569"/>
+  <text x="517" y="35" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">UNITS</text>
+  <text x="451" y="55" fill="#0f172a" font-size="8.5"><tspan font-weight="bold">id</tspan> : BIGINT [PK]</text>
+  <text x="451" y="70" fill="#dc2626" font-size="8.5"><tspan font-weight="bold">subject_id</tspan> : BIGINT [FK]</text>
+  <text x="451" y="85" fill="#334155" font-size="8.5">unit_number : INT</text>
+  <text x="451" y="100" fill="#334155" font-size="8.5">title : VARCHAR</text>
+  <text x="451" y="115" fill="#334155" font-size="8.5">description : TEXT</text>
 
-    STUDENTS {
-        bigint id PK
-        varchar full_name
-        varchar email UK
-        varchar password
-        varchar college
-        varchar degree
-        varchar branch
-        int current_semester
-        double daily_study_hours
-        varchar preferred_study_timings
-        timestamp created_at
-    }
+  <!-- TOPICS TABLE -->
+  <rect x="625" y="20" width="140" height="150" rx="4" fill="#ffffff" stroke="#475569" stroke-width="1.5"/>
+  <rect x="625" y="20" width="140" height="22" rx="4" fill="#475569"/>
+  <text x="695" y="35" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">TOPICS</text>
+  <text x="631" y="55" fill="#0f172a" font-size="8.5"><tspan font-weight="bold">id</tspan> : BIGINT [PK]</text>
+  <text x="631" y="70" fill="#dc2626" font-size="8.5"><tspan font-weight="bold">unit_id</tspan> : BIGINT [FK]</text>
+  <text x="631" y="85" fill="#dc2626" font-size="8.5"><tspan font-weight="bold">subject_id</tspan> : BIGINT [FK]</text>
+  <text x="631" y="100" fill="#334155" font-size="8.5">name : VARCHAR</text>
+  <text x="631" y="115" fill="#334155" font-size="8.5">difficulty : VARCHAR</text>
+  <text x="631" y="130" fill="#334155" font-size="8.5">estimated_min : INT</text>
+  <text x="631" y="145" fill="#334155" font-size="8.5">status : VARCHAR</text>
+  <text x="631" y="160" fill="#334155" font-size="8.5">confidence : INT</text>
 
-    SUBJECTS {
-        bigint id PK
-        bigint student_id FK
-        varchar name
-        varchar code
-        int semester
-        int credits
-        varchar teacher_name
-        varchar target_grade
-        varchar color_hex
-    }
+  <!-- ER Links Top Row -->
+  <line x1="185" y1="75" x2="235" y2="75" stroke="#002D62" stroke-width="1.5"/>
+  <text x="190" y="70" fill="#002D62" font-size="8" font-weight="bold">1</text>
+  <text x="222" y="70" fill="#002D62" font-size="8" font-weight="bold">&infin;</text>
 
-    UNITS {
-        bigint id PK
-        bigint subject_id FK
-        int unit_number
-        varchar title
-        text description
-    }
+  <line x1="395" y1="75" x2="445" y2="75" stroke="#475569" stroke-width="1.5"/>
+  <text x="400" y="70" fill="#475569" font-size="8" font-weight="bold">1</text>
+  <text x="432" y="70" fill="#475569" font-size="8" font-weight="bold">&infin;</text>
 
-    TOPICS {
-        bigint id PK
-        bigint unit_id FK
-        bigint subject_id FK
-        bigint student_id FK
-        varchar name
-        varchar difficulty_level
-        int estimated_duration_minutes
-        varchar completion_status
-        int student_confidence_level
-        date last_studied_date
-    }
+  <line x1="590" y1="75" x2="625" y2="75" stroke="#475569" stroke-width="1.5"/>
+  <text x="595" y="70" fill="#475569" font-size="8" font-weight="bold">1</text>
+  <text x="612" y="70" fill="#475569" font-size="8" font-weight="bold">&infin;</text>
 
-    ASSESSMENTS {
-        bigint id PK
-        bigint student_id FK
-        bigint subject_id FK
-        varchar title
-        varchar type
-        timestamp assessment_date_time
-        varchar syllabus_coverage
-        double max_marks
-        varchar preparation_status
-        varchar priority
-    }
+  <!-- BOTTOM ROW -->
+  <!-- ASSESSMENTS TABLE -->
+  <rect x="20" y="210" width="165" height="135" rx="4" fill="#ffffff" stroke="#b91c1c" stroke-width="1.5"/>
+  <rect x="20" y="210" width="165" height="22" rx="4" fill="#b91c1c"/>
+  <text x="102" y="225" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">ASSESSMENTS</text>
+  <text x="26" y="245" fill="#0f172a" font-size="8.5"><tspan font-weight="bold">id</tspan> : BIGINT [PK]</text>
+  <text x="26" y="260" fill="#dc2626" font-size="8.5"><tspan font-weight="bold">subject_id</tspan> : BIGINT [FK]</text>
+  <text x="26" y="275" fill="#dc2626" font-size="8.5"><tspan font-weight="bold">student_id</tspan> : BIGINT [FK]</text>
+  <text x="26" y="290" fill="#334155" font-size="8.5">title : VARCHAR (MST)</text>
+  <text x="26" y="305" fill="#334155" font-size="8.5">type : VARCHAR</text>
+  <text x="26" y="320" fill="#334155" font-size="8.5">max_marks : DOUBLE</text>
+  <text x="26" y="335" fill="#334155" font-size="8.5">date_time : TIMESTAMP</text>
 
-    MARKS {
-        bigint id PK
-        bigint student_id FK
-        bigint subject_id FK
-        double marks_obtained
-        double max_marks
-        date assessment_date
-        varchar assessment_type
-    }
+  <!-- MARKS TABLE -->
+  <rect x="235" y="210" width="160" height="135" rx="4" fill="#ffffff" stroke="#b91c1c" stroke-width="1.5"/>
+  <rect x="235" y="210" width="160" height="22" rx="4" fill="#b91c1c"/>
+  <text x="315" y="225" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">MARKS</text>
+  <text x="241" y="245" fill="#0f172a" font-size="8.5"><tspan font-weight="bold">id</tspan> : BIGINT [PK]</text>
+  <text x="241" y="260" fill="#dc2626" font-size="8.5"><tspan font-weight="bold">subject_id</tspan> : BIGINT [FK]</text>
+  <text x="241" y="275" fill="#dc2626" font-size="8.5"><tspan font-weight="bold">student_id</tspan> : BIGINT [FK]</text>
+  <text x="241" y="290" fill="#334155" font-size="8.5">marks_obtained : DOUBLE</text>
+  <text x="241" y="305" fill="#334155" font-size="8.5">max_marks : DOUBLE</text>
+  <text x="241" y="320" fill="#334155" font-size="8.5">assessment_date : DATE</text>
+  <text x="241" y="335" fill="#334155" font-size="8.5">assessment_type : VARCHAR</text>
 
-    STUDY_TASKS {
-        bigint id PK
-        bigint student_id FK
-        bigint topic_id FK
-        bigint subject_id FK
-        date scheduled_date
-        time start_time
-        time end_time
-        int duration_minutes
-        varchar priority
-        double calculated_priority_score
-        boolean is_completed
-    }
+  <!-- STUDY_TASKS TABLE -->
+  <rect x="440" y="210" width="160" height="150" rx="4" fill="#ffffff" stroke="#16a34a" stroke-width="1.5"/>
+  <rect x="440" y="210" width="160" height="22" rx="4" fill="#16a34a"/>
+  <text x="520" y="225" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">STUDY_TASKS</text>
+  <text x="446" y="245" fill="#0f172a" font-size="8.5"><tspan font-weight="bold">id</tspan> : BIGINT [PK]</text>
+  <text x="446" y="260" fill="#dc2626" font-size="8.5"><tspan font-weight="bold">student_id</tspan> : BIGINT [FK]</text>
+  <text x="446" y="275" fill="#dc2626" font-size="8.5"><tspan font-weight="bold">topic_id</tspan> : BIGINT [FK]</text>
+  <text x="446" y="290" fill="#334155" font-size="8.5">scheduled_date : DATE</text>
+  <text x="446" y="305" fill="#334155" font-size="8.5">duration_min : INT</text>
+  <text x="446" y="320" fill="#334155" font-size="8.5">priority_score : DOUBLE</text>
+  <text x="446" y="335" fill="#334155" font-size="8.5">is_completed : BOOLEAN</text>
 
-    STUDY_SESSIONS {
-        bigint id PK
-        bigint student_id FK
-        bigint subject_id FK
-        bigint topic_id FK
-        timestamp start_time
-        timestamp end_time
-        int duration_minutes
-        varchar session_type
-        int focus_rating
-    }
-        </div>
+  <!-- STUDY_SESSIONS TABLE -->
+  <rect x="625" y="210" width="140" height="135" rx="4" fill="#ffffff" stroke="#16a34a" stroke-width="1.5"/>
+  <rect x="625" y="210" width="140" height="22" rx="4" fill="#16a34a"/>
+  <text x="695" y="225" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">STUDY_SESSIONS</text>
+  <text x="631" y="245" fill="#0f172a" font-size="8.5"><tspan font-weight="bold">id</tspan> : BIGINT [PK]</text>
+  <text x="631" y="260" fill="#dc2626" font-size="8.5"><tspan font-weight="bold">student_id</tspan> : BIGINT [FK]</text>
+  <text x="631" y="275" fill="#334155" font-size="8.5">start_time : TIMESTAMP</text>
+  <text x="631" y="290" fill="#334155" font-size="8.5">end_time : TIMESTAMP</text>
+  <text x="631" y="305" fill="#334155" font-size="8.5">duration_min : INT</text>
+  <text x="631" y="320" fill="#334155" font-size="8.5">session_type : VARCHAR</text>
+  <text x="631" y="335" fill="#334155" font-size="8.5">focus_rating : INT</text>
+
+  <!-- Vertical Links -->
+  <line x1="102" y1="170" x2="102" y2="210" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="106" y="185" fill="#b91c1c" font-size="8" font-weight="bold">1</text>
+  <text x="106" y="202" fill="#b91c1c" font-size="8" font-weight="bold">&infin;</text>
+
+  <line x1="315" y1="170" x2="315" y2="210" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="319" y="185" fill="#b91c1c" font-size="8" font-weight="bold">1</text>
+  <text x="319" y="202" fill="#b91c1c" font-size="8" font-weight="bold">&infin;</text>
+
+  <line x1="695" y1="170" x2="520" y2="210" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="650" y="185" fill="#16a34a" font-size="8" font-weight="bold">1</text>
+  <text x="535" y="202" fill="#16a34a" font-size="8" font-weight="bold">&infin;</text>
+</svg>
+
     </div>
+
+    <div class="page-break"></div>
 
     <h3 class="sub-heading">2.6 Module Description</h3>
     <ol>
@@ -832,7 +1078,7 @@ erDiagram
 
     <div class="page-break"></div>
 
-    <!-- CHAPTER 3 -->
+    <!-- CHAPTER 3: IMPLEMENTATION -->
     <h2 class="section-heading">Chapter 3: Implementation</h2>
 
     <h3 class="sub-heading">3.1 Technologies and Tools Used</h3>
@@ -901,6 +1147,8 @@ c:\Users\jasmi\OneDrive\Desktop\java_project
         <li><strong><code>SecurityConfig.java</code>:</strong> Configures stateless session-backed authentication, CSRF exemptions for REST endpoints, and BCrypt bean isolation.</li>
         <li><strong><code>GlobalExceptionHandler.java</code>:</strong> Intercepts exceptions and returns structured JSON error responses with proper HTTP status codes.</li>
     </ul>
+
+    <div class="page-break"></div>
 
     <h3 class="sub-heading">3.4 Implementation of Major Modules</h3>
     <h4 class="sub-sub-heading">A. Course Evaluation Scheme Parser &amp; Run-Rate Computation</h4>
@@ -989,7 +1237,7 @@ dto.setFeasibilityStatus(feasibility);
 
     <div class="page-break"></div>
 
-    <!-- CHAPTER 4 -->
+    <!-- CHAPTER 4: RESULTS AND SCREENSHOTS -->
     <h2 class="section-heading">Chapter 4: Results and Screenshots</h2>
 
     <h3 class="sub-heading">4.1 Main Application Screen</h3>
@@ -1052,6 +1300,8 @@ Pre-fill: jkaur_be24@thapar.edu | password123
             Features the 20-Week Semester Strip auto-highlighting <strong>Week 17 (Current • 23–28 Nov 2026)</strong>, Datesheet Milestones (MST Exams, Diwali Break, Lab Evaluations, EST Exams, Answer Sheet Review), and Gazetted Holidays with live countdowns.
         </p>
     </div>
+
+    <div class="page-break"></div>
 
     <h3 class="sub-heading">4.3 Input and Output Demonstrations</h3>
     <table class="report-table">
@@ -1123,7 +1373,7 @@ Pre-fill: jkaur_be24@thapar.edu | password123
 
     <!-- REFERENCES -->
     <h2 class="section-heading">References</h2>
-    <ol style="font-size: 11.5pt; line-height: 1.8;">
+    <ol style="font-size: 11pt; line-height: 1.8;">
         <li><strong>Spring Boot Framework Documentation:</strong> Spring Boot Reference Guide (v3.3.5), VMware Tanzu / Broadcom. Available at: <a href="https://docs.spring.io/spring-boot/" target="_blank">https://docs.spring.io/spring-boot/</a></li>
         <li><strong>Spring Security Architecture:</strong> Spring Security Core Specification, VMware Tanzu. Available at: <a href="https://docs.spring.io/spring-security/" target="_blank">https://docs.spring.io/spring-security/</a></li>
         <li><strong>Hibernate ORM 6.5 User Guide:</strong> Red Hat, Inc. Available at: <a href="https://hibernate.org/orm/documentation/" target="_blank">https://hibernate.org/orm/documentation/</a></li>
