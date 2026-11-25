@@ -16,7 +16,7 @@ Thapar Institute of Engineering & Technology, Patiala
 ### Submitted By:
 | Roll Number | Student Name | Branch & Program | Semester & Section |
 | :---: | :---: | :---: | :---: |
-| **102203045** | **Jasmine Kaur** | B.E. Computer Engineering (COE) | 5th Semester (`2627ODDSEM`) |
+| **1024030605** | **Akshat Gupta** | B.E. Computer Engineering (COE) | 5th Semester (`2627ODDSEM`) |
 
 ---
 
@@ -757,7 +757,7 @@ dto.setFeasibilityStatus(feasibility);
 # Chapter 4: Results and Screenshots
 
 ### 4.1 Main Application Screen
-The main dashboard serves as the central cockpit for student **Jasmine Kaur (`102203045`)**. It features:
+The main dashboard serves as the central cockpit for student **Akshat Gupta (`1024030605`)**. It features:
 - The **Formal Institutional Masthead** of Thapar Institute of Engineering & Technology.
 - The **Student Academic Status Ribbon** indicating Regular standing in Third Year (`2627ODDSEM`) with 7 enrolled courses (25.0 credits).
 - The **"What Should I Study Today?"** AI recommendation directive highlighting high-priority tasks in Computer Architecture (`UCS510`) and Enterprise Web Apps (`UCS553`).

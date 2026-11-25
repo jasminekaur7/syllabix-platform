@@ -304,8 +304,8 @@ const htmlContent = `<!DOCTYPE html>
                     <td><strong>Student Name</strong></td>
                 </tr>
                 <tr>
-                    <td>102203045</td>
-                    <td>Jasmine Kaur</td>
+                    <td>1024030605</td>
+                    <td>Akshat Gupta</td>
                 </tr>
             </table>
         </div>
@@ -735,7 +735,7 @@ dto.setFeasibilityStatus(feasibility);
 
     <h3 class="sub-heading">4.1 Main Application Screen</h3>
     <p>
-        The main dashboard serves as the central cockpit for student <strong>Jasmine Kaur (<code>102203045</code>)</strong>. It features the formal institutional masthead of Thapar Institute of Engineering &amp; Technology, the student academic status ribbon indicating Regular standing in Third Year (<code>2627ODDSEM</code>) with 7 enrolled courses (25.0 credits), the AI recommendation directive, the LMS evaluation run-rate calculator, and the lab tracker.
+        The main dashboard serves as the central cockpit for student <strong>Akshat Gupta (<code>1024030605</code>)</strong>. It features the formal institutional masthead of Thapar Institute of Engineering &amp; Technology, the student academic status ribbon indicating Regular standing in Third Year (<code>2627ODDSEM</code>) with 7 enrolled courses (25.0 credits), the AI recommendation directive, the LMS evaluation run-rate calculator, and the lab tracker.
     </p>
 
     <h3 class="sub-heading">4.2 Functional Screenshots &amp; Live Outputs</h3>

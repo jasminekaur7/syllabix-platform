@@ -1,6 +1,6 @@
 # UCS553: Enterprise Web Application
 ## Project Viva-Voce & Final Evaluation Master Defense Guide
-**Candidate:** Jasmine Kaur (`Roll Number: 102203045`, COE, 5th Sem `2627ODDSEM`)  
+**Candidate:** Akshat Gupta (`Roll Number: 1024030605`, COE, 5th Sem `2627ODDSEM`)  
 **Project:** *SYLLABIX: Intelligent Student Management & Adaptive Academic Planning Platform*  
 **Course Code:** UCS553 (Enterprise Web Application)  
 **Evaluator Target:** Lab Evaluation Before EST (15 Marks: 10 Marks Execution & Submission + 5 Marks Viva & Report)
@@ -52,7 +52,7 @@ Total Lab Marks: 30 Marks
 4. **Explain:** *"The authentication is managed through Spring Security with BCrypt cryptographic password hashing. Sessions are managed via secure cookies with multi-tenant data isolation."*
 
 ### Step 2: Dashboard, Roll Ribbon & Course Catalog (`0:45 - 1:30`)
-1. **Show:** Point to the top institutional ribbon: *"Jasmine Kaur | Roll: 102203045 | COE Regular | 7 Core Courses | 25.0 Credits"*.
+1. **Show:** Point to the top institutional ribbon: *"Akshat Gupta | Roll: 1024030605 | COE Regular | 7 Core Courses | 25.0 Credits"*.
 2. **Show:** The 7 Third-Year registered courses (`UCS510`, `UCS553`, `UCS421`, `UCS548`, `UCS615`, `UML501`, `UCS503`).
 3. **Explain:** *"Each course tracks credits, faculty names, and dynamically computes syllabus completion percentages from micro-level topic states in the database."*
 
