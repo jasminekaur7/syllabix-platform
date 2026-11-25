@@ -48,28 +48,10 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        // If data exists, check if 3rd year subjects are already seeded
-        Student student = studentRepository.findByEmail("jkaur_be24@thapar.edu").orElse(null);
-        if (student != null) {
-            List<Subject> existingSubjects = subjectRepository.findByStudentId(student.getId());
-            boolean hasUcs510 = existingSubjects.stream().anyMatch(s -> "UCS510".equalsIgnoreCase(s.getCode()));
-            if (hasUcs510 && existingSubjects.size() >= 7) {
-                System.out.println(">>> Syllabix: 7 Third-Year subjects already initialized for Jasmine Kaur.");
-                return;
-            } else {
-                System.out.println(">>> Syllabix: Refreshing academic courses to official Third-Year curriculum...");
-                // Clear old subject data to seed fresh 3rd year curriculum
-                studySessionRepository.deleteAll();
-                studyTaskRepository.deleteAll();
-                marksRepository.deleteAll();
-                assessmentRepository.deleteAll();
-                topicRepository.deleteAll();
-                unitRepository.deleteAll();
-                subjectRepository.deleteAll();
-            }
-        } else {
-            // Seed Student (Jasmine Kaur)
-            student = new Student(
+        // 1. Ensure Jasmine Kaur exists and has curriculum
+        Student jasmine = studentRepository.findByEmail("jkaur_be24@thapar.edu").orElse(null);
+        if (jasmine == null) {
+            jasmine = new Student(
                     "Jasmine Kaur",
                     "jkaur_be24@thapar.edu",
                     passwordEncoder.encode("password123"),
@@ -78,28 +60,66 @@ public class DataInitializer implements CommandLineRunner {
                     "Computer Engineering (COE)",
                     5
             );
-            student.setAcademicGoals("Target CGPA >= 9.25 in 2627ODDSEM (Third Year). Excel in Computer Architecture (UCS510), Enterprise Web App (UCS553), Machine Learning (UML501), Data Science (UCS548), Image Processing (UCS615), Ethics (UCS421), and Software Engineering (UCS503).");
-            student.setDailyStudyHours(3.5);
-            student.setPreferredStudyTimings("EVENING");
-            student.setWeeklyAvailability("{\"Monday\":3.5,\"Tuesday\":3.5,\"Wednesday\":4.0,\"Thursday\":3.5,\"Friday\":3.0,\"Saturday\":5.0,\"Sunday\":4.5}");
-            studentRepository.save(student);
-
-            // Also seed secondary test user
-            if (!studentRepository.existsByEmail("alex.student@university.edu")) {
-                Student alex = new Student(
-                        "Alex Mercer",
-                        "alex.student@university.edu",
-                        passwordEncoder.encode("password123"),
-                        "National Institute of Technology",
-                        "Bachelor of Technology",
-                        "Computer Science & Engineering",
-                        5
-                );
-                studentRepository.save(alex);
+            jasmine.setAcademicGoals("Target CGPA >= 9.25 in 2627ODDSEM (Third Year). Excel in Computer Architecture (UCS510), Enterprise Web App (UCS553), Machine Learning (UML501), Data Science (UCS548), Image Processing (UCS615), Ethics (UCS421), and Software Engineering (UCS503).");
+            jasmine.setDailyStudyHours(3.5);
+            jasmine.setPreferredStudyTimings("EVENING");
+            jasmine.setWeeklyAvailability("{\"Monday\":3.5,\"Tuesday\":3.5,\"Wednesday\":4.0,\"Thursday\":3.5,\"Friday\":3.0,\"Saturday\":5.0,\"Sunday\":4.5}");
+            jasmine = studentRepository.save(jasmine);
+            seedCurriculumForStudent(jasmine);
+        } else {
+            List<Subject> existingSubjects = subjectRepository.findByStudentId(jasmine.getId());
+            boolean hasUcs510 = existingSubjects.stream().anyMatch(s -> "UCS510".equalsIgnoreCase(s.getCode()));
+            if (!hasUcs510 || existingSubjects.size() < 7) {
+                seedCurriculumForStudent(jasmine);
             }
         }
 
-        System.out.println(">>> Initializing Official Thapar Third-Year (2627ODDSEM) Academic Curriculum...");
+        // 2. Ensure Akshat Gupta (agupta8_be24@thapar.edu / admin@1234) exists
+        Student akshat = studentRepository.findByEmail("agupta8_be24@thapar.edu").orElse(null);
+        if (akshat == null) {
+            akshat = new Student(
+                    "Akshat Gupta",
+                    "agupta8_be24@thapar.edu",
+                    passwordEncoder.encode("admin@1234"),
+                    "Thapar Institute of Engineering & Technology, Patiala",
+                    "Bachelor of Engineering (B.E.)",
+                    "Computer Engineering (COE)",
+                    5
+            );
+            akshat.setAcademicGoals("Target CGPA >= 9.50 in 2627ODDSEM (Third Year). Excel in Computer Architecture (UCS510), Enterprise Web App (UCS553), Machine Learning (UML501), Data Science (UCS548), Image Processing (UCS615), Ethics (UCS421), and Software Engineering (UCS503).");
+            akshat.setDailyStudyHours(3.5);
+            akshat.setPreferredStudyTimings("EVENING");
+            akshat.setWeeklyAvailability("{\"Monday\":3.5,\"Tuesday\":3.5,\"Wednesday\":4.0,\"Thursday\":3.5,\"Friday\":3.0,\"Saturday\":5.0,\"Sunday\":4.5}");
+            akshat = studentRepository.save(akshat);
+            seedCurriculumForStudent(akshat);
+            System.out.println(">>> Syllabix: New student account created: agupta8_be24@thapar.edu (Akshat Gupta)");
+        } else {
+            akshat.setPasswordHash(passwordEncoder.encode("admin@1234"));
+            studentRepository.save(akshat);
+            List<Subject> akshatSubjects = subjectRepository.findByStudentId(akshat.getId());
+            if (akshatSubjects.isEmpty()) {
+                seedCurriculumForStudent(akshat);
+            }
+            System.out.println(">>> Syllabix: Student account verified and updated: agupta8_be24@thapar.edu (Akshat Gupta)");
+        }
+
+        // 3. Ensure secondary demo student (Alex Mercer) exists
+        if (!studentRepository.existsByEmail("alex.student@university.edu")) {
+            Student alex = new Student(
+                    "Alex Mercer",
+                    "alex.student@university.edu",
+                    passwordEncoder.encode("password123"),
+                    "National Institute of Technology",
+                    "Bachelor of Technology",
+                    "Computer Science & Engineering",
+                    5
+            );
+            studentRepository.save(alex);
+        }
+    }
+
+    private void seedCurriculumForStudent(Student student) {
+        System.out.println(">>> Initializing Official Thapar Third-Year (2627ODDSEM) Academic Curriculum for " + student.getFullName() + "...");
 
         // =========================================================================
         // SEED THE 7 OFFICIAL THIRD-YEAR SUBJECTS
