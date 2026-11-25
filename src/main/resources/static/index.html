@@ -103,67 +103,36 @@
 
     <!-- Main Content -->
     <div class="app-main">
-        <!-- Institutional University Masthead Bar -->
-        <div class="university-brand-masthead d-none d-md-flex">
+        <!-- Sleek Unified Top Header -->
+        <header class="app-header py-2" style="height: auto; min-height: 60px; padding: 10px 28px;">
             <div class="d-flex align-items-center gap-3">
-                <img src="/images/thapar_logo.png" alt="Thapar Institute Logo" style="height: 42px; width: auto; object-fit: contain; background: white; padding: 2px 4px; border-radius: 4px;">
-                <div>
-                    <div class="university-title-text">Thapar Institute of Engineering & Technology</div>
-                    <div class="university-subtitle-text">(Deemed to be University) &bull; Estd. 1956 &bull; NAAC 'A+' Grade &bull; Patiala, Punjab, India</div>
+                <img src="/images/thapar_logo.png" alt="Thapar Institute Logo" style="height: 38px; width: auto; object-fit: contain;">
+                <div class="d-none d-sm-block">
+                    <div class="fw-bold text-dark" style="font-size: 14px; letter-spacing: -0.2px;">Thapar Institute of Engineering & Technology</div>
+                    <div class="small text-muted" style="font-size: 11px;">Official Academic &amp; LMS Portal &bull; Patiala</div>
                 </div>
             </div>
-            <div class="d-flex align-items-center gap-3">
-                <span class="badge bg-danger text-white px-2.5 py-1.5 fw-bold" style="letter-spacing: 0.5px;"><i class="bi bi-shield-check me-1"></i> Official Academic & LMS Portal</span>
-                <span class="small text-muted fw-bold">Academic Session: 2026–2027</span>
-            </div>
-        </div>
 
-        <!-- Top Navbar -->
-        <header class="app-header">
-            <div class="header-title-section">
-                <div class="d-flex align-items-center gap-2 mb-1">
-                    <span class="badge bg-danger text-white fw-bold" style="letter-spacing: 0.5px;"><i class="bi bi-mortarboard-fill"></i> THAPAR-LMS</span>
-                    <span class="badge bg-secondary text-white fw-bold"><i class="bi bi-cpu-fill"></i> SYLLABIX INTELLIGENCE</span>
-                </div>
-                <h1>Student Academic Dashboard</h1>
-            </div>
-
-            <div class="header-actions">
-                <!-- Semester Selector matching Thapar LMS Image 2 -->
-                <div class="me-1">
-                    <select class="form-select form-select-sm fw-bold border-danger text-danger bg-white shadow-sm" id="semesterSelector" onchange="Syllabix.toast('Switched view to ' + this.value, 'info')">
-                        <option value="2627ODDSEM" selected>2627ODDSEM (3rd Year - Current)</option>
-                        <option value="2425ODDSEM">2425ODDSEM</option>
-                        <option value="2425EVESEM">2425EVESEM</option>
-                        <option value="2526ODDSEM">2526ODDSEM</option>
-                        <option value="2526EVESEM">2526EVESEM</option>
-                        <option value="EL Activities">EL Activities</option>
-                    </select>
-                </div>
-
-                <!-- Academic Calendar Week Indicator -->
-                <a href="/calendar" class="badge bg-danger-subtle text-danger border border-danger px-2.5 py-1.5 text-decoration-none rounded-pill d-flex align-items-center gap-1 shadow-sm" title="View Thapar Academic Calendar">
-                    <i class="bi bi-calendar3"></i> <strong>Week 17</strong> &bull; Teaching <span class="d-none d-lg-inline text-muted">&bull; Eval in 5d</span>
+            <div class="header-actions d-flex align-items-center gap-2">
+                <a href="/calendar" class="badge bg-light text-secondary border px-2.5 py-1.5 text-decoration-none rounded-pill d-flex align-items-center gap-1" title="Academic Calendar">
+                    <i class="bi bi-calendar3 text-danger"></i> <span>Week 17</span>
                 </a>
 
-                <!-- Notification Bell with count 76 matching Image 2 -->
-                <button class="btn btn-light position-relative border shadow-sm" onclick="Syllabix.toast('76 LMS notifications: 2 assessments approaching, 1 lab submission due, 73 forum updates', 'info')" title="LMS Notifications">
-                    <i class="bi bi-bell-fill text-secondary"></i>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.65rem;">
-                        76
-                    </span>
+                <button class="btn btn-sm btn-light border position-relative" onclick="Syllabix.toast('76 LMS notifications active', 'info')" title="Notifications">
+                    <i class="bi bi-bell text-secondary"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
                 </button>
 
-                <div class="streak-pill" id="dashboard-streak-pill">
-                    <i class="bi bi-fire"></i>
-                    <span id="streak-days">3</span> Day Streak
+                <div class="streak-pill py-1 px-2.5" id="dashboard-streak-pill" style="font-size: 12px;">
+                    <i class="bi bi-fire text-warning"></i>
+                    <span id="streak-days">3</span>d Streak
                 </div>
 
                 <div class="dropdown">
-                    <button class="btn btn-primary-syllabix dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    <button class="btn btn-sm btn-primary-syllabix dropdown-toggle" type="button" data-bs-toggle="dropdown">
                         <i class="bi bi-plus-lg"></i> Quick Action
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0" style="font-size: 13px;">
                         <li><a class="dropdown-item py-2" href="#" data-bs-toggle="modal" data-bs-target="#modalImportLmsScheme"><i class="bi bi-mortarboard-fill me-2 text-danger"></i> Import LMS Scheme</a></li>
                         <li><a class="dropdown-item py-2" href="#" data-bs-toggle="modal" data-bs-target="#modalAddSubject"><i class="bi bi-journal-plus me-2 text-primary"></i> Add Subject</a></li>
                         <li><a class="dropdown-item py-2" href="#" data-bs-toggle="modal" data-bs-target="#modalAddAssessment"><i class="bi bi-calendar-plus me-2 text-danger"></i> Add Assessment</a></li>
@@ -178,50 +147,38 @@
         <!-- Page Body -->
         <main class="page-body">
 
-            <!-- Official Student Academic Profile Ribbon -->
-            <div class="student-academic-ribbon">
+            <!-- Clean, Minimal Student Profile Card -->
+            <div class="card-syllabix mb-4 p-3 px-4 bg-white border d-flex flex-wrap align-items-center justify-content-between gap-3 shadow-sm">
                 <div class="d-flex align-items-center gap-3">
-                    <div class="user-avatar js-user-avatar" style="width: 44px; height: 44px; font-size: 16px; background: #800000; border: 2px solid #c5a059; border-radius: 4px;">AG</div>
+                    <div class="user-avatar js-user-avatar" style="width: 44px; height: 44px; font-size: 16px; font-weight: 700; background: #800000; color: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(128,0,0,0.15);">AG</div>
                     <div>
-                        <div class="h6 mb-0 font-bold text-dark d-flex align-items-center gap-2">
-                            <span class="js-student-name">Akshat Gupta</span>
-                            <span class="badge bg-danger text-white" style="font-size: 10px; padding: 2px 6px;">REGULAR</span>
+                        <div class="d-flex align-items-center gap-2">
+                            <h2 class="h5 font-bold text-dark mb-0 js-student-name">Akshat Gupta</h2>
+                            <span class="badge bg-danger-subtle text-danger border border-danger-subtle" style="font-size: 11px; font-weight: 600;">COE &bull; Sem 5</span>
                         </div>
-                        <div class="small text-muted">Roll Number: <strong>1024030605</strong> &bull; Registration: <span class="js-student-email">agupta8_be24@thapar.edu</span></div>
+                        <div class="small text-muted mt-0.5">
+                            Roll No: <strong class="text-dark">1024030605</strong> &bull; <span class="js-student-email">agupta8_be24@thapar.edu</span>
+                        </div>
                     </div>
                 </div>
-                <div class="d-flex flex-wrap align-items-center gap-4">
-                    <div class="student-meta-item">
-                        <div class="text-muted small">Program & Department</div>
-                        <strong>B.E. Computer Engineering (CSED)</strong>
-                    </div>
-                    <div class="student-meta-item">
-                        <div class="text-muted small">Academic Standing</div>
-                        <strong>Third Year &bull; Semester 5</strong>
-                    </div>
-                    <div class="student-meta-item">
-                        <div class="text-muted small">Active Term</div>
-                        <span class="badge bg-danger text-white">2627ODDSEM</span>
-                    </div>
-                    <div class="student-meta-item">
-                        <div class="text-muted small">Registered Curriculum</div>
-                        <strong class="text-danger">7 Courses &bull; 25 Credits</strong>
-                    </div>
+                <div class="d-flex align-items-center gap-3 text-secondary small">
+                    <div><i class="bi bi-journal-bookmark text-primary me-1"></i> <strong>7 Enrolled Courses</strong> (25 Credits)</div>
+                    <div class="text-muted opacity-50">&bull;</div>
+                    <div><i class="bi bi-trophy text-warning me-1"></i> Target CGPA: <strong>9.6</strong></div>
                 </div>
             </div>
 
-            <!-- Differentiator A: "What Should I Study Today?" AI Recommendation Card -->
-            <section class="recommendation-banner">
-                <div class="d-flex align-items-center justify-content-between mb-2">
+            <!-- AI Adaptive Study Directives -->
+            <section class="recommendation-banner py-3 px-4 mb-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
                     <div class="d-flex align-items-center gap-2">
-                        <span class="badge bg-white text-dark px-2.5 py-1 fw-bold"><i class="bi bi-stars text-primary me-1"></i> ADAPTIVE RECOMMENDATION</span>
-                        <h2 class="h5 mb-0 text-white font-bold">What Should I Study Today?</h2>
+                        <span class="badge bg-white text-dark px-2.5 py-1 fw-bold" style="font-size: 11px;"><i class="bi bi-stars text-primary me-1"></i> AI STUDY DIRECTIVES</span>
+                        <span class="text-white small opacity-75 d-none d-sm-inline">&bull; Daily priority recommendations based on exam urgency &amp; difficulty</span>
                     </div>
-                    <a href="/planner" class="text-white text-decoration-none small opacity-75 hover-opacity-100">
-                        View Full Planner <i class="bi bi-arrow-right"></i>
+                    <a href="/planner" class="text-white text-decoration-none small opacity-75 hover-opacity-100 font-medium">
+                        View Planner <i class="bi bi-arrow-right"></i>
                     </a>
                 </div>
-                <p class="small text-white-50 mb-3">Calculated by Syllabix Intelligent Engine based on exam urgency, syllabus completion gaps, and topic difficulty.</p>
 
                 <div class="row g-3" id="top-recommendations-container">
                     <!-- Populated dynamically via JS -->
@@ -300,6 +257,21 @@
                             <a href="/calendar" class="small text-decoration-none">Calendar &rarr;</a>
                         </div>
                         <div class="card-body-clean">
+                            <!-- Required Run-Rate & Target Exam Score Alert Box -->
+                            <div class="p-3 mb-3 rounded-3 border" style="background: #f0fdf4; border-color: #86efac !important;">
+                                <div class="d-flex align-items-center justify-content-between mb-1">
+                                    <span class="font-bold small text-dark"><i class="bi bi-calculator text-success me-1"></i> Required Run-Rate for Grade A:</span>
+                                    <span class="badge bg-success">ACHIEVABLE</span>
+                                </div>
+                                <div class="d-flex align-items-baseline gap-2 mb-1">
+                                    <div class="h4 font-bold text-dark mb-0">74.3%</div>
+                                    <div class="small text-muted">(Need <strong class="text-dark">52.0</strong> / 70.0 marks across remaining evaluations)</div>
+                                </div>
+                                <div class="small text-secondary">
+                                    <i class="bi bi-bullseye text-success me-1"></i> <strong>Exam Target:</strong> Scoring <strong>22/30 in MST</strong> and <strong>30/40 in EST</strong> comfortably secures your A grade.
+                                </div>
+                            </div>
+
                             <div id="upcoming-assessments-list" class="d-flex flex-column gap-3">
                                 <div class="text-muted text-center py-4">Loading assessments...</div>
                             </div>
@@ -703,20 +675,19 @@
 
         container.innerHTML = recs.map((r, idx) => `
             <div class="col-lg-4 col-md-6">
-                <div class="recommendation-card h-100 d-flex flex-column justify-content-between">
+                <div class="recommendation-card h-100 p-3 d-flex flex-column justify-content-between" style="border-radius: 8px;">
                     <div>
                         <div class="d-flex align-items-center justify-content-between mb-2">
-                            <span class="badge" style="background: rgba(255,255,255,0.2); color: #fff;">
+                            <span class="badge ${r.difficulty === 'HARD' ? 'bg-danger text-white' : (r.difficulty === 'EASY' ? 'bg-success text-white' : 'bg-warning text-dark')}" style="font-size: 11px;">
                                 ${r.subjectCode} &bull; ${r.difficulty}
                             </span>
-                            <span class="badge bg-danger text-white">Priority ${r.priorityScore}</span>
+                            <span class="badge bg-white text-dark fw-bold" style="font-size: 11px; opacity: 0.9;">Priority ${r.priorityScore}</span>
                         </div>
-                        <h4 class="h6 text-white font-bold mb-2">${r.topicName}</h4>
-                        <p class="small text-white-50 mb-3">${r.reason}</p>
+                        <h4 class="h6 text-white font-bold mb-1">${r.topicName}</h4>
                     </div>
-                    <div class="d-flex align-items-center justify-content-between pt-2 border-top border-white-10">
-                        <span class="small text-white-50"><i class="bi bi-clock me-1"></i> ${r.estimatedDurationMinutes} mins</span>
-                        <a href="/sessions?topicId=${r.topicId}&subjectId=${r.subjectId}" class="btn btn-sm btn-light font-bold px-3 py-1">
+                    <div class="d-flex align-items-center justify-content-between pt-2 mt-2 border-top border-white-10">
+                        <span class="small text-white-75"><i class="bi bi-clock me-1"></i> ${r.estimatedDurationMinutes}m</span>
+                        <a href="/sessions?topicId=${r.topicId}&subjectId=${r.subjectId}" class="btn btn-sm btn-light font-bold px-3 py-1" style="font-size: 12px; border-radius: 6px;">
                             Start Study <i class="bi bi-play-fill"></i>
                         </a>
                     </div>
@@ -784,19 +755,27 @@
                 label = `Approaching &bull; ${a.daysRemaining} days left`;
             }
 
+            const targetMarks = Math.ceil(a.maxMarks * 0.743);
+
             return `
-                <div class="p-3 border rounded-3 bg-white d-flex align-items-center justify-content-between">
-                    <div>
-                        <div class="d-flex align-items-center gap-2 mb-1">
-                            <span class="badge" style="background: ${a.subjectColor || '#0ea5e9'}; color: white;">${a.subjectCode}</span>
+                <div class="p-3 border rounded-3 bg-white">
+                    <div class="d-flex align-items-center justify-content-between mb-1">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge" style="background: ${a.subjectColor || '#800000'}; color: white;">${a.subjectCode}</span>
                             <span class="${urgencyClass}">${label}</span>
                         </div>
-                        <div class="font-bold text-dark">${a.title}</div>
-                        <div class="small text-muted">${new Date(a.assessmentDateTime).toLocaleString(undefined, {month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'})} &bull; Max: ${a.maxMarks} Marks</div>
+                        <a href="/insights" class="btn btn-sm btn-light border py-0 px-2" title="View Exam Readiness">
+                            <i class="bi bi-shield-check text-success"></i> <span class="small" style="font-size: 11px;">Readiness</span>
+                        </a>
                     </div>
-                    <a href="/insights" class="btn btn-sm btn-light border" title="View Exam Readiness">
-                        <i class="bi bi-shield-check text-success"></i>
-                    </a>
+                    <div class="font-bold text-dark">${a.title}</div>
+                    <div class="small text-muted mb-2">${new Date(a.assessmentDateTime).toLocaleString(undefined, {month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'})} &bull; Max: ${a.maxMarks} Marks</div>
+                    <div class="p-2 rounded-2 bg-success-subtle border border-success-subtle d-flex align-items-center justify-content-between" style="font-size: 12px;">
+                        <span class="font-bold text-success">
+                            <i class="bi bi-bullseye me-1"></i> Target to score: <strong>${targetMarks} / ${a.maxMarks} Marks</strong> (${Math.round((targetMarks / a.maxMarks) * 100)}%)
+                        </span>
+                        <span class="badge bg-success" style="font-size: 10px;">For Grade A</span>
+                    </div>
                 </div>
             `;
         }).join('');
@@ -811,21 +790,27 @@
 
         grid.innerHTML = subjects.map(s => `
             <div class="col-md-6 col-lg-4">
-                <div class="p-3 border rounded-3 bg-white h-100">
-                    <div class="d-flex align-items-center justify-content-between mb-2">
-                        <span class="badge" style="background: ${s.colorHex || '#4f46e5'}; color: white;">${s.code}</span>
-                        <span class="small font-bold text-primary">${s.completionPercentage}% Complete</span>
-                    </div>
-                    <h5 class="font-bold h6 text-dark mb-1 text-truncate">${s.name}</h5>
-                    <div class="small text-muted mb-2">${s.completedTopics} of ${s.totalTopics} topics studied</div>
+                <div class="p-3 border rounded-3 bg-white h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <span class="badge" style="background: ${s.colorHex || '#800000'}; color: white;">${s.code}</span>
+                            <span class="small font-bold text-primary">${s.completionPercentage}% Complete</span>
+                        </div>
+                        <h5 class="font-bold h6 text-dark mb-1 text-truncate">${s.name}</h5>
+                        <div class="small text-muted mb-2">${s.completedTopics} of ${s.totalTopics} topics studied</div>
 
-                    <div class="progress-syllabix mb-2">
-                        <div class="progress-bar-syllabix" style="width: ${s.completionPercentage}%;"></div>
-                    </div>
+                        <div class="progress-syllabix mb-2">
+                            <div class="progress-bar-syllabix" style="width: ${s.completionPercentage}%;"></div>
+                        </div>
 
-                    <div class="d-flex align-items-center justify-content-between small text-muted pt-2 border-top">
-                        <span>Target: <strong>${s.targetGrade || 'A'}</strong></span>
-                        <span>Avg: <strong>${s.averageMarksPercentage ? s.averageMarksPercentage + '%' : 'N/A'}</strong></span>
+                        <div class="d-flex align-items-center justify-content-between small text-muted pt-2 border-top">
+                            <span>Target: <strong>${s.targetGrade || 'A'}</strong></span>
+                            <span>Avg: <strong>${s.averageMarksPercentage ? s.averageMarksPercentage + '%' : 'N/A'}</strong></span>
+                        </div>
+                    </div>
+                    <div class="mt-2 p-1.5 px-2 rounded-2 bg-light border d-flex align-items-center justify-content-between" style="font-size: 11px;">
+                        <span class="text-secondary"><i class="bi bi-bullseye text-danger me-1"></i> Exam Target:</span>
+                        <strong class="text-dark">Need 22/30 in MST &bull; 30/40 in EST</strong>
                     </div>
                 </div>
             </div>

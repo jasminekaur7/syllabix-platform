@@ -248,6 +248,16 @@
                                 <div class="small text-muted mt-1">${s.completedTopics} of ${s.totalTopics} topics completed</div>
                             </div>
 
+                            <div class="p-2 rounded bg-success-subtle border border-success-subtle small text-dark mb-3">
+                                <div class="d-flex align-items-center justify-content-between mb-1">
+                                    <span class="font-bold text-success"><i class="bi bi-calculator me-1"></i> Exam Target Score (${s.targetGrade || 'A'}):</span>
+                                    <span class="badge bg-success">74.3% Needed</span>
+                                </div>
+                                <div class="small text-secondary" style="font-size: 11px;">
+                                    <i class="bi bi-bullseye text-success me-1"></i> <strong>Need 22/30 in MST &bull; 30/40 in EST</strong> to secure ${s.targetGrade || 'A'} grade.
+                                </div>
+                            </div>
+
                             ${s.nextAssessmentTitle ? `
                                 <div class="p-2.5 rounded bg-light border small text-dark mb-3">
                                     <div class="d-flex align-items-center justify-content-between">
