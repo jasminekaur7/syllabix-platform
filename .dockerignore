@@ -1,0 +1,12 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+.git/
+.gitignore
+.idea/
+*.iml
+.vscode/
+*.log
+boot_*.log
+tunnel_*.log
+data/
+apache-maven-3.9.9/

@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: syllabix-academic-platform
+    runtime: docker
+    plan: free
+    region: oregon
+    healthCheckPath: /login
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: SPRING_PROFILES_ACTIVE
+        value: dev
