@@ -105,15 +105,15 @@ public class SubjectApiController {
         List<LabAssignmentDto> labs = new ArrayList<>();
         LocalDate baseDate = LocalDate.now();
 
-        labs.add(new LabAssignmentDto(1L, 1L, "UCS501", "Assignment 1", "SQL DDL & Relational Schema Definition", "Create university database schema with foreign keys and cascade rules", baseDate.minusDays(20), true));
-        labs.add(new LabAssignmentDto(2L, 1L, "UCS501", "Assignment 2", "Complex SQL Queries & Joins", "Execute multi-table joins, subqueries, and aggregate grouping", baseDate.minusDays(15), true));
-        labs.add(new LabAssignmentDto(3L, 1L, "UCS501", "Assignment 3", "Nested Queries & Views", "Create parameterized views and correlated subqueries", baseDate.minusDays(10), true));
-        labs.add(new LabAssignmentDto(4L, 1L, "UCS501", "Assignment 4", "Normalization: 1NF, 2NF, 3NF & BCNF", "Decompose unnormalized relation into BCNF lossless-join forms", baseDate.minusDays(4), true));
-        labs.add(new LabAssignmentDto(5L, 1L, "UCS501", "Assignment 4.1", "Functional Dependency Closure Verifier", "Implement algorithm to find canonical cover and candidate keys", baseDate.minusDays(1), true));
-        labs.add(new LabAssignmentDto(6L, 1L, "UCS501", "Assignment 5", "Transactions & ACID Properties Simulation", "Demonstrate dirty read, non-repeatable read, and phantom read anomalies", baseDate.plusDays(3), false));
-        labs.add(new LabAssignmentDto(7L, 1L, "UCS501", "Assignment 6", "Strict Two-Phase Locking & Precedence Graphs", "Simulate 2PL concurrency manager and cycle detection", baseDate.plusDays(8), false));
-        labs.add(new LabAssignmentDto(8L, 1L, "UCS501", "Assignment 7", "B+ Tree Indexing & Search Evaluation", "Measure query execution time with clustered vs non-clustered index", baseDate.plusDays(14), false));
-        labs.add(new LabAssignmentDto(9L, 1L, "UCS501", "Assignment 8", "Database Backup, Recovery & ARIES Logging", "Demonstrate checkpointing and undo/redo log replay simulation", baseDate.plusDays(21), false));
+        labs.add(new LabAssignmentDto(1L, 1L, "UCS553", "Assignment 1", "Spring Boot Initializer & MVC Controller Setup", "Create enterprise web application with REST endpoints and Thymeleaf", baseDate.minusDays(20), true));
+        labs.add(new LabAssignmentDto(2L, 1L, "UCS553", "Assignment 2", "Spring Dependency Injection & Bean Configuration", "Implement Service layer, Component scanning, and custom qualifiers", baseDate.minusDays(15), true));
+        labs.add(new LabAssignmentDto(3L, 1L, "UCS553", "Assignment 3", "JPA & Hibernate Entity Relationships", "Design One-to-Many and Many-to-Many entities with foreign key constraints", baseDate.minusDays(10), true));
+        labs.add(new LabAssignmentDto(4L, 1L, "UCS553", "Assignment 4", "Spring Data Repositories & JPQL Queries", "Write custom JPQL queries, pagination, and sorting criteria", baseDate.minusDays(4), true));
+        labs.add(new LabAssignmentDto(5L, 1L, "UCS553", "Assignment 4.1", "Form Validation & Exception Handling", "Implement Bean Validation (@Valid, @NotNull) and GlobalExceptionHandler", baseDate.minusDays(1), true));
+        labs.add(new LabAssignmentDto(6L, 1L, "UCS553", "Assignment 5", "Spring Security Authentication & BCrypt Hashing", "Configure SecurityFilterChain, UserDetailsService, and role-based access", baseDate.plusDays(3), false));
+        labs.add(new LabAssignmentDto(7L, 1L, "UCS553", "Assignment 6", "JWT Stateless Token Authentication Filter", "Generate, sign, and validate JSON Web Tokens for secure REST APIs", baseDate.plusDays(8), false));
+        labs.add(new LabAssignmentDto(8L, 1L, "UCS553", "Assignment 7", "REST API Unit & Integration Testing", "Write JUnit 5 and Mockito test suites with MockMvc assertions", baseDate.plusDays(14), false));
+        labs.add(new LabAssignmentDto(9L, 1L, "UCS553", "Assignment 8", "Docker Containerization & Production Build", "Package multi-stage Docker container with production properties", baseDate.plusDays(21), false));
 
         return ResponseEntity.ok(labs);
     }

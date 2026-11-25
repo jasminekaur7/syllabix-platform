@@ -1,47 +1,102 @@
 /* ==========================================================================
-   SYLLABIX - Premium Academic Productivity & Management Platform Design System
+   SYLLABIX - Formal University Academic Design System
+   Tailored to Thapar Institute of Engineering & Technology Official Standards
    ========================================================================== */
 
 :root {
-    --primary: #4f46e5;
-    --primary-hover: #4338ca;
-    --primary-light: #e0e7ff;
-    --secondary: #0ea5e9;
-    --secondary-light: #e0f2fe;
-    --accent: #10b981;
-    --accent-light: #d1fae5;
-    --warning: #f59e0b;
-    --warning-light: #fef3c7;
-    --danger: #ef4444;
-    --danger-light: #fee2e2;
-    --sidebar-bg: #0f172a;
-    --sidebar-hover: #1e293b;
-    --sidebar-active: #312e81;
-    --body-bg: #f8fafc;
-    --card-bg: #ffffff;
-    --text-primary: #1e293b;
-    --text-secondary: #64748b;
-    --text-muted: #94a3b8;
-    --border-color: #e2e8f0;
-    --border-focus: #818cf8;
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 16px;
-    --radius-xl: 20px;
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.04);
-    --shadow-hover: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.04);
+    --primary: #800000;          /* Thapar Deep Crimson / Maroon */
+    --primary-hover: #660000;
+    --primary-light: #FDF2F2;
+    --secondary: #002D62;        /* Thapar Institutional Navy Blue */
+    --secondary-hover: #001F3F;
+    --secondary-light: #EBF3FA;
+    --accent: #1B4D3E;           /* Collegiate Deep Forest Green */
+    --accent-light: #E8F5E9;
+    --warning: #B8860B;          /* Academic Dark Goldenrod */
+    --warning-light: #FEF9E7;
+    --danger: #B91C1C;           /* Formal Academic Red */
+    --danger-light: #FEE2E2;
+    --sidebar-bg: #161B26;       /* Formal Slate Navy */
+    --sidebar-hover: #1F2737;
+    --sidebar-active: #800000;   /* Thapar Maroon on Active Nav Item */
+    --body-bg: #F4F6F9;          /* Dignified Institutional Slate/Off-white */
+    --card-bg: #FFFFFF;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #64748B;
+    --border-color: #D1D5DB;
+    --border-focus: #800000;
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 10px;
+    --radius-xl: 12px;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+    --shadow-hover: 0 12px 20px -4px rgba(0, 0, 0, 0.1);
     --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body {
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     background-color: var(--body-bg);
     color: var(--text-primary);
     overflow-x: hidden;
     margin: 0;
     padding: 0;
+    font-size: 14.5px;
+    line-height: 1.5;
+}
+
+/* Institutional Top Masthead Bar */
+.university-brand-masthead {
+    background: #ffffff;
+    border-bottom: 2px solid #800000;
+    padding: 10px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.university-title-text {
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: #800000;
+    text-transform: uppercase;
+}
+
+.university-subtitle-text {
+    font-size: 11.5px;
+    color: #475569;
+    font-weight: 500;
+}
+
+/* Student Academic Profile Ribbon */
+.student-academic-ribbon {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--primary);
+    border-radius: var(--radius-sm);
+    padding: 12px 20px;
+    margin-bottom: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--shadow-sm);
+}
+
+.student-meta-item {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.student-meta-item strong {
+    color: var(--text-primary);
+    font-weight: 700;
 }
 
 /* App Layout Grid */
@@ -67,42 +122,44 @@ body {
 }
 
 .sidebar-brand {
-    padding: 24px 24px 18px;
+    padding: 22px 20px 18px;
     display: flex;
     align-items: center;
     gap: 12px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .brand-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: var(--radius-md);
-    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-sm);
+    background: #800000;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
     font-size: 20px;
     font-weight: 700;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 2px 8px rgba(128, 0, 0, 0.5);
 }
 
 .brand-text {
-    font-size: 20px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
     color: #ffffff;
 }
 
 .brand-tag {
-    font-size: 11px;
-    font-weight: 600;
-    background: rgba(99, 102, 241, 0.2);
-    color: #a5b4fc;
+    font-size: 10px;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.15);
+    color: #f1f5f9;
     padding: 2px 8px;
-    border-radius: 20px;
+    border-radius: 4px;
     margin-left: auto;
+    letter-spacing: 0.5px;
 }
 
 .sidebar-menu {
@@ -153,7 +210,7 @@ body {
 .menu-link.active {
     color: #ffffff;
     background-color: var(--primary);
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+    box-shadow: 0 2px 8px rgba(128, 0, 0, 0.4);
     font-weight: 600;
 }
 
@@ -276,7 +333,8 @@ body {
 .card-syllabix {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: var(--radius-lg);
+    border-top: 3px solid #800000;
+    border-radius: var(--radius-sm);
     box-shadow: var(--shadow-sm);
     transition: var(--transition);
     overflow: hidden;
@@ -287,7 +345,7 @@ body {
 }
 
 .card-header-clean {
-    padding: 20px 24px;
+    padding: 16px 20px;
     border-bottom: 1px solid var(--border-color);
     display: flex;
     align-items: center;
@@ -296,39 +354,40 @@ body {
 }
 
 .card-header-clean h2, .card-header-clean h3 {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
     margin: 0;
     display: flex;
     align-items: center;
     gap: 10px;
+    letter-spacing: -0.2px;
 }
 
 .card-body-clean {
-    padding: 24px;
+    padding: 20px;
 }
 
-/* What Should I Study Today Card */
+/* What Should I Study Today Card - Formal Academic Directive */
 .recommendation-banner {
-    background: linear-gradient(135deg, #1e1b4b, #312e81);
+    background: linear-gradient(135deg, #0a1128 0%, #002d62 55%, #4a0e17 100%);
     color: #ffffff;
-    border-radius: var(--radius-lg);
-    padding: 28px 32px;
-    margin-bottom: 28px;
+    border-radius: var(--radius-sm);
+    border-left: 4px solid #c5a059;
+    padding: 22px 26px;
+    margin-bottom: 24px;
     position: relative;
-    overflow: hidden;
-    box-shadow: 0 10px 25px -5px rgba(49, 46, 129, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 45, 98, 0.18);
 }
 
 .recommendation-banner::after {
     content: '';
     position: absolute;
-    right: -40px;
-    top: -40px;
-    width: 200px;
-    height: 200px;
+    right: -30px;
+    top: -30px;
+    width: 160px;
+    height: 160px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(99, 102, 241, 0.3) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(197, 160, 89, 0.2) 0%, transparent 70%);
     pointer-events: none;
 }
 
@@ -336,14 +395,14 @@ body {
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: var(--radius-md);
-    padding: 16px 20px;
-    margin-top: 16px;
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    margin-top: 14px;
     transition: var(--transition);
 }
 
 .recommendation-card:hover {
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.15);
     transform: translateY(-2px);
 }
 
@@ -351,8 +410,9 @@ body {
 .stat-widget {
     background: #ffffff;
     border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: 20px;
+    border-top: 3px solid #800000;
+    border-radius: var(--radius-sm);
+    padding: 18px;
     display: flex;
     align-items: center;
     gap: 16px;
@@ -366,77 +426,78 @@ body {
 }
 
 .stat-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: var(--radius-md);
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
+    font-size: 20px;
 }
 
-.stat-icon.primary { background: var(--primary-light); color: var(--primary); }
-.stat-icon.secondary { background: var(--secondary-light); color: var(--secondary); }
-.stat-icon.accent { background: var(--accent-light); color: var(--accent); }
-.stat-icon.warning { background: var(--warning-light); color: var(--warning); }
-.stat-icon.danger { background: var(--danger-light); color: var(--danger); }
+.stat-icon.primary { background: #fee2e2; color: #800000; }
+.stat-icon.secondary { background: #e0f2fe; color: #002d62; }
+.stat-icon.accent { background: #dcfce7; color: #166534; }
+.stat-icon.warning { background: #fef3c7; color: #b45309; }
+.stat-icon.danger { background: #fee2e2; color: #b91c1c; }
 
 .stat-value {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 800;
     line-height: 1.1;
     color: var(--text-primary);
 }
 
 .stat-label {
-    font-size: 13px;
+    font-size: 12.5px;
     color: var(--text-secondary);
-    margin-top: 4px;
+    font-weight: 500;
+    margin-top: 3px;
 }
 
 /* Urgency Badges */
 .badge-urgent {
-    background: var(--danger-light);
-    color: var(--danger);
+    background: #fee2e2;
+    color: #991b1b;
     font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 20px;
+    padding: 3px 8px;
+    border-radius: 4px;
     font-size: 11px;
-    border: 1px solid #fca5a5;
+    border: 1px solid #f87171;
 }
 
 .badge-approaching {
-    background: var(--warning-light);
-    color: #d97706;
+    background: #fef3c7;
+    color: #92400e;
     font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 20px;
+    padding: 3px 8px;
+    border-radius: 4px;
     font-size: 11px;
-    border: 1px solid #fde68a;
+    border: 1px solid #fcd34d;
 }
 
 .badge-sufficient {
-    background: var(--accent-light);
-    color: #059669;
+    background: #dcfce7;
+    color: #166534;
     font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 20px;
+    padding: 3px 8px;
+    border-radius: 4px;
     font-size: 11px;
-    border: 1px solid #a7f3d0;
+    border: 1px solid #86efac;
 }
 
 /* Progress Bars */
 .progress-syllabix {
     height: 8px;
     background-color: #f1f5f9;
-    border-radius: 10px;
+    border-radius: 4px;
     overflow: hidden;
 }
 
 .progress-bar-syllabix {
     height: 100%;
-    border-radius: 10px;
-    background: linear-gradient(90deg, #4f46e5, #06b6d4);
+    border-radius: 4px;
+    background: linear-gradient(90deg, #800000, #002d62);
     transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -457,7 +518,7 @@ body {
     justify-content: center;
     background: linear-gradient(135deg, #f8fafc, #edf2f7);
     border: 8px solid var(--primary-light);
-    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05), 0 8px 24px rgba(79, 70, 229, 0.15);
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05), 0 8px 24px rgba(128, 0, 0, 0.15);
 }
 
 .timer-digits {
@@ -477,20 +538,24 @@ body {
 
 /* Buttons */
 .btn-primary-syllabix {
-    background-color: var(--primary);
+    background-color: #800000;
     color: #ffffff;
     font-weight: 600;
-    padding: 9px 20px;
+    padding: 8px 18px;
     border-radius: var(--radius-sm);
-    border: none;
+    border: 1px solid #660000;
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    box-shadow: 0 2px 6px rgba(79, 70, 229, 0.3);
+    box-shadow: 0 1px 3px rgba(128, 0, 0, 0.3);
     transition: var(--transition);
 }
 
 .btn-primary-syllabix:hover {
+    background-color: #660000;
+    color: #ffffff;
+    box-shadow: 0 3px 8px rgba(128, 0, 0, 0.4);
+}
     background-color: var(--primary-hover);
     color: #ffffff;
     transform: translateY(-1px);

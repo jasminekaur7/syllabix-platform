@@ -102,22 +102,40 @@
 
     <!-- Main Content -->
     <div class="app-main">
+        <!-- Institutional University Masthead Bar -->
+        <div class="university-brand-masthead d-none d-md-flex">
+            <div class="d-flex align-items-center gap-3">
+                <div class="brand-icon" style="width: 38px; height: 38px; font-size: 18px; border-radius: 4px;">
+                    <i class="bi bi-mortarboard-fill"></i>
+                </div>
+                <div>
+                    <div class="university-title-text">Thapar Institute of Engineering & Technology</div>
+                    <div class="university-subtitle-text">(Deemed to be University) &bull; Estd. 1956 &bull; NAAC 'A+' Grade &bull; Patiala, Punjab, India</div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <span class="badge bg-danger text-white px-2.5 py-1.5 fw-bold" style="letter-spacing: 0.5px;"><i class="bi bi-shield-check me-1"></i> Official Academic & LMS Portal</span>
+                <span class="small text-muted fw-bold">Academic Session: 2026–2027</span>
+            </div>
+        </div>
+
         <!-- Top Navbar -->
         <header class="app-header">
             <div class="header-title-section">
                 <div class="d-flex align-items-center gap-2 mb-1">
-                    <span class="badge bg-danger text-white" style="letter-spacing: 0.5px;"><i class="bi bi-mortarboard-fill"></i> THAPAR-LMS</span>
-                    <span class="badge bg-primary text-white"><i class="bi bi-stars"></i> SYLLABIX AI</span>
+                    <span class="badge bg-danger text-white fw-bold" style="letter-spacing: 0.5px;"><i class="bi bi-mortarboard-fill"></i> THAPAR-LMS</span>
+                    <span class="badge bg-secondary text-white fw-bold"><i class="bi bi-cpu-fill"></i> SYLLABIX INTELLIGENCE</span>
                 </div>
-                <h1>Academic Dashboard</h1>
-                <p>Welcome back, <span class="js-student-name fw-bold">Jasmine Kaur</span>! Here is your adaptive study overview today.</p>
+                <h1>Student Academic Dashboard</h1>
+                <p>Curricular management, continuous evaluation tracking, and adaptive study directives for <span class="js-student-name fw-bold">Jasmine Kaur</span>.</p>
             </div>
 
             <div class="header-actions">
                 <!-- Semester Selector matching Thapar LMS Image 2 -->
                 <div class="me-1">
                     <select class="form-select form-select-sm fw-bold border-danger text-danger bg-white shadow-sm" id="semesterSelector" onchange="Syllabix.toast('Switched view to ' + this.value, 'info')">
-                        <option value="2425ODDSEM" selected>2425ODDSEM (Current)</option>
+                        <option value="2627ODDSEM" selected>2627ODDSEM (3rd Year - Current)</option>
+                        <option value="2425ODDSEM">2425ODDSEM</option>
                         <option value="2425EVESEM">2425EVESEM</option>
                         <option value="2526ODDSEM">2526ODDSEM</option>
                         <option value="2526EVESEM">2526EVESEM</option>
@@ -161,6 +179,38 @@
 
         <!-- Page Body -->
         <main class="page-body">
+
+            <!-- Official Student Academic Profile Ribbon -->
+            <div class="student-academic-ribbon">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="user-avatar" style="width: 44px; height: 44px; font-size: 16px; background: #800000; border: 2px solid #c5a059; border-radius: 4px;">JK</div>
+                    <div>
+                        <div class="h6 mb-0 font-bold text-dark d-flex align-items-center gap-2">
+                            <span class="js-student-name">Jasmine Kaur</span>
+                            <span class="badge bg-danger text-white" style="font-size: 10px; padding: 2px 6px;">REGULAR</span>
+                        </div>
+                        <div class="small text-muted">Roll Number: <strong>102203045</strong> &bull; Registration: <span class="js-student-email">jkaur_be24@thapar.edu</span></div>
+                    </div>
+                </div>
+                <div class="d-flex flex-wrap align-items-center gap-4">
+                    <div class="student-meta-item">
+                        <div class="text-muted small">Program & Department</div>
+                        <strong>B.E. Computer Engineering (CSED)</strong>
+                    </div>
+                    <div class="student-meta-item">
+                        <div class="text-muted small">Academic Standing</div>
+                        <strong>Third Year &bull; Semester 5</strong>
+                    </div>
+                    <div class="student-meta-item">
+                        <div class="text-muted small">Active Term</div>
+                        <span class="badge bg-danger text-white">2627ODDSEM</span>
+                    </div>
+                    <div class="student-meta-item">
+                        <div class="text-muted small">Registered Curriculum</div>
+                        <strong class="text-danger">7 Courses &bull; 25 Credits</strong>
+                    </div>
+                </div>
+            </div>
 
             <!-- Differentiator A: "What Should I Study Today?" AI Recommendation Card -->
             <section class="recommendation-banner">

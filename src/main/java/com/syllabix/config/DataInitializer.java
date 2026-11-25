@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
@@ -47,276 +48,393 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        if (studentRepository.count() > 0) {
-            return; // Already seeded
+        // If data exists, check if 3rd year subjects are already seeded
+        Student student = studentRepository.findByEmail("jkaur_be24@thapar.edu").orElse(null);
+        if (student != null) {
+            List<Subject> existingSubjects = subjectRepository.findByStudentId(student.getId());
+            boolean hasUcs510 = existingSubjects.stream().anyMatch(s -> "UCS510".equalsIgnoreCase(s.getCode()));
+            if (hasUcs510 && existingSubjects.size() >= 7) {
+                System.out.println(">>> Syllabix: 7 Third-Year subjects already initialized for Jasmine Kaur.");
+                return;
+            } else {
+                System.out.println(">>> Syllabix: Refreshing academic courses to official Third-Year curriculum...");
+                // Clear old subject data to seed fresh 3rd year curriculum
+                studySessionRepository.deleteAll();
+                studyTaskRepository.deleteAll();
+                marksRepository.deleteAll();
+                assessmentRepository.deleteAll();
+                topicRepository.deleteAll();
+                unitRepository.deleteAll();
+                subjectRepository.deleteAll();
+            }
+        } else {
+            // Seed Student (Jasmine Kaur)
+            student = new Student(
+                    "Jasmine Kaur",
+                    "jkaur_be24@thapar.edu",
+                    passwordEncoder.encode("password123"),
+                    "Thapar Institute of Engineering & Technology, Patiala",
+                    "Bachelor of Engineering (B.E.)",
+                    "Computer Engineering (COE)",
+                    5
+            );
+            student.setAcademicGoals("Target CGPA >= 9.25 in 2627ODDSEM (Third Year). Excel in Computer Architecture (UCS510), Enterprise Web App (UCS553), Machine Learning (UML501), Data Science (UCS548), Image Processing (UCS615), Ethics (UCS421), and Software Engineering (UCS503).");
+            student.setDailyStudyHours(3.5);
+            student.setPreferredStudyTimings("EVENING");
+            student.setWeeklyAvailability("{\"Monday\":3.5,\"Tuesday\":3.5,\"Wednesday\":4.0,\"Thursday\":3.5,\"Friday\":3.0,\"Saturday\":5.0,\"Sunday\":4.5}");
+            studentRepository.save(student);
+
+            // Also seed secondary test user
+            if (!studentRepository.existsByEmail("alex.student@university.edu")) {
+                Student alex = new Student(
+                        "Alex Mercer",
+                        "alex.student@university.edu",
+                        passwordEncoder.encode("password123"),
+                        "National Institute of Technology",
+                        "Bachelor of Technology",
+                        "Computer Science & Engineering",
+                        5
+                );
+                studentRepository.save(alex);
+            }
         }
 
-        System.out.println(">>> Initializing Syllabix Demo Academic Environment...");
+        System.out.println(">>> Initializing Official Thapar Third-Year (2627ODDSEM) Academic Curriculum...");
 
-        // 1. Seed Thapar Student (Jasmine Kaur - matching Thapar LMS login)
-        Student student = new Student(
-                "Jasmine Kaur",
-                "jkaur_be24@thapar.edu",
-                passwordEncoder.encode("password123"),
-                "Thapar Institute of Engineering & Technology, Patiala",
-                "Bachelor of Engineering (B.E.)",
-                "Computer Engineering (COE)",
-                5
-        );
-        student.setAcademicGoals("Target CGPA >= 9.2 in 2425ODDSEM. Ace DBMS (UCS501) and OS (UCS502) MSTs, maintain 100% submission on Lab Assignments 1-8, and secure A grades across all subjects.");
-        student.setDailyStudyHours(3.5);
-        student.setPreferredStudyTimings("EVENING");
-        student.setWeeklyAvailability("{\"Monday\":3.5,\"Tuesday\":3.5,\"Wednesday\":4.0,\"Thursday\":3.5,\"Friday\":3.0,\"Saturday\":5.0,\"Sunday\":4.5}");
-        studentRepository.save(student);
+        // =========================================================================
+        // SEED THE 7 OFFICIAL THIRD-YEAR SUBJECTS
+        // 1. UCS510: Computer Architecture and Organization
+        // 2. UCS553: Enterprise Web Application (2627ODDSEM)
+        // 3. UCS421: Ethics and Risk Mitigation in Computing (2627ODDSEM)
+        // 4. UCS548: Foundations of Data Science (2627ODDSEM)
+        // 5. UCS615: Image Processing (2627ODDSEM)
+        // 6. UML501: Machine Learning (2627ODDSEM)
+        // 7. UCS503: Software Engineering (2627ODDSEM)
+        // =========================================================================
 
-        // Also seed Alex Mercer for secondary compatibility
-        Student alex = new Student(
-                "Alex Mercer",
-                "alex.student@university.edu",
-                passwordEncoder.encode("password123"),
-                "National Institute of Technology",
-                "Bachelor of Technology",
-                "Computer Science & Engineering",
-                5
-        );
-        studentRepository.save(alex);
+        Subject ucs510 = new Subject(student, "Computer Architecture and Organization", "UCS510", 5, 4,
+                "Instruction set architectures, MIPS pipeline design, hazard handling, memory hierarchies, and multiprocessor cache coherency.",
+                "Dr. Rajesh Kumar", "A", "#800000"); // Formal Maroon
 
-        // 2. Seed Subjects with authentic Thapar University course codes
-        Subject dbms = new Subject(student, "Database Management Systems", "UCS501", 5, 4,
-                "Relational databases, Normalization, Query Processing, Transactions and Indexing structures",
-                "Dr. Sarah Jenkins", "A+", "#4f46e5");
-        Subject os = new Subject(student, "Operating Systems", "UCS502", 5, 4,
-                "Process synchronization, CPU Scheduling, Virtual Memory, Deadlocks, File systems",
-                "Prof. Alan Vance", "A", "#0284c7");
-        Subject cn = new Subject(student, "Computer Networks", "UCS503", 5, 3,
-                "OSI and TCP/IP protocol suites, Routing algorithms, Transport layer flow and congestion control",
-                "Dr. Elena Rostova", "A", "#10b981");
-        Subject daa = new Subject(student, "Design & Analysis of Algorithms", "UCS504", 5, 4,
-                "Asymptotic notation, Divide & Conquer, Dynamic Programming, Greedy approaches and Graph algorithms",
-                "Dr. Ramesh Nair", "A+", "#f59e0b");
-        Subject se = new Subject(student, "Software Engineering & Agile", "UCS505", 5, 3,
-                "Software lifecycles, Agile Scrum, System design, Testing methodologies and CI/CD pipelines",
-                "Prof. Michael Chang", "A", "#8b5cf6");
+        Subject ucs553 = new Subject(student, "Enterprise Web Application", "UCS553", 5, 4,
+                "Enterprise Java, Spring Boot microservices, Spring Security, JPA/Hibernate persistence, and modern responsive frontend frameworks.",
+                "Prof. Vivek Sharma", "A+", "#002D62"); // Formal Navy
 
-        subjectRepository.save(dbms);
-        subjectRepository.save(os);
-        subjectRepository.save(cn);
-        subjectRepository.save(daa);
-        subjectRepository.save(se);
+        Subject ucs421 = new Subject(student, "Ethics and Risk Mitigation in Computing", "UCS421", 5, 2,
+                "Professional codes of ethics (ACM/IEEE), algorithmic bias, AI safety governance, Indian DPDP Act, and open-source licensing compliance.",
+                "Dr. Meenakshi Sood", "A", "#4A5568"); // Formal Slate
 
-        // 3. Seed Units and Topics for DBMS (CS501) - ~40% completed (Prompt scenario)
-        Unit dbmsU1 = new Unit(dbms, 1, "Relational Model & Relational Algebra", "Tuple calculus, schema definition, fundamental operators");
-        Unit dbmsU2 = new Unit(dbms, 2, "SQL Queries & Schema Normalization", "1NF, 2NF, 3NF, BCNF, functional dependencies and decomposition");
-        Unit dbmsU3 = new Unit(dbms, 3, "Transactions & Concurrency Control", "ACID properties, serializability, 2-phase locking, deadlock handling");
-        Unit dbmsU4 = new Unit(dbms, 4, "Indexing, Hashing & Storage", "B-Trees, B+ Trees, clustered/unclustered indexing, bitmap index");
-        Unit dbmsU5 = new Unit(dbms, 5, "Query Optimization & Recovery", "Query execution plan, cost models, ARIES log recovery algorithm");
-        unitRepository.save(dbmsU1);
-        unitRepository.save(dbmsU2);
-        unitRepository.save(dbmsU3);
-        unitRepository.save(dbmsU4);
-        unitRepository.save(dbmsU5);
+        Subject ucs548 = new Subject(student, "Foundations of Data Science", "UCS548", 5, 4,
+                "Probability distributions, exploratory data analysis, hypothesis testing, PCA/SVD dimensionality reduction, and clustering algorithms.",
+                "Dr. Anupam Garg", "A+", "#1B4D3E"); // Formal Dark Forest
 
-        // Topics DBMS
-        Topic t1 = new Topic(dbmsU1, dbms, student, "Relational Algebra Operations", "Selection, projection, Cartesian product and joins", "MEDIUM", 45, "COMPLETED", 4);
-        t1.setLastStudiedDate(LocalDate.now().minusDays(10));
-        Topic t2 = new Topic(dbmsU1, dbms, student, "ER to Relational Schema Mapping", "Entity sets, relationship cardinality and composite attributes", "EASY", 40, "COMPLETED", 5);
-        t2.setLastStudiedDate(LocalDate.now().minusDays(12));
+        Subject ucs615 = new Subject(student, "Image Processing", "UCS615", 5, 3,
+                "Digital image fundamentals, spatial and frequency domain filtering, 2D Fourier transforms, morphological processing, and edge detection.",
+                "Dr. Harpreet Kaur", "A", "#B8860B"); // Formal Dark Gold
 
-        Topic t3 = new Topic(dbmsU2, dbms, student, "Complex SQL Subqueries & CTEs", "Nested queries, window functions, recursive CTEs", "MEDIUM", 50, "COMPLETED", 4);
-        t3.setLastStudiedDate(LocalDate.now().minusDays(4));
-        Topic t4 = new Topic(dbmsU2, dbms, student, "BCNF Decomposition & Lossless Join", "Functional dependency closure, canonical cover and testing BCNF", "HARD", 60, "IN_PROGRESS", 2);
-        t4.setLastStudiedDate(LocalDate.now().minusDays(2));
+        Subject uml501 = new Subject(student, "Machine Learning", "UML501", 5, 4,
+                "Supervised regression/classification, Decision Trees, SVM, Backpropagation neural networks, clustering, and model validation.",
+                "Dr. Neeraj Kumar", "A+", "#6B1D2F"); // Formal Burgundy
 
-        Topic t5 = new Topic(dbmsU3, dbms, student, "Conflict & View Serializability", "Precedence graphs, testing conflict serializability", "HARD", 60, "NOT_STARTED", 2);
-        Topic t6 = new Topic(dbmsU3, dbms, student, "Strict Two-Phase Locking (2PL)", "Lock conversions, conservative 2PL, preventing cascading rollbacks", "HARD", 55, "NOT_STARTED", 1);
+        Subject ucs503 = new Subject(student, "Software Engineering", "UCS503", 5, 4,
+                "Agile Scrum methodologies, UML design, software architecture patterns, test automation (unit/integration/mutation), and CI/CD pipelines.",
+                "Prof. Sanjeev Sofat", "A", "#2E5B88"); // Formal Steel Blue
 
-        Topic t7 = new Topic(dbmsU4, dbms, student, "B+ Tree Insertion and Deletion Algorithms", "Node splitting, balance criteria, multi-level indexing", "HARD", 65, "NOT_STARTED", 2);
-        Topic t8 = new Topic(dbmsU4, dbms, student, "Dynamic Hashing & Extendible Hashing", "Directory allocation, bucket overflows and doubling directory", "MEDIUM", 45, "NOT_STARTED", 3);
+        subjectRepository.save(ucs510);
+        subjectRepository.save(ucs553);
+        subjectRepository.save(ucs421);
+        subjectRepository.save(ucs548);
+        subjectRepository.save(ucs615);
+        subjectRepository.save(uml501);
+        subjectRepository.save(ucs503);
 
-        Topic t9 = new Topic(dbmsU5, dbms, student, "Heuristic Query Optimization", "Relational algebra equivalence rules, pushing selections down", "MEDIUM", 50, "NOT_STARTED", 3);
-        Topic t10 = new Topic(dbmsU5, dbms, student, "ARIES Recovery Algorithm", "Analysis, Redo, and Undo passes with write-ahead logging (WAL)", "HARD", 60, "NOT_STARTED", 1);
+        // =========================================================================
+        // 1. UNITS & TOPICS: UCS510 (Computer Architecture) - ~45% Complete
+        // =========================================================================
+        Unit u1_510 = new Unit(ucs510, 1, "Instruction Set Architecture & Machine Language", "MIPS instruction formats, register conventions, addressing modes");
+        Unit u2_510 = new Unit(ucs510, 2, "Datapath & Control Unit Design", "Single-cycle datapath, ALU control, hardwired vs microprogrammed control");
+        Unit u3_510 = new Unit(ucs510, 3, "Pipelining & Hazard Resolution", "5-stage MIPS pipeline, data hazards, forwarding, branch prediction");
+        Unit u4_510 = new Unit(ucs510, 4, "Memory Hierarchy & Cache Design", "Direct-mapped, set-associative cache, replacement policies, multi-level caches");
+        unitRepository.save(u1_510);
+        unitRepository.save(u2_510);
+        unitRepository.save(u3_510);
+        unitRepository.save(u4_510);
 
-        topicRepository.save(t1);
-        topicRepository.save(t2);
-        topicRepository.save(t3);
-        topicRepository.save(t4);
-        topicRepository.save(t5);
-        topicRepository.save(t6);
-        topicRepository.save(t7);
-        topicRepository.save(t8);
-        topicRepository.save(t9);
-        topicRepository.save(t10);
+        Topic t1_510 = new Topic(u1_510, ucs510, student, "MIPS R-Type and I-Type Instruction Encoding", "Opcode, funct, rs, rt, rd fields and immediate arithmetic", "MEDIUM", 45, "COMPLETED", 5);
+        t1_510.setLastStudiedDate(LocalDate.now().minusDays(12));
+        Topic t2_510 = new Topic(u1_510, ucs510, student, "Addressing Modes & Assembly Control Flow", "Base addressing, PC-relative, and pseudo-direct jump addressing", "EASY", 40, "COMPLETED", 4);
+        t2_510.setLastStudiedDate(LocalDate.now().minusDays(10));
+        Topic t3_510 = new Topic(u2_510, ucs510, student, "Single-Cycle Datapath Execution", "Timing analysis, critical path delay and control signals", "MEDIUM", 50, "COMPLETED", 4);
+        t3_510.setLastStudiedDate(LocalDate.now().minusDays(6));
+        Topic t4_510 = new Topic(u3_510, ucs510, student, "Data Hazards & Forwarding Unit Design", "Load-use hazard stalls, EX-to-EX and MEM-to-EX forwarding logic", "HARD", 60, "IN_PROGRESS", 2);
+        t4_510.setLastStudiedDate(LocalDate.now().minusDays(1));
+        Topic t5_510 = new Topic(u3_510, ucs510, student, "Branch Prediction & Control Hazards", "Dynamic 2-bit branch predictor, branch delay slots", "HARD", 55, "NOT_STARTED", 2);
+        Topic t6_510 = new Topic(u4_510, ucs510, student, "Set-Associative Cache Hit Ratio & Miss Rates", "Compulsory, capacity, and conflict misses with LRU policy", "HARD", 65, "NOT_STARTED", 1);
+        topicRepository.save(t1_510);
+        topicRepository.save(t2_510);
+        topicRepository.save(t3_510);
+        topicRepository.save(t4_510);
+        topicRepository.save(t5_510);
+        topicRepository.save(t6_510);
 
-        // 4. Seed Units and Topics for Operating Systems (CS502) - ~75% completed (Prompt scenario)
-        Unit osU1 = new Unit(os, 1, "Processes, Threads & System Calls", "Process control blocks, context switching, pthread library");
-        Unit osU2 = new Unit(os, 2, "CPU Scheduling & IPC", "Round Robin, Multi-level feedback queues, pipes and shared memory");
-        Unit osU3 = new Unit(os, 3, "Synchronization & Deadlock Management", "Semaphores, Monitors, Banker's Algorithm, Resource Allocation Graph");
-        Unit osU4 = new Unit(os, 4, "Memory Management & Paging", "Demand paging, Page replacement (LRU, FIFO), Thrashing");
-        unitRepository.save(osU1);
-        unitRepository.save(osU2);
-        unitRepository.save(osU3);
-        unitRepository.save(osU4);
+        // =========================================================================
+        // 2. UNITS & TOPICS: UCS553 (Enterprise Web Application) - ~60% Complete
+        // =========================================================================
+        Unit u1_553 = new Unit(ucs553, 1, "Spring Boot Framework & Dependency Injection", "Inversion of control, bean lifecycles, and auto-configuration");
+        Unit u2_553 = new Unit(ucs553, 2, "RESTful Architecture & Spring Security", "REST endpoints, JWT authentication, and method security");
+        Unit u3_553 = new Unit(ucs553, 3, "Database Persistence with JPA & Hibernate", "Entity relations, JPQL, transaction management and connection pools");
+        Unit u4_553 = new Unit(ucs553, 4, "Enterprise Integration & Cloud Deployment", "Microservices communication, Docker containerization, CI/CD");
+        unitRepository.save(u1_553);
+        unitRepository.save(u2_553);
+        unitRepository.save(u3_553);
+        unitRepository.save(u4_553);
 
-        Topic ot1 = new Topic(osU1, os, student, "Process Lifecycle & Context Switching", "PCB state transitions, fork/exec system calls", "EASY", 35, "COMPLETED", 5);
-        ot1.setLastStudiedDate(LocalDate.now().minusDays(15));
-        Topic ot2 = new Topic(osU1, os, student, "Kernel vs User Threads", "Many-to-one, one-to-one mapping models", "MEDIUM", 40, "COMPLETED", 4);
-        ot2.setLastStudiedDate(LocalDate.now().minusDays(14));
+        Topic t1_553 = new Topic(u1_553, ucs553, student, "Spring Boot Application Architecture", "Component scanning, configuration properties, and profiles", "EASY", 40, "COMPLETED", 5);
+        t1_553.setLastStudiedDate(LocalDate.now().minusDays(14));
+        Topic t2_553 = new Topic(u2_553, ucs553, student, "Spring Security Filter Chain & JWT Tokens", "Authentication provider, SecurityFilterChain, and stateless sessions", "HARD", 60, "COMPLETED", 4);
+        t2_553.setLastStudiedDate(LocalDate.now().minusDays(4));
+        Topic t3_553 = new Topic(u3_553, ucs553, student, "Hibernate Entity Mapping & Cascading Rules", "One-to-Many, Many-to-One, lazy vs eager fetching", "MEDIUM", 50, "COMPLETED", 4);
+        t3_553.setLastStudiedDate(LocalDate.now().minusDays(2));
+        Topic t4_553 = new Topic(u3_553, ucs553, student, "JPA Criteria Queries & Transaction Isolation", "ACID transactions, optimistic locking, and JPQL joins", "HARD", 55, "IN_PROGRESS", 3);
+        t4_553.setLastStudiedDate(LocalDate.now().minusDays(1));
+        Topic t5_553 = new Topic(u4_553, ucs553, student, "Docker Containerization & Multi-Stage Builds", "Dockerfile optimization, docker-compose orchestration", "MEDIUM", 45, "NOT_STARTED", 2);
+        topicRepository.save(t1_553);
+        topicRepository.save(t2_553);
+        topicRepository.save(t3_553);
+        topicRepository.save(t4_553);
+        topicRepository.save(t5_553);
 
-        Topic ot3 = new Topic(osU2, os, student, "Multilevel Feedback Queue Scheduling", "Preemption, aging techniques, starvation avoidance", "MEDIUM", 45, "COMPLETED", 4);
-        ot3.setLastStudiedDate(LocalDate.now().minusDays(8));
-        Topic ot4 = new Topic(osU2, os, student, "Inter-Process Communication via Shared Memory", "Race conditions, memory mapping with shmget", "MEDIUM", 45, "COMPLETED", 4);
-        ot4.setLastStudiedDate(LocalDate.now().minusDays(7));
+        // =========================================================================
+        // 3. UNITS & TOPICS: UML501 (Machine Learning) - ~50% Complete
+        // =========================================================================
+        Unit u1_501 = new Unit(uml501, 1, "Linear Models & Optimization", "Linear regression, logistic regression, gradient descent algorithms");
+        Unit u2_501 = new Unit(uml501, 2, "Decision Trees & Ensemble Learning", "Information gain, Gini index, Random Forest, AdaBoost, XGBoost");
+        Unit u3_501 = new Unit(uml501, 3, "Support Vector Machines & Neural Networks", "Hyperplane margin maximization, kernel trick, multi-layer perceptron");
+        unitRepository.save(u1_501);
+        unitRepository.save(u2_501);
+        unitRepository.save(u3_501);
 
-        Topic ot5 = new Topic(osU3, os, student, "Classic Synchronization Problems", "Dining Philosophers, Readers-Writers with semaphores", "HARD", 55, "COMPLETED", 4);
-        ot5.setLastStudiedDate(LocalDate.now().minusDays(3));
-        Topic ot6 = new Topic(osU3, os, student, "Banker's Algorithm for Deadlock Avoidance", "Safe state verification, resource request algorithm", "HARD", 50, "COMPLETED", 4);
-        ot6.setLastStudiedDate(LocalDate.now().minusDays(3));
+        Topic t1_501 = new Topic(u1_501, uml501, student, "Gradient Descent & Cost Optimization", "Batch, mini-batch, stochastic gradient descent, learning rate decay", "MEDIUM", 45, "COMPLETED", 5);
+        t1_501.setLastStudiedDate(LocalDate.now().minusDays(9));
+        Topic t2_501 = new Topic(u2_501, uml501, student, "Decision Tree Splitting & Pruning", "ID3, C4.5, post-pruning techniques, handling continuous features", "MEDIUM", 50, "COMPLETED", 4);
+        t2_501.setLastStudiedDate(LocalDate.now().minusDays(5));
+        Topic t3_501 = new Topic(u3_501, uml501, student, "Support Vector Machines & Kernel Trick", "Soft-margin SVM, RBF kernel, dual problem formulation", "HARD", 65, "IN_PROGRESS", 2);
+        t3_501.setLastStudiedDate(LocalDate.now().minusDays(2));
+        Topic t4_501 = new Topic(u3_501, uml501, student, "Backpropagation & Neural Network Training", "Activation functions (ReLU, Sigmoid), chain rule, vanishing gradients", "HARD", 60, "NOT_STARTED", 1);
+        topicRepository.save(t1_501);
+        topicRepository.save(t2_501);
+        topicRepository.save(t3_501);
+        topicRepository.save(t4_501);
 
-        Topic ot7 = new Topic(osU4, os, student, "Virtual Memory & Inverted Page Tables", "Multi-level paging, TLB hit ratio calculations", "HARD", 60, "IN_PROGRESS", 3);
-        ot7.setLastStudiedDate(LocalDate.now().minusDays(1));
-        Topic ot8 = new Topic(osU4, os, student, "Page Replacement: LRU vs Working Set", "Belady's anomaly, clock algorithm, thrashing mitigation", "HARD", 55, "NOT_STARTED", 2);
+        // =========================================================================
+        // 4. UNITS & TOPICS: UCS548 (Foundations of Data Science) - ~70% Complete
+        // =========================================================================
+        Unit u1_548 = new Unit(ucs548, 1, "Statistical Inference & Probability", "Central Limit Theorem, confidence intervals, hypothesis tests");
+        Unit u2_548 = new Unit(ucs548, 2, "Dimensionality Reduction & Clustering", "PCA, Singular Value Decomposition, K-Means clustering");
+        unitRepository.save(u1_548);
+        unitRepository.save(u2_548);
 
-        topicRepository.save(ot1);
-        topicRepository.save(ot2);
-        topicRepository.save(ot3);
-        topicRepository.save(ot4);
-        topicRepository.save(ot5);
-        topicRepository.save(ot6);
-        topicRepository.save(ot7);
-        topicRepository.save(ot8);
+        Topic t1_548 = new Topic(u1_548, ucs548, student, "Hypothesis Testing: T-Test & Chi-Square", "Null hypothesis formulation, p-values, degrees of freedom", "MEDIUM", 45, "COMPLETED", 4);
+        t1_548.setLastStudiedDate(LocalDate.now().minusDays(8));
+        Topic t2_548 = new Topic(u2_548, ucs548, student, "Principal Component Analysis (PCA)", "Covariance matrix, eigenvalues, projecting onto principal axes", "HARD", 55, "COMPLETED", 4);
+        t2_548.setLastStudiedDate(LocalDate.now().minusDays(3));
+        Topic t3_548 = new Topic(u2_548, ucs548, student, "K-Means Clustering & Silhouette Score", "Centroid initialization, convergence criteria, determining optimal K", "MEDIUM", 40, "NOT_STARTED", 3);
+        topicRepository.save(t1_548);
+        topicRepository.save(t2_548);
+        topicRepository.save(t3_548);
 
-        // 5. Seed Units and Topics for Computer Networks (CS503)
-        Unit cnU1 = new Unit(cn, 1, "Network Layer & Routing", "IP addressing, CIDR, Dijkstra SPF, distance vector routing");
-        Unit cnU2 = new Unit(cn, 2, "Transport Protocols & Flow Control", "TCP 3-way handshake, sliding window, Reno/Cubic congestion control");
-        unitRepository.save(cnU1);
-        unitRepository.save(cnU2);
+        // =========================================================================
+        // 5. UNITS & TOPICS: UCS615 (Image Processing) - ~50% Complete
+        // =========================================================================
+        Unit u1_615 = new Unit(ucs615, 1, "Spatial Domain Filtering & Enhancements", "Histogram equalization, smoothing linear filters, Laplacian sharpening");
+        Unit u2_615 = new Unit(ucs615, 2, "Image Segmentation & Edge Detection", "Gradient operators (Sobel, Prewitt), Canny edge detector, thresholding");
+        unitRepository.save(u1_615);
+        unitRepository.save(u2_615);
 
-        Topic cnt1 = new Topic(cnU1, cn, student, "Subnetting and CIDR Calculation", "VLSM, address block allocation, broadcast domains", "MEDIUM", 45, "COMPLETED", 4);
-        cnt1.setLastStudiedDate(LocalDate.now().minusDays(6));
-        Topic cnt2 = new Topic(cnU1, cn, student, "Link-State Routing & OSPF", "Dijkstra algorithm, link state packets, routing loops", "HARD", 50, "NOT_STARTED", 3);
-        Topic cnt3 = new Topic(cnU2, cn, student, "TCP Congestion Control State Machine", "Slow start, congestion avoidance, fast retransmit, fast recovery", "HARD", 55, "NOT_STARTED", 2);
-        topicRepository.save(cnt1);
-        topicRepository.save(cnt2);
-        topicRepository.save(cnt3);
+        Topic t1_615 = new Topic(u1_615, ucs615, student, "Histogram Equalization & Contrast Stretching", "Cumulative distribution function, transformation function mapping", "EASY", 35, "COMPLETED", 5);
+        t1_615.setLastStudiedDate(LocalDate.now().minusDays(7));
+        Topic t2_615 = new Topic(u2_615, ucs615, student, "Canny Edge Detection Algorithm", "Gaussian smoothing, gradient calculation, non-maximum suppression, hysteresis", "HARD", 55, "IN_PROGRESS", 3);
+        t2_615.setLastStudiedDate(LocalDate.now().minusDays(2));
+        topicRepository.save(t1_615);
+        topicRepository.save(t2_615);
 
-        // 6. Seed Assessments (Matching exact prompt requirements!)
-        LocalDateTime now = LocalDateTime.now();
+        // =========================================================================
+        // 6. UNITS & TOPICS: UCS421 (Ethics & Risk Mitigation) - ~75% Complete
+        // =========================================================================
+        Unit u1_421 = new Unit(ucs421, 1, "Professional Ethics & Algorithmic Accountability", "ACM Code of Conduct, algorithmic discrimination, AI explainability");
+        Unit u2_421 = new Unit(ucs421, 2, "Cyber Regulations & Data Privacy", "Indian DPDP Act, GDPR compliance, intellectual property in software");
+        unitRepository.save(u1_421);
+        unitRepository.save(u2_421);
 
-        // Assessment 1: DBMS MST in 5 days (Urgent Red)
-        Assessment aDbmsMst = new Assessment(
-                student, dbms,
-                "Mid-Semester Test (MST-1): DBMS Core",
+        Topic t1_421 = new Topic(u1_421, ucs421, student, "Algorithmic Bias & Fair Machine Learning", "Disparate impact, demographic parity, fairness metrics in AI", "MEDIUM", 40, "COMPLETED", 4);
+        t1_421.setLastStudiedDate(LocalDate.now().minusDays(11));
+        Topic t2_421 = new Topic(u2_421, ucs421, student, "Indian Digital Personal Data Protection (DPDP) Act", "Data fiduciary obligations, consent mechanisms, penalties", "EASY", 35, "COMPLETED", 5);
+        t2_421.setLastStudiedDate(LocalDate.now().minusDays(5));
+        topicRepository.save(t1_421);
+        topicRepository.save(t2_421);
+
+        // =========================================================================
+        // 7. UNITS & TOPICS: UCS503 (Software Engineering) - ~60% Complete
+        // =========================================================================
+        Unit u1_503 = new Unit(ucs503, 1, "Agile Development & Requirements Modeling", "Scrum sprints, user stories, use case modeling, SRS documentation");
+        Unit u2_503 = new Unit(ucs503, 2, "Design Patterns & Automated Testing", "Creational/Structural patterns, JUnit test pyramids, mutation testing");
+        unitRepository.save(u1_503);
+        unitRepository.save(u2_503);
+
+        Topic t1_503 = new Topic(u1_503, ucs503, student, "Agile Scrum Ceremonies & Sprint Backlog Management", "Sprint planning, daily standup, burn-down charts, retrospective", "EASY", 35, "COMPLETED", 5);
+        t1_503.setLastStudiedDate(LocalDate.now().minusDays(15));
+        Topic t2_503 = new Topic(u2_503, ucs503, student, "Design Patterns: Factory, Singleton & Observer", "UML class structure, loose coupling, dependency inversion", "MEDIUM", 50, "COMPLETED", 4);
+        t2_503.setLastStudiedDate(LocalDate.now().minusDays(6));
+        Topic t3_503 = new Topic(u2_503, ucs503, student, "White-Box Testing: Path Coverage & Cyclomatic Complexity", "Control flow graphs, basis path testing, branch coverage", "HARD", 55, "NOT_STARTED", 2);
+        topicRepository.save(t1_503);
+        topicRepository.save(t2_503);
+        topicRepository.save(t3_503);
+
+        // =========================================================================
+        // SEED ASSESSMENTS (Matching official Thapar ODD SEM 2026-27 schedule)
+        // Reference date: 25 Nov 2026 (Week 17 • Teaching)
+        // Week 18 (30 Nov - 05 Dec): Lab Evaluations & Sessional Make-up Quiz
+        // Week 19-20 (07 Dec - 19 Dec): EST (End-Semester Examinations)
+        // =========================================================================
+        LocalDateTime refNow = LocalDateTime.now();
+
+        // 1. UCS510: Computer Architecture MST / Eval in 5 days (Week 18)
+        Assessment a1_510 = new Assessment(
+                student, ucs510,
+                "Minor Test (MST-2): Pipelining & Cache Design",
                 "MST",
-                now.plusDays(5).withHour(10).withMinute(0),
-                "Units 1, 2, and 3 (Relational Algebra, SQL Normalization, Serializability)",
+                refNow.plusDays(5).withHour(10).withMinute(0),
+                "Units 2 & 3: Datapath, 5-stage MIPS pipeline, data hazard forwarding",
                 50.0,
                 "PREPARING",
                 "URGENT",
-                "Must practice BCNF decomposition proofs and conflict serializability graphs"
+                "Practice forwarding unit Boolean equations and pipeline timing diagrams."
         );
 
-        // Assessment 2: Operating Systems MST in 8 days (Approaching Orange)
-        Assessment aOsMst = new Assessment(
-                student, os,
-                "Mid-Semester Test (MST-1): Operating Systems",
-                "MST",
-                now.plusDays(8).withHour(14).withMinute(0),
-                "Units 1, 2, and 3 (Processes, CPU Scheduling, Synchronization)",
-                50.0,
+        // 2. UCS553: Enterprise Web App Lab Evaluation in 6 days (Week 18)
+        Assessment a1_553 = new Assessment(
+                student, ucs553,
+                "Lab Evaluation & Viva (Week 18): Spring Boot & JPA",
+                "LAB",
+                refNow.plusDays(6).withHour(14).withMinute(0),
+                "Assignments 1 to 8: Spring REST APIs, JWT Security, and JPA Persistence",
+                20.0,
+                "PREPARING",
+                "URGENT",
+                "Submit all pending GitHub lab repository links prior to scheduled viva."
+        );
+
+        // 3. UML501: Machine Learning Sessional Quiz in 9 days (Week 18/19)
+        Assessment a1_501 = new Assessment(
+                student, uml501,
+                "Sessional Quiz: Classification & Neural Networks",
+                "QUIZ",
+                refNow.plusDays(9).withHour(11).withMinute(30),
+                "Units 2 & 3: Decision Trees, SVM dual formulation, and Backpropagation",
+                25.0,
                 "READY",
                 "HIGH",
-                "Review Banker's algorithm safe sequence checks and Dining Philosophers semaphore code"
+                "Formula sheet permitted for cross-entropy loss and gradient formulas."
         );
 
-        // Assessment 3: Computer Networks Quiz in 12 days (Green)
-        Assessment aCnQuiz = new Assessment(
-                student, cn,
-                "Network Layer & CIDR Subnetting Quiz",
-                "QUIZ",
-                now.plusDays(12).withHour(11).withMinute(30),
-                "Unit 1: Subnetting, VLSM and IP routing",
-                25.0,
-                "NOT_STARTED",
+        // 4. UCS548: Data Science Project Milestone in 11 days
+        Assessment a1_548 = new Assessment(
+                student, ucs548,
+                "Data Science Term Project Presentation",
+                "PROJECT",
+                refNow.plusDays(11).withHour(15).withMinute(0),
+                "End-to-end exploratory analysis, PCA dimensionality reduction, and clustering",
+                30.0,
+                "PREPARING",
                 "MEDIUM",
-                "Online MCQs and subnet mask calculation problems"
+                "Submit Jupyter Notebook with visualizations and executive summary PDF."
         );
 
-        // Assessment 4: Algorithms End-Sem in 25 days
-        Assessment aDaaEst = new Assessment(
-                student, daa,
-                "End-Semester Examination (EST): Algorithms",
+        // 5. UCS503: Software Engineering EST in 16 days (Week 19 EST)
+        Assessment a1_503 = new Assessment(
+                student, ucs503,
+                "End-Semester Examination (EST): Software Engineering",
                 "EST",
-                now.plusDays(25).withHour(9).withMinute(30),
-                "Comprehensive syllabus (Units 1 to 5)",
+                refNow.plusDays(16).withHour(9).withMinute(30),
+                "Comprehensive syllabus (Agile, UML Design, Design Patterns, Test Automation)",
                 100.0,
                 "NOT_STARTED",
                 "HIGH",
-                "Comprehensive university exam covering dynamic programming and graph theory"
+                "Official university hall ticket required; examination duration 3 hours."
         );
 
-        assessmentRepository.save(aDbmsMst);
-        assessmentRepository.save(aOsMst);
-        assessmentRepository.save(aCnQuiz);
-        assessmentRepository.save(aDaaEst);
+        assessmentRepository.save(a1_510);
+        assessmentRepository.save(a1_553);
+        assessmentRepository.save(a1_501);
+        assessmentRepository.save(a1_548);
+        assessmentRepository.save(a1_503);
 
-        // 7. Seed Marks for Past Assessments
-        Marks m1 = new Marks(student, null, dbms, 18.5, 20.0, LocalDate.now().minusDays(20), "QUIZ", "High score in Relational Algebra. Lost 1.5 marks in outer joins.");
-        Marks m2 = new Marks(student, null, os, 16.0, 20.0, LocalDate.now().minusDays(18), "QUIZ", "Solid understanding of CPU scheduling. Practice IPC shared memory code.");
-        Marks m3 = new Marks(student, null, cn, 22.0, 25.0, LocalDate.now().minusDays(14), "ASSIGNMENT", "Network simulation lab report received grade A.");
-        Marks m4 = new Marks(student, null, daa, 42.0, 50.0, LocalDate.now().minusDays(30), "MST", "Great work on divide and conquer; review dynamic programming memoization.");
-        Marks m5 = new Marks(student, null, se, 23.5, 25.0, LocalDate.now().minusDays(10), "ASSIGNMENT", "Agile sprint backlog and user story mapping accepted with distinction.");
+        // =========================================================================
+        // SEED PAST MARKS
+        // =========================================================================
+        Marks m1 = new Marks(student, null, ucs510, 19.0, 20.0, LocalDate.now().minusDays(22), "QUIZ", "High score in MIPS instruction encoding. Excellent work.");
+        Marks m2 = new Marks(student, null, ucs553, 23.5, 25.0, LocalDate.now().minusDays(18), "ASSIGNMENT", "Spring Security filter chain implementation with JWT distinction.");
+        Marks m3 = new Marks(student, null, uml501, 18.0, 20.0, LocalDate.now().minusDays(14), "QUIZ", "Accurate mathematical derivations for gradient descent updates.");
+        Marks m4 = new Marks(student, null, ucs548, 43.0, 50.0, LocalDate.now().minusDays(30), "MST", "Strong grasp of hypothesis testing and PCA eigenvalue calculations.");
+        Marks m5 = new Marks(student, null, ucs421, 24.0, 25.0, LocalDate.now().minusDays(10), "ASSIGNMENT", "Comprehensive analysis of Indian DPDP Act 2023 compliance.");
+        Marks m6 = new Marks(student, null, ucs503, 44.0, 50.0, LocalDate.now().minusDays(28), "MST", "Exceptional UML class diagrams and software design pattern architecture.");
 
         marksRepository.save(m1);
         marksRepository.save(m2);
         marksRepository.save(m3);
         marksRepository.save(m4);
         marksRepository.save(m5);
+        marksRepository.save(m6);
 
-        // 8. Seed Study Tasks for Today and Upcoming Days
+        // =========================================================================
+        // SEED STUDY TASKS FOR TODAY
+        // =========================================================================
         StudyTask task1 = new StudyTask(
-                student, t4, dbms,
+                student, t4_510, ucs510,
                 LocalDate.now(), LocalTime.of(18, 0), LocalTime.of(19, 0), 60,
-                "NEW_LEARNING", "CRITICAL", 88.5,
-                "DBMS examination is in 5 days; BCNF decomposition is heavily weighted on MST-1"
+                "NEW_LEARNING", "CRITICAL", 89.0,
+                "Computer Architecture MST is in 5 days; master MIPS pipeline forwarding logic."
         );
         StudyTask task2 = new StudyTask(
-                student, t5, dbms,
+                student, t4_553, ucs553,
                 LocalDate.now(), LocalTime.of(19, 15), LocalTime.of(20, 15), 60,
-                "NEW_LEARNING", "URGENT", 84.0,
-                "High priority conflict serializability topic pending with upcoming exam"
+                "NEW_LEARNING", "URGENT", 85.0,
+                "Enterprise Web App Lab Evaluation is in 6 days; review JPA Criteria queries."
         );
         StudyTask task3 = new StudyTask(
-                student, ot7, os,
+                student, t3_501, uml501,
                 LocalDate.now(), LocalTime.of(20, 30), LocalTime.of(21, 15), 45,
-                "REVISION", "HIGH", 68.0,
-                "Solidify virtual memory paging concepts ahead of OS test in 8 days"
+                "REVISION", "HIGH", 72.0,
+                "Solidify SVM dual formulation and soft margin slack variables ahead of quiz."
         );
 
         studyTaskRepository.save(task1);
         studyTaskRepository.save(task2);
         studyTaskRepository.save(task3);
 
-        // 9. Seed Study Sessions for Study Streak Tracking
+        // =========================================================================
+        // SEED RECENT STUDY SESSIONS FOR STUDY STREAK
+        // =========================================================================
         StudySession s1 = new StudySession(
-                student, dbms, t3, null,
-                now.minusDays(3).withHour(18).withMinute(0), now.minusDays(3).withHour(18).withMinute(50), 50,
-                "POMODORO", "Completed complex SQL nested subqueries and window rank functions.", 5
+                student, ucs510, t3_510, null,
+                refNow.minusDays(3).withHour(18).withMinute(0), refNow.minusDays(3).withHour(18).withMinute(50), 50,
+                "POMODORO", "Analyzed single-cycle datapath execution delays and control word mapping.", 5
         );
         StudySession s2 = new StudySession(
-                student, os, ot6, null,
-                now.minusDays(2).withHour(19).withMinute(0), now.minusDays(2).withHour(19).withMinute(45), 45,
-                "POMODORO", "Solved Banker's algorithm safe sequence exercises without error.", 5
+                student, ucs553, t2_553, null,
+                refNow.minusDays(2).withHour(19).withMinute(0), refNow.minusDays(2).withHour(19).withMinute(45), 45,
+                "POMODORO", "Verified stateless Spring Security JWT authentication filter chain.", 5
         );
         StudySession s3 = new StudySession(
-                student, dbms, t4, null,
-                now.minusDays(1).withHour(18).withMinute(0), now.minusDays(1).withHour(19).withMinute(0), 60,
-                "CUSTOM", "Worked through functional dependency canonical cover steps.", 4
+                student, uml501, t2_501, null,
+                refNow.minusDays(1).withHour(18).withMinute(0), refNow.minusDays(1).withHour(19).withMinute(0), 60,
+                "CUSTOM", "Computed Decision Tree Gini impurity reduction across split features.", 4
         );
 
         studySessionRepository.save(s1);
         studySessionRepository.save(s2);
         studySessionRepository.save(s3);
 
-        System.out.println(">>> Syllabix Demo Academic Environment successfully initialized with 5 Subjects, 21 Topics, 4 Assessments, and Past Analytics!");
+        System.out.println(">>> Syllabix: Official Thapar Third-Year (2627ODDSEM) Academic Environment successfully initialized with 7 Subjects, 24 Topics, 5 Assessments, and Verified Records!");
     }
 }
