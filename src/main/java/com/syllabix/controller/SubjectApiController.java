@@ -63,6 +63,12 @@ public class SubjectApiController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/{id}/ai-evaluate")
+    public ResponseEntity<SubjectDto> aiEvaluateSubject(@PathVariable Long id) {
+        Student student = authenticationService.getAuthenticatedStudent();
+        return ResponseEntity.ok(subjectService.aiEvaluateSubject(id, student));
+    }
+
     // =========================================================================
     // THAPAR LMS COURSE EVALUATION SCHEME & TARGET GRADE CALCULATOR ENDPOINTS
     // =========================================================================

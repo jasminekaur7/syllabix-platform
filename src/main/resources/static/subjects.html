@@ -109,9 +109,15 @@
             </div>
             <form id="formAddSubject" onsubmit="handleCreateSubject(event)">
                 <div class="modal-body p-4">
+                    <div class="alert alert-primary border-0 d-flex align-items-center gap-2 py-2 px-3 small mb-3">
+                        <i class="bi bi-robot fs-5 text-primary"></i>
+                        <div>
+                            <strong>AI Curriculum Agent Active:</strong> When registered, the AI Agent will auto-extract official Thapar syllabus units &amp; topics from the curriculum database, evaluate cognitive difficulty (Easy / Medium / Hard), and calculate study duration.
+                        </div>
+                    </div>
                     <div class="mb-3">
                         <label class="form-label font-medium small">Subject Name *</label>
-                        <input type="text" name="name" class="form-control" required placeholder="e.g. Distributed Computing">
+                        <input type="text" name="name" class="form-control" required placeholder="e.g. Software Engineering or UCS503">
                     </div>
                     <div class="row g-2 mb-3">
                         <div class="col-md-6">
@@ -228,9 +234,14 @@
                         </div>
 
                         <div class="p-3 bg-light border-top d-flex align-items-center justify-content-between">
-                            <a href="/syllabus?subjectId=${s.id}" class="btn btn-sm btn-primary-syllabix">
-                                <i class="bi bi-diagram-3"></i> Syllabus Units
-                            </a>
+                            <div class="d-flex align-items-center gap-2">
+                                <a href="/syllabus?subjectId=${s.id}" class="btn btn-sm btn-primary-syllabix">
+                                    <i class="bi bi-diagram-3"></i> Syllabus Units
+                                </a>
+                                <button class="btn btn-sm btn-outline-primary" onclick="aiEvaluateSubject(${s.id}, '${s.name}')" title="AI Evaluate / Sync Curriculum">
+                                    <i class="bi bi-robot"></i> AI Evaluate
+                                </button>
+                            </div>
                             <button class="btn btn-sm btn-outline-danger" onclick="deleteSubject(${s.id}, '${s.name}')" title="Delete Subject">
                                 <i class="bi bi-trash"></i>
                             </button>
@@ -253,12 +264,23 @@
 
         try {
             await Syllabix.api('/api/subjects', { method: 'POST', body: payload });
-            Syllabix.toast('Subject created successfully!', 'success');
+            Syllabix.toast('Subject registered & AI topics generated with difficulty scores!', 'success');
             bootstrap.Modal.getInstance(document.getElementById('modalAddSubject')).hide();
             form.reset();
             loadSubjects();
         } catch (err) {
             console.error(err);
+        }
+    }
+
+    async function aiEvaluateSubject(id, name) {
+        try {
+            Syllabix.toast(`AI Agent evaluating syllabus & difficulty for "${name}"...`, 'info');
+            await Syllabix.api(`/api/subjects/${id}/ai-evaluate`, { method: 'POST' });
+            Syllabix.toast(`AI difficulty evaluation complete for "${name}"!`, 'success');
+            loadSubjects();
+        } catch (e) {
+            console.error('Failed to AI evaluate subject', e);
         }
     }
 

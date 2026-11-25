@@ -32,17 +32,23 @@ public class SubjectService {
     private final TopicRepository topicRepository;
     private final MarksRepository marksRepository;
     private final AssessmentRepository assessmentRepository;
+    private final CurriculumCatalogService curriculumCatalogService;
+    private final AiTopicEvaluatorService aiTopicEvaluatorService;
 
     public SubjectService(SubjectRepository subjectRepository,
                           UnitRepository unitRepository,
                           TopicRepository topicRepository,
                           MarksRepository marksRepository,
-                          AssessmentRepository assessmentRepository) {
+                          AssessmentRepository assessmentRepository,
+                          CurriculumCatalogService curriculumCatalogService,
+                          AiTopicEvaluatorService aiTopicEvaluatorService) {
         this.subjectRepository = subjectRepository;
         this.unitRepository = unitRepository;
         this.topicRepository = topicRepository;
         this.marksRepository = marksRepository;
         this.assessmentRepository = assessmentRepository;
+        this.curriculumCatalogService = curriculumCatalogService;
+        this.aiTopicEvaluatorService = aiTopicEvaluatorService;
     }
 
     public List<SubjectDto> getAllSubjects(Student student) {
@@ -86,6 +92,7 @@ public class SubjectService {
                 tDto.setConfidenceLevel(t.getConfidenceLevel());
                 tDto.setPriorityScore(t.getPriorityScore());
                 tDto.setLastStudiedDate(t.getLastStudiedDate());
+                tDto.setAiReasoning(t.getAiReasoning());
                 return tDto;
             }).collect(Collectors.toList());
 
@@ -121,7 +128,108 @@ public class SubjectService {
         );
 
         subjectRepository.save(subject);
+        populateSyllabusAndEvaluateWithAi(subject, student);
         return enrichSubjectDto(subject);
+    }
+
+    @Transactional
+    public SubjectDto aiEvaluateSubject(Long subjectId, Student student) {
+        Subject subject = subjectRepository.findByIdAndStudentId(subjectId, student.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Subject not found: " + subjectId));
+
+        List<Unit> units = unitRepository.findBySubjectIdOrderByUnitNumberAsc(subject.getId());
+        if (units.isEmpty()) {
+            populateSyllabusAndEvaluateWithAi(subject, student);
+        } else {
+            for (Unit unit : units) {
+                List<Topic> topics = topicRepository.findByUnitId(unit.getId());
+                for (Topic topic : topics) {
+                    AiTopicEvaluatorService.EvaluationResult eval =
+                            aiTopicEvaluatorService.evaluateTopic(subject.getName(), subject.getCode(), unit.getTitle(), topic.getName(), topic.getDescription());
+                    topic.setDifficulty(eval.getDifficulty());
+                    topic.setEstimatedDurationMinutes(eval.getEstimatedMinutes());
+                    topic.setAiReasoning(eval.getAiReasoning());
+                    topicRepository.save(topic);
+                }
+            }
+        }
+
+        return getSubjectById(subjectId, student);
+    }
+
+    @Transactional
+    public void populateSyllabusAndEvaluateWithAi(Subject subject, Student student) {
+        List<Unit> existingUnits = unitRepository.findBySubjectIdOrderByUnitNumberAsc(subject.getId());
+        if (!existingUnits.isEmpty()) {
+            return;
+        }
+
+        java.util.Optional<CurriculumCatalogService.CourseCurriculum> courseOpt =
+                curriculumCatalogService.findCourse(subject.getCode(), subject.getName());
+
+        if (courseOpt.isPresent()) {
+            CurriculumCatalogService.CourseCurriculum course = courseOpt.get();
+            for (CurriculumCatalogService.UnitCurriculum uCur : course.getUnits()) {
+                Unit unit = new Unit(subject, uCur.getUnitNumber(), uCur.getTitle(), "Extracted from official university scheme & syllabus");
+                unitRepository.save(unit);
+
+                for (String topicName : uCur.getTopics()) {
+                    AiTopicEvaluatorService.EvaluationResult eval =
+                            aiTopicEvaluatorService.evaluateTopic(subject.getName(), subject.getCode(), uCur.getTitle(), topicName, null);
+
+                    Topic topic = new Topic(
+                            unit,
+                            subject,
+                            student,
+                            topicName,
+                            "AI evaluated from official Thapar syllabus",
+                            eval.getDifficulty(),
+                            eval.getEstimatedMinutes(),
+                            "NOT_STARTED",
+                            3
+                    );
+                    topic.setAiReasoning(eval.getAiReasoning());
+                    topicRepository.save(topic);
+                }
+            }
+        } else {
+            // Sensible fallback: generate 3 structured curriculum units and evaluate them
+            String[] defaultUnits = {
+                "Foundations & Theoretical Core",
+                "Core Methodologies, Architecture & Implementation",
+                "Advanced Systems, Integration & Emerging Trends"
+            };
+
+            for (int i = 0; i < defaultUnits.length; i++) {
+                Unit unit = new Unit(subject, i + 1, defaultUnits[i], "Standard modular curriculum for " + subject.getName());
+                unitRepository.save(unit);
+
+                String[] sampleTopics = (i == 0)
+                        ? new String[]{"Fundamental Definitions & Core Principles", "Mathematical Foundations & Terminology", "System Context & Requirements"}
+                        : (i == 1)
+                        ? new String[]{"Core Design Patterns & Methodologies", "Procedural Algorithms & Performance Constraints", "Data Models & Error Handling"}
+                        : new String[]{"Advanced Scalability & System Optimization", "Integration Patterns & Frameworks", "Case Studies & Assessment Synthesis"};
+
+                for (String tName : sampleTopics) {
+                    AiTopicEvaluatorService.EvaluationResult eval =
+                            aiTopicEvaluatorService.evaluateTopic(subject.getName(), subject.getCode(), unit.getTitle(), tName, null);
+
+                    Topic topic = new Topic(
+                            unit,
+                            subject,
+                            student,
+                            tName,
+                            "AI evaluated curriculum topic",
+                            eval.getDifficulty(),
+                            eval.getEstimatedMinutes(),
+                            "NOT_STARTED",
+                            3
+                    );
+                    topic.setAiReasoning(eval.getAiReasoning());
+                    topicRepository.save(topic);
+                }
+            }
+        }
     }
 
     @Transactional

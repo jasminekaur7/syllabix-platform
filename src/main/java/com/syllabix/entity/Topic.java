@@ -48,6 +48,9 @@ public class Topic {
     @Column(name = "last_studied_date")
     private LocalDate lastStudiedDate;
 
+    @Column(name = "ai_reasoning", columnDefinition = "TEXT")
+    private String aiReasoning;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
@@ -110,6 +113,9 @@ public class Topic {
 
     public LocalDate getLastStudiedDate() { return lastStudiedDate; }
     public void setLastStudiedDate(LocalDate lastStudiedDate) { this.lastStudiedDate = lastStudiedDate; }
+
+    public String getAiReasoning() { return aiReasoning; }
+    public void setAiReasoning(String aiReasoning) { this.aiReasoning = aiReasoning; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }

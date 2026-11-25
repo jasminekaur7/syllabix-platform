@@ -23,6 +23,7 @@ public class TopicDto {
     private Integer confidenceLevel = 3; // 1 to 5
     private Double priorityScore = 0.0;
     private LocalDate lastStudiedDate;
+    private String aiReasoning;
 
     public TopicDto() {}
 
@@ -70,4 +71,7 @@ public class TopicDto {
 
     public LocalDate getLastStudiedDate() { return lastStudiedDate; }
     public void setLastStudiedDate(LocalDate lastStudiedDate) { this.lastStudiedDate = lastStudiedDate; }
+
+    public String getAiReasoning() { return aiReasoning; }
+    public void setAiReasoning(String aiReasoning) { this.aiReasoning = aiReasoning; }
 }

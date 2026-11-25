@@ -137,11 +137,16 @@
                 <div class="progress-syllabix mb-2">
                     <div class="progress-bar-syllabix" id="displaySubjectBar" style="width: 0%;"></div>
                 </div>
-                <div class="d-flex justify-content-between small text-muted">
+                <div class="d-flex justify-content-between align-items-center small text-muted">
                     <span id="displaySubjectTopicsRatio">0 of 0 topics completed</span>
-                    <button class="btn btn-sm btn-link p-0 text-primary text-decoration-none" onclick="openAddTopicModal(null)">
-                        <i class="bi bi-plus-circle me-1"></i> Add Topic to Selected Subject
-                    </button>
+                    <div class="d-flex align-items-center gap-3">
+                        <button class="btn btn-sm btn-outline-primary" onclick="aiEvaluateAllTopicsForSubject()">
+                            <i class="bi bi-robot me-1"></i> AI Re-Evaluate Topics
+                        </button>
+                        <button class="btn btn-sm btn-link p-0 text-primary text-decoration-none" onclick="openAddTopicModal(null)">
+                            <i class="bi bi-plus-circle me-1"></i> Add Topic
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -458,7 +463,13 @@
                                                     </td>
                                                     <td>
                                                         <div class="font-bold ${isDone ? 'text-decoration-line-through text-muted' : 'text-dark'}">${t.name}</div>
-                                                        <div class="small text-muted">${t.description || ''}</div>
+                                                        ${t.description ? `<div class="small text-muted">${t.description}</div>` : ''}
+                                                        ${t.aiReasoning ? `
+                                                            <div class="mt-1 small text-primary d-flex align-items-start gap-1" style="font-size: 11px; background: rgba(79, 70, 229, 0.05); padding: 4px 8px; border-radius: 4px;">
+                                                                <i class="bi bi-robot flex-shrink-0 mt-0.5"></i>
+                                                                <span>${t.aiReasoning}</span>
+                                                            </div>
+                                                        ` : ''}
                                                     </td>
                                                     <td><span class="badge ${diffBadge}">${t.difficulty}</span></td>
                                                     <td><span class="small text-secondary"><i class="bi bi-clock me-1"></i>${t.estimatedDurationMinutes}m</span></td>
@@ -469,7 +480,8 @@
                                                     </td>
                                                     <td><span class="small text-muted">${t.lastStudiedDate ? t.lastStudiedDate : 'Never'}</span></td>
                                                     <td class="text-end">
-                                                        <button class="btn btn-sm btn-link text-danger p-0 ms-2" onclick="deleteTopic(${t.id})" title="Delete Topic"><i class="bi bi-trash"></i></button>
+                                                        <button class="btn btn-sm btn-link text-primary p-0 me-2" onclick="aiEvaluateSingleTopic(${t.id})" title="AI Evaluate / Explain Difficulty"><i class="bi bi-robot"></i></button>
+                                                        <button class="btn btn-sm btn-link text-danger p-0" onclick="deleteTopic(${t.id})" title="Delete Topic"><i class="bi bi-trash"></i></button>
                                                     </td>
                                                 </tr>
                                             `;
@@ -499,6 +511,29 @@
             loadSubjectSyllabus(currentSubjectId);
         } catch (e) {
             console.error(e);
+        }
+    }
+
+    async function aiEvaluateSingleTopic(topicId) {
+        try {
+            Syllabix.toast('AI Agent evaluating topic difficulty...', 'info');
+            const res = await Syllabix.api(`/api/topics/${topicId}/ai-evaluate`, { method: 'POST' });
+            Syllabix.toast(`Evaluated as ${res.difficulty}!`, 'success');
+            loadSubjectSyllabus(currentSubjectId);
+        } catch (e) {
+            console.error('Failed to AI evaluate topic', e);
+        }
+    }
+
+    async function aiEvaluateAllTopicsForSubject() {
+        if (!currentSubjectId) return;
+        try {
+            Syllabix.toast('AI Agent evaluating all topics for this subject...', 'info');
+            await Syllabix.api(`/api/subjects/${currentSubjectId}/ai-evaluate`, { method: 'POST' });
+            Syllabix.toast('All syllabus topics AI evaluated with difficulty scores!', 'success');
+            loadSubjectSyllabus(currentSubjectId);
+        } catch (e) {
+            console.error('Failed to AI evaluate all topics', e);
         }
     }
 

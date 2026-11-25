@@ -61,6 +61,12 @@ public class TopicApiController {
         return ResponseEntity.ok(syllabusService.toggleTopicStatus(id, status, student));
     }
 
+    @PostMapping("/{id}/ai-evaluate")
+    public ResponseEntity<TopicDto> aiEvaluateTopic(@PathVariable Long id) {
+        Student student = authenticationService.getAuthenticatedStudent();
+        return ResponseEntity.ok(syllabusService.aiEvaluateTopic(id, student));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTopic(@PathVariable Long id) {
         Student student = authenticationService.getAuthenticatedStudent();

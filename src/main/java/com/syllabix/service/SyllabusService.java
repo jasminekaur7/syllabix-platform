@@ -32,13 +32,16 @@ public class SyllabusService {
     private final SubjectRepository subjectRepository;
     private final UnitRepository unitRepository;
     private final TopicRepository topicRepository;
+    private final AiTopicEvaluatorService aiTopicEvaluatorService;
 
     public SyllabusService(SubjectRepository subjectRepository,
                            UnitRepository unitRepository,
-                           TopicRepository topicRepository) {
+                           TopicRepository topicRepository,
+                           AiTopicEvaluatorService aiTopicEvaluatorService) {
         this.subjectRepository = subjectRepository;
         this.unitRepository = unitRepository;
         this.topicRepository = topicRepository;
+        this.aiTopicEvaluatorService = aiTopicEvaluatorService;
     }
 
     public List<UnitDto> getUnitsForSubject(Long subjectId, Student student) {
@@ -142,8 +145,23 @@ public class SyllabusService {
                 dto.getConfidenceLevel()
         );
 
+        if (dto.getAiReasoning() != null && !dto.getAiReasoning().trim().isEmpty()) {
+            topic.setAiReasoning(dto.getAiReasoning());
+        } else {
+            AiTopicEvaluatorService.EvaluationResult eval = aiTopicEvaluatorService.evaluateTopic(
+                    subject.getName(), subject.getCode(), unit.getTitle(), dto.getName(), dto.getDescription());
+            topic.setDifficulty(eval.getDifficulty());
+            if (dto.getEstimatedDurationMinutes() == null || dto.getEstimatedDurationMinutes() == 45) {
+                topic.setEstimatedDurationMinutes(eval.getEstimatedMinutes());
+            }
+            topic.setAiReasoning(eval.getAiReasoning());
+        }
+
         if ("COMPLETED".equalsIgnoreCase(dto.getCompletionStatus())) {
             topic.setLastStudiedDate(LocalDate.now());
+        }
+        if (dto.getAiReasoning() != null) {
+            topic.setAiReasoning(dto.getAiReasoning());
         }
 
         topicRepository.save(topic);
@@ -160,6 +178,7 @@ public class SyllabusService {
         if (dto.getDifficulty() != null) topic.setDifficulty(dto.getDifficulty());
         if (dto.getEstimatedDurationMinutes() != null) topic.setEstimatedDurationMinutes(dto.getEstimatedDurationMinutes());
         if (dto.getConfidenceLevel() != null) topic.setConfidenceLevel(dto.getConfidenceLevel());
+        if (dto.getAiReasoning() != null) topic.setAiReasoning(dto.getAiReasoning());
 
         if (dto.getCompletionStatus() != null) {
             String prevStatus = topic.getCompletionStatus();
@@ -310,6 +329,27 @@ public class SyllabusService {
         }
     }
 
+    @Transactional
+    public TopicDto aiEvaluateTopic(Long topicId, Student student) {
+        Topic topic = topicRepository.findByIdAndStudentId(topicId, student.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Topic not found: " + topicId));
+
+        AiTopicEvaluatorService.EvaluationResult eval = aiTopicEvaluatorService.evaluateTopic(
+                topic.getSubject().getName(),
+                topic.getSubject().getCode(),
+                topic.getUnit().getTitle(),
+                topic.getName(),
+                topic.getDescription()
+        );
+
+        topic.setDifficulty(eval.getDifficulty());
+        topic.setEstimatedDurationMinutes(eval.getEstimatedMinutes());
+        topic.setAiReasoning(eval.getAiReasoning());
+        topicRepository.save(topic);
+
+        return toTopicDto(topic);
+    }
+
     public TopicDto toTopicDto(Topic topic) {
         TopicDto dto = new TopicDto();
         dto.setId(topic.getId());
@@ -327,6 +367,7 @@ public class SyllabusService {
         dto.setConfidenceLevel(topic.getConfidenceLevel());
         dto.setPriorityScore(topic.getPriorityScore());
         dto.setLastStudiedDate(topic.getLastStudiedDate());
+        dto.setAiReasoning(topic.getAiReasoning());
         return dto;
     }
 }
